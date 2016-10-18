@@ -1,0 +1,15 @@
+$root_ssh_key = <<SCRIPT
+mkdir -p /root/.ssh/
+chmod 700 /root/.ssh/
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDITasns6BrTV3mCvHZJX96Cv4zx9GdTJYoe52yHeSi1/kryfcCvw6vl7NC9Bx1papPSzITxYW6qHQgSNlJ8yRPrlI35F6UDZxHv676BQzbazM6yg2rSw9o5IgYDFkrdOiKaB8CwtIAwVMVqqdipT5DDmDQqITAtwieUIQYBBg26A72XhatOb/FhrQ8FUOrhXitYlWsk0rGcehNtGDOOVI+f2jvOoS4dDwmJ1DmsVFjFfCsq+iIyNThp/ucUxZ06RpCO/hXvV4X4K6sY0x68l+Fy9QpudrB7R1wSYSjZXhTyQ1NAK7YeyHW+vM+ROsdcfCelXP7Jv1TizrqGN8+Xm9b STaaS root key" >> /root/.ssh/authorized_keys
+chmod 600 /root/.ssh/authorized_keys
+SCRIPT
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+  config.vm.network "forwarded_port", guest: 80, host: 8888
+  config.vm.network "forwarded_port", guest: 22, host: 22222
+  config.vm.network "forwarded_port", guest: 5555, host: 5555
+
+  config.vm.provision :shell, inline: $root_ssh_key
+end
