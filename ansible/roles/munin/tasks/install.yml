@@ -1,0 +1,29 @@
+- name: Install Munin
+  yum: "name={{ packages }} state=installed"
+
+- name: Copy Apache config file
+  copy:
+    src: "{{ config_file.src }}"
+    dest: "{{ config_file.dest }}"
+  notify:
+    - Apache reload
+
+- name: Create munin-cgi-graph.log file
+  copy:
+    content: ""
+    dest: "{{ log_file.dest }}"
+    force: no
+    group: "{{ log_file.group }}"
+    owner: "{{ log_file.owner }}"
+    mode: "{{ log_file.mode }}"
+
+- name: Symlink Nemea Munin plugin
+  file:
+    src: "{{ plugin.src }}"
+    dest: "{{ plugin.dest }}"
+    state: link
+  notify:
+    - Munin-node restart
+
+- name: Start & enable Munin-node
+  service: name=munin-node state=started enabled=yes

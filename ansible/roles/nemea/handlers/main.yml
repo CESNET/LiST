@@ -1,0 +1,2 @@
+- name: Restart NEMEA supervisor
+  service: name=nemea-supervisor state=restarted

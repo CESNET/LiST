@@ -1,0 +1,7 @@
+- name: Munin install
+  include: install.yml
+  tags: install
+
+- name: Munin update
+  include: update.yml
+  tags: update

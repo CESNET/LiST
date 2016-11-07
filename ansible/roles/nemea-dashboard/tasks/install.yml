@@ -1,0 +1,46 @@
+- name: Add Mongo repository
+  copy:
+    src: "{{ repo.mongo.src }}"
+    dest: "{{ repo.mongo.dest }}"
+
+- name: Install Mongo, python, etc
+  yum: "name={{ packages }} state=installed"
+
+- name: Get python pip
+  get_url:
+    url: "{{ pip.url }}"
+    dest: "{{ pip.tmp }}"
+
+- name: Install python pip
+  command: python3.4 "{{ pip.tmp }}" creates="{{ pip.creates }}"
+
+- name: Start & enable Mongo
+  service: name=mongod state=started enabled=yes
+
+- name: Clone Nemea-Dashboard
+  git:
+    repo: "{{ git.repo }}"
+    dest: "{{ git.dest }}"
+    depth: 1
+
+- name: Install requirements for dashboard
+  pip: requirements="{{ pip.requirements }}"
+
+- name: Copy default user query file
+  copy:
+    src: "{{ mongo_init.query_file }}"
+    dest: "{{ mongo_init.tmp_file }}"
+
+- name: Setup defaults for mongo database
+  shell: mongo "{{ mongo_init.database }}" "{{ mongo_init.tmp_file }}"; touch "{{ mongo_init.creates }}"
+  args:
+    creates: "{{ mongo_init.creates }}"
+
+- name: Install backend service
+  copy:
+    src: "{{ service.src }}"
+    dest: "{{ service.dest }}"
+    remote_src: true
+
+- name: Start & enable Nemea-Dashboard backend
+  service: name=nemea-dashboard state=started enabled=yes

@@ -1,0 +1,5 @@
+- name: Install Apache
+  yum: "name={{ packages }} state=installed"
+
+- name: Start & enable Apache
+  service: name=httpd enabled=yes state=started

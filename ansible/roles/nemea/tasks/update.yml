@@ -1,0 +1,7 @@
+- name: Update NEMEA packages
+  yum: "name={{ packages }} state=latest"
+  notify:
+    - Restart NEMEA supervisor
+
+- name: Common tasks
+  include: common.yml

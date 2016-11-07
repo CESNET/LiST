@@ -1,0 +1,7 @@
+- name: Apache install
+  include: install.yml
+  tags: install
+
+- name: Apache update
+  include: update.yml
+  tags: update

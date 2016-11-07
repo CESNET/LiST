@@ -1,0 +1,32 @@
+packages: [mongodb-org, python34, python34-devel, python-pymongo, "@Development tools"]
+
+repo: {
+  mongo: {
+    src: "mongodb-org-3.2.repo",
+    dest: "/etc/yum.repos.d/mongodb-org-3.2.repo"
+  }
+}
+
+pip: {
+  url: "https://bootstrap.pypa.io/get-pip.py",
+  tmp: "/tmp/get-pip.py",
+  creates: "/bin/pip",
+  requirements: "/var/www/html/Nemea-Dashboard/requirements.txt"
+}
+
+git: {
+  repo: "https://github.com/CESNET/Nemea-Dashboard.git",
+  dest: "/var/www/html/Nemea-Dashboard"
+}
+
+mongo_init: {
+  query_file: "default-user.js",
+  tmp_file: "/tmp/default-user.js",
+  database: "nemeadb",
+  creates: "/tmp/nd-user-done"
+}
+
+service: {
+  src: "/var/www/html/Nemea-Dashboard/nemea-dashboard.service",
+  dest: "/usr/lib/systemd/system/nemea-dashboard.service",
+}

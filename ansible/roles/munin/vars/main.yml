@@ -1,0 +1,18 @@
+packages: [munin, munin-node]
+
+config_file: {
+  src: "munin.conf",
+  dest: "/etc/httpd/conf.d/munin.conf"
+}
+
+log_file: {
+  dest: "/var/log/munin/munin-cgi-graph.log",
+  owner: "apache",
+  group: "apache",
+  mode: "0664"
+}
+
+plugin: {
+  src: "/usr/share/munin/plugins/nemea_supervisor",
+  dest: "/etc/munin/plugins/nemea_supervisor"
+}

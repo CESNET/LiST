@@ -1,0 +1,12 @@
+- name: Copy host specific NEMEA configuration
+  synchronize:
+    src: "{{ configuration.local }}"
+    dest: "{{ configuration.dest }}"
+    archive: no
+    recursive: yes
+    times: yes
+    rsync_opts:
+      - "--omit-dir-times"
+  notify:
+    - Restart NEMEA supervisor
+  ignore_errors: yes

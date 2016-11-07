@@ -1,0 +1,7 @@
+- hosts: all
+  force_handlers: true
+  roles:
+    - { role: nemea-dashboard, tags: nemea-dashboard }
+    - { role: nemea, tags: nemea }
+    - { role: munin, tags: munin }
+    - { role: ipfixcol, tags: ipfixcol }

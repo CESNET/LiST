@@ -1,0 +1,3 @@
+- name: Add Epel repository
+  yum: name={{ epel_rpm }} state=installed
+  tags: install

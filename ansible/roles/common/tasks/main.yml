@@ -1,0 +1,11 @@
+# This file provides some basic checks common to all roles
+
+# This check is not done in when clause since it produces an awful lot of SKIPPED messages (it is used as a dependency in a lot of places)
+- name: Check for compatible system
+  shell: 'if ! [[ "{{ ansible_distribution }}/{{ ansible_distribution_major_version }}" == {{ supported_distribution }} ]]; then exit 1; fi'
+  changed_when: false
+  tags: always
+
+- name: Check for tags
+  fail: msg="Use one of [install | update] tags"
+  when: tags is not defined

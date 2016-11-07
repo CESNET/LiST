@@ -1,0 +1,14 @@
+- name: Add IPFIXcol repo
+  get_url:
+    url: "{{ repo.ipfixcol.url }}"
+    dest: "{{ repo.ipfixcol.dest }}"
+    mode: "{{ repo.mode }}"
+
+- name: Add NEMEA repo (unirec dependency)
+  get_url:
+    url: "{{ repo.nemea.url }}"
+    dest: "{{ repo.nemea.dest }}"
+    mode: "{{ repo.mode }}"
+
+- name: Install IPFIXcol
+  yum: "name={{ packages }} state=installed"

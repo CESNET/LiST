@@ -1,0 +1,16 @@
+packages: [nemea, nemea-modules]
+
+repo: {
+  nemea: {
+    url: "https://copr.fedorainfracloud.org/coprs/g/CESNET/NEMEA/repo/epel-7/group_CESNET-NEMEA-epel-7.repo",
+    dest: "/etc/yum.repos.d/COPR-NEMEA.repo"
+  },
+  mode: 664
+}
+
+configuration: {
+  src: "/usr/share/nemea-supervisor/*",
+  dest: "/etc/nemea/",
+  creates: "/etc/nemea/config_example.xml",
+  local: "{{ inventory_hostname }}/nemea/"
+}

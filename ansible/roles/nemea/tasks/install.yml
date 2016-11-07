@@ -1,0 +1,20 @@
+- name: Add NEMEA repository
+  get_url:
+    url: "{{ repo.nemea.url }}"
+    dest: "{{ repo.nemea.dest }}"
+    mode: "{{ repo.mode }}"
+
+- name: Install NEMEA packages
+  yum: "name={{ packages }} state=installed"
+
+- name: Set NEMEA supervisor default configuration
+  shell: >
+    cp -R "{{ configuration.src }}" "{{ configuration.dest }}"
+  args:
+    creates: "{{ configuration.creates }}"
+
+- name: Common tasks
+  include: common.yml
+
+- name: Start NEMEA supervisor
+  service: name=nemea-supervisor state=started enabled=yes

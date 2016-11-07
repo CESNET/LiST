@@ -1,0 +1,18 @@
+- name: Update Packages
+  yum: "name={{ packages }} state=latest"
+  notify:
+    - Mongo restart
+
+- name: Update Nemea-Dashboard
+  git:
+    repo: "{{ git.repo }}"
+    dest: "{{ git.dest }}"
+    depth: 1
+    update: yes
+  notify:
+    - Nemea-Dashboard backend
+
+- name: Update Nemea-Dashboard pip requirements
+  pip: requirements="{{ pip.requirements }}" state=latest
+  notify:
+    - Nemea-Dashboard backend

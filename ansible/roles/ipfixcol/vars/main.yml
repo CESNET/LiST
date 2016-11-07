@@ -1,0 +1,13 @@
+packages: [ipfixcol, ipfixcol-unirec-output]
+
+repo: {
+  ipfixcol: {
+    url: "https://copr.fedorainfracloud.org/coprs/g/CESNET/IPFIXcol/repo/epel-7/group_CESNET-IPFIXcol-epel-7.repo",
+    dest: "/etc/yum.repos.d/COPR-IPFIXcol.repo"
+  },
+  nemea: {
+    url: "https://copr.fedorainfracloud.org/coprs/g/CESNET/NEMEA/repo/epel-7/group_CESNET-NEMEA-epel-7.repo",
+    dest: "/etc/yum.repos.d/COPR-NEMEA.repo"
+  },
+  mode: 664
+}

@@ -1,0 +1,2 @@
+- name: Update IPFIXcol
+  yum: "name={{ packages }} state=latest"

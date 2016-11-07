@@ -1,0 +1,5 @@
+- name: Update Munin
+  yum: "name={{ packages }} state=latest"
+  notify:
+    - Munin restart
+    - Munin-node restart
