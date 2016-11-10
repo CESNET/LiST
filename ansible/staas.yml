@@ -1,6 +1,7 @@
 - hosts: all
   force_handlers: true
   roles:
+    - { role: settings, tags: settings }
     - { role: nemea-dashboard, tags: nemea-dashboard }
     - { role: nemea, tags: nemea }
     - { role: munin, tags: munin }

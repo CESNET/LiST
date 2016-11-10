@@ -12,6 +12,8 @@ log_file: {
   mode: "0664"
 }
 
+munin_conf: "/etc/munin/munin.conf"
+
 plugin: {
   src: "/usr/share/munin/plugins/nemea_supervisor",
   dest: "/etc/munin/plugins/nemea_supervisor"

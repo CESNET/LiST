@@ -25,5 +25,12 @@
   notify:
     - Munin-node restart
 
+- name: Change munin hostname
+  replace:
+    dest: "{{ munin_conf }}"
+    regexp: '^\[.*\]$'
+    replace: '[{{ hostname }}]'
+  when: hostname is defined
+
 - name: Start & enable Munin-node
   service: name=munin-node state=started enabled=yes

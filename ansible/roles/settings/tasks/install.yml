@@ -1,0 +1,10 @@
+- name: Set default hosname from inventory file
+  set_fact: hostname={{ ansible_fqdn }}
+  when: hostname is not defined
+
+- name: Set system hostname
+  hostname: name={{ hostname }}
+
+- name: Set hostname to /etc/hosts
+  lineinfile: dest={{ hosts_file }} regexp='.*{{ hostname }}$' line="{{ ansible_default_ipv4.address }} {{ hostname }}" state=present
+  when: ansible_default_ipv4.address is defined
