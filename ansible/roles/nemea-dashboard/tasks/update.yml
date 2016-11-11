@@ -10,9 +10,12 @@
     depth: 1
     update: yes
   notify:
-    - Nemea-Dashboard backend
+    - Nemea-Dashboard restart
 
 - name: Update Nemea-Dashboard pip requirements
-  pip: requirements="{{ pip.requirements }}" state=latest
+  pip:
+    requirements: "{{ pip.requirements }}"
+    state: latest
+    executable: pip3
   notify:
-    - Nemea-Dashboard backend
+    - Nemea-Dashboard restart

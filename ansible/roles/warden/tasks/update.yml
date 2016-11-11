@@ -1,0 +1,15 @@
+- name: Update Warden rpm dependencies
+  yum: "name={{ packages }} state=latest"
+
+# Do not update because ZOE package requires python 2.7.9 and breaks the update
+#- name: Update Warden pip dependencies
+#  pip:
+#    name: "{{ item }}"
+#    state: latest
+#    executable: pip2
+#  with_items: "{{ pip_packages }}"
+
+- name: Generate new Warden keys
+  shell: "{{ warden_keys.script }}"
+  args:
+    creates: "{{ warden_keys.creates }}"

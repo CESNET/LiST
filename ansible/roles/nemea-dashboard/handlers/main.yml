@@ -1,4 +1,4 @@
-- name: Nemea-Dashboard backend
+- name: Nemea-Dashboard restart
   service: name=nemea-dashboard state=restarted
 
 - name: Mongo restart

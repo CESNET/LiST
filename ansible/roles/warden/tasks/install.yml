@@ -1,0 +1,53 @@
+- name: Install Warden rpm dependencies
+  yum: "name={{ packages }} state=installed"
+
+- name: Install Warden pip dependencies
+  pip:
+    name: "{{ item }}"
+    executable: pip2
+  with_items: "{{ pip_packages }}"
+
+- name: Start & enable MariaDB
+  service: name=mariadb state=started enabled=yes
+
+- name: Copy Warden install files
+  synchronize:
+    src: "{{ warden_install_dir.src }}"
+    dest: "{{ warden_install_dir.dest }}"
+    archive: no
+    recursive: yes
+    times: yes
+
+- name: Create Warden keys
+  shell: "{{ warden_keys.script }}"
+  args:
+    creates: "{{ warden_keys.creates }}"
+
+- name: Create Warden database
+  shell: "{{ warden_db.script }}"
+  args:
+     creates: "{{ warden_db.creates }}"
+
+- name: Copy ssl.conf
+  copy:
+    src: "{{ warden_ssl.src }}"
+    dest: "{{ warden_ssl.dest }}"
+  notify: Apache restart
+
+- name: Copy Warden server and client
+  synchronize:
+    src: "{{ warden_files.src }}"
+    dest: "{{ warden_files.dest }}"
+    archive: no
+    recursive: yes
+    times: yes
+
+- name: Download IDEA schema
+  get_url:
+    url: "{{ warden_schema.url }}"
+    dest: "{{ warden_schema.dest }}"
+
+- name: Register client to Warden server & create NEMEA config
+  shell: "{{ warden_register.script }}"
+  args:
+    creates: "{{ warden_register.creates }}"

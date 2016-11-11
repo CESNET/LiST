@@ -24,7 +24,9 @@
     depth: 1
 
 - name: Install requirements for dashboard
-  pip: requirements="{{ pip.requirements }}"
+  pip:
+    requirements: "{{ pip.requirements }}"
+    executable: pip3
 
 - name: Copy default user query file
   copy:

@@ -1,0 +1,37 @@
+packages: [mariadb-server, mariadb-devel, mod_ssl, mod_wsgi, swig, openssl-devel, gcc, python-pip, python-devel]
+pip_packages: ["ZEO==4.1.0", mysqldbda, mysql, M2Crypto, jsonschema]
+
+warden_install_dir: {
+  src: "install/",
+  dest: "/tmp/warden"
+}
+
+warden_keys: {
+  script: "/tmp/warden/generate-keys.sh",
+  creates: "/opt/warden_server_3/keys/client.crt"
+}
+
+warden_db: {
+  script: "/tmp/warden/create-db.sh",
+  creates: "/tmp/warden/db.created"
+}
+
+warden_ssl: {
+  src: "warden-ssl.conf",
+  dest: "/etc/httpd/conf.d/warden-ssl.conf"
+}
+
+warden_schema: {
+  url: "https://idea.cesnet.cz/_media/en/idea0.schema",
+  dest: "/opt/warden_server_3/idea.schema"
+}
+
+warden_register: {
+  script: "/tmp/warden/generate-warden-cfg.sh",
+  creates: "/etc/nemea/warden/dnstunnel.cfg"
+}
+
+warden_files: {
+  src: "warden3/",
+  dest: "/opt"
+}

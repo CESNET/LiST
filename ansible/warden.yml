@@ -1,0 +1,4 @@
+- hosts: warden
+  force_handlers: true
+  roles:
+    - { role: warden, tags: warden }

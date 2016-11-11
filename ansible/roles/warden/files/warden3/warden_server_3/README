@@ -1,0 +1,270 @@
++-------------------------+
+| Warden Server 3.0-beta2 |
++-------------------------+
+
+Content
+
+  A. Introduction
+  B. Dependencies
+  C. Installation
+  D. Configuration
+  E. Command line
+
+------------------------------------------------------------------------------
+A. Introduction
+
+   Warden is a system for efficient sharing information about detected events
+(threats). Warden Server is server-side part of the software, the
+communication hub, allowing to publish detected events and download yet
+unprocessed ones.
+
+   The events are exchanged in Idea, flexible and descriptive event JSON
+serialized format. Warden 3 protocol is based on plain HTTPS queries with
+help of JSON, so the clients can be thin and simple.
+
+   For description of API see Warden Client, this document describes basics
+of Warden Server administration.
+
+   Warden Server is Python/WSGI based, written primarily with Apache mod_wsgi
+in mind. Other WSGI servers/frameworks are not yet tested, so your mileage
+may vary. Authentication is X509 certificate (for machine or client
+identification) + shared secret (for client icentification, where
+certificate does not suffice).
+
+------------------------------------------------------------------------------
+B. Dependencies
+
+ 1. Platform
+
+    Python 2.7+
+	Apache 2.2
+	mod_wsgi 3.3+
+
+ 2. Python modules
+
+    python-mysqldb 5.3.3+
+    python-m2crypto 0.20+
+    jsonschema 2.4+
+
+------------------------------------------------------------------------------
+C. Installation
+
+ * Untar distribution archive into required destination
+   (We're using /opt as an example.)
+
+   # cd /opt
+   # tar xjf warden_server_3.0.tar.bz2
+   # ls
+   warden_server_3.0
+
+ * Create database and desired database users
+   (We're using db "warden3" and user "warden@localhost" as an example.)
+
+   # mysql -p
+
+   mysql> CREATE DATABASE warden3;
+   mysql> GRANT ALL ON warden3.* TO `warden`@`localhost`;
+   mysql> SET PASSWORD FOR 'warden'@'localhost' = PASSWORD('example');
+   mysql> FLUSH PRIVILEDGES;
+
+ * Create necessary table structure
+
+   mysql -p -u warden warden3 < warden3.0.sql
+
+ * Enable mod_wsgi, mod_ssl, include Warden configuration
+
+   This depends heavily on your distribution and Apache configuration.
+   Basically you need to create and include apache.conf:
+
+      Include /opt/warden_server_3.0/apache.conf
+
+   or paste the contents into whichever Directory, Location or VirtualHost
+   you dedicate for Warden. You can use apache.conf.dist as an example.
+
+   You may need to change paths to certificate/key/ca material, path to
+   warden_server.wsgi and web path alias.
+
+   Also note that warden_server itself is NOT thread safe, so included
+   configuration expects Apache with mpm-prefork worker, or you will have
+   to configure mod_wsgi as separate process with threads=1.
+
+   Also, for warden_server.wsgi, you can use warden_server.wsgi.dist as
+   a template. You will possibly need to change at least configuration
+   file path.
+
+ * Configure Warden server (see next chapter)
+
+ * Reload Apache
+
+------------------------------------------------------------------------------
+D. Configuration
+
+   Configuration is JSON object in file (warden_server.cfg by default),
+however, lines starting with "#" or "//" are allowed and will be ignored as
+comments. File must contain valid JSON object, containing configuration. See
+also warden_server.cfg.dist as example.
+
+   Top level JSON object contains subsections, which configure particular
+aspect of the server. Each subsection can contain "type" key, which chooses
+particular implementation object of the aspect, for example type of logger
+(file, syslog), such as:
+
+   {
+      "Log": {
+         "type": "SysLogger",
+         ...
+      },
+      "DB": { ... }
+   }
+
+   Sections and their "type" objects can be:
+
+		Log: FileLogger, SysLogger
+		DB: MySQL
+		Auth: X509Authenticator, NoAuthenticator
+		Validator: JSONSchemaValidator, "NoValidator
+		Handler: WardenHandler
+
+	"type" keyword is not mandatory, if not specified, first implementation
+object from particular section list is used ("FileLogger" for example).
+
+   Object function and configuration keys are as follows:
+
+   FileLogger: logging into file on the filesystem
+      filename: name of the file, defaults to "warden_server.log" at
+		        installation directory
+      level: least log level (CRITICAL, ERROR, WARNING, INFO, DEBUG)
+
+   SysLogger: logging into unix syslog
+      socket: path to syslog socket, defaults to "/dev/log"
+      facility: syslog facility, defaults to "daemon"
+      level: least log level (CRITICAL, ERROR, WARNING, INFO, DEBUG)
+
+   NoAuthenticator: forego authentication, for debug purposes
+
+   X509Authenticator: authenticate based on certificate chain validation,
+       hostname corresponding with certificate CN or SubjectAltName and
+       optionally shared secret
+
+   NoValidator: forego event JSON validation, for debug purposes
+
+   JSONSchemaValidator: validate incoming events based on JSON schema file
+      filename: path to schema file, defaults to "idea.schema" at
+                installation directory
+
+   MySQL: database storage backend
+      host: database server host, default "localhost"
+      user: database user, default "warden"
+      password: database password
+      dbname: database name, default "warden3"
+      port: database server port, default 3306
+      retry_pause: retry in case of database errors, in seconds, defaults to 5
+      retry_count: number of retries, defaults to 3
+      event_size_limit: max size of serialized event, defaults to 5 MB
+      catmap_filename: IDEA category mapping to database ids, defaults to
+                       "catmap_mysql.json" at installation directory
+      tagmap_filename": IDEA node type mapping to database ids, defaults to
+                        "tagmap_mysql.json" at installation directory
+
+   WardenHandler: Main Warden RPC worker
+      send_events_limit: max events sent in one bunch, defaults to 10000
+      get_events_limit: max events received in one bunch, defaults to 10000
+      description: human readable description, sent in server info
+	
+------------------------------------------------------------------------------
+E. Command line
+
+   When run from command line, server offers set of commands and options for
+runtime and database management. You can also use --help option for each
+command and for server itself.
+   
+warden_server.py [--help] [-c CONFIG] <command>
+
+optional arguments:
+  -c CONFIG, --config CONFIG
+                        configuration file path
+
+commands:
+  {check,register,modify,list,loadmaps}
+    check               check configuration
+    register            register new client
+    modify              modify client registration
+    list                list registered clients
+    loadmaps            load catmap and tagmap into db
+
+
+warden_server.py register [--help] -n NAME -h HOSTNAME -r REQUESTOR
+                          [-s SECRET] [--note NOTE]
+                          [--valid | --novalid] [--read | --noread]
+                          [--nowrite | --write] [--nodebug | --debug]
+                          [--test | --notest]
+
+   Add new client registration entry.
+
+   optional arguments:
+     -n NAME, --name NAME  client name (in dotted reverse path notation)
+     -h HOSTNAME, --hostname HOSTNAME
+                           client FQDN hostname
+     -r REQUESTOR, --requestor REQUESTOR
+                           requestor email
+     -s SECRET, --secret SECRET
+                           authentication token
+     --note NOTE           client freetext description
+     --valid               valid client (default)
+     --novalid
+     --read                client is allowed to read (default)
+     --noread
+     --nowrite             client is allowed to send (default - no)
+     --write
+     --nodebug             client is allowed receive debug output (default - no)
+     --debug
+     --test                client is yet in testing phase (default - yes)
+     --notest
+
+
+warden_server.py modify [--help] -i ID [-n NAME] [-h HOSTNAME]
+                        [-r REQUESTOR] [-s SECRET] [--note NOTE]
+                        [--valid | --novalid] [--read | --noread]
+                        [--nowrite | --write] [--nodebug | --debug]
+                        [--test | --notest]
+
+   Modify details of client registration entry.
+
+   optional arguments:
+     -i ID, --id ID        client id
+
+   Rest of the arguments is same as in "register" command.
+
+
+warden_server.py list [--help] [--id ID]
+
+   List details of client registration entries.
+
+   optional arguments:
+     --id ID  client id
+
+
+warden_server.py purge [--help] [-l] [-e] [-d DAYS]
+
+   Purge old events or lastlog records. Note that lastlog purge retains at
+   least one newest record for each client, even if it is more than number of
+   'days' old.
+
+   optional arguments:
+     --help                show this help message and exit
+     -l, --lastlog         purge lastlog records
+     -e, --events          purge events
+     -d DAYS, --days DAYS  records older than 'days' back from today will get
+                           purged
+
+
+warden_server.py loadmaps [--help]
+
+   Load 'categories' and 'tags' table from 'catmap_mysql.json' and
+   'tagmap_mysql.json'. Note that this is NOT needed for server at all, load
+   them into db at will, should you need to run your own specific SQL queries
+   on data directly. Note also that previous content of both tables will be
+   lost.
+
+------------------------------------------------------------------------------
+Copyright (C) 2011-2015 Cesnet z.s.p.o

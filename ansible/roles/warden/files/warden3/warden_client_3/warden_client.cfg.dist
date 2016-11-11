@@ -1,0 +1,8 @@
+{
+    "url": "https://warden-hub.example.org/warden3",
+    "certfile": "cert.pem",
+    "keyfile": "key.pem",
+    "filelog": {"level": "debug"},
+    "name": "org.example.warden_client",
+    "secret": "ToP_SeCrEt"
+}

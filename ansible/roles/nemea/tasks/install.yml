@@ -9,7 +9,7 @@
 
 - name: Set NEMEA supervisor default configuration
   shell: >
-    cp -R "{{ configuration.src }}" "{{ configuration.dest }}"
+    cp -R {{ configuration.src }} {{ configuration.dest }}
   args:
     creates: "{{ configuration.creates }}"
 
