@@ -7,11 +7,11 @@
 - name: Install NEMEA packages
   yum: "name={{ packages }} state=installed"
 
-- name: Set NEMEA supervisor default configuration
-  shell: >
-    cp -R {{ configuration.src }} {{ configuration.dest }}
-  args:
-    creates: "{{ configuration.creates }}"
+#- name: Set NEMEA supervisor default configuration
+#  shell: >
+#    cp -R {{ configuration.src }} {{ configuration.dest }}
+#  args:
+#    creates: "{{ configuration.creates }}"
 
 - name: Common tasks
   include: common.yml

@@ -1,0 +1,19 @@
+- name: Install Nemea status dependencies
+  yum: "name={{ packages }} state=installed"
+
+- name: Clone Nemea-Supervisor status dir
+  git:
+    repo: "{{ git.repo }}"
+    dest: "{{ git.dest }}"
+
+#- name: Allow apache to run nemea-supervisor
+#  sefcontext:
+#    target: '/srv/git_repos(/.*)?'
+#    setype: httpd_git_rw_content_t
+#    state: present
+
+- name: Copy httpd config
+  copy:
+    src: "{{ nemea_status_httpd.src }}"
+    dest: "{{ nemea_status_httpd.dest }}"
+  notify: Apache restart

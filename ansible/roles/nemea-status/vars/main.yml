@@ -1,0 +1,11 @@
+packages: [python-flask, python, mod_wsgi]
+
+git: {
+  repo: "https://github.com/CESNET/Nemea-Supervisor.git",
+  dest: "/var/www/html/nemea-status",
+}
+
+nemea_status_httpd: {
+  src: "nemea-status.conf",
+  dest: "/etc/httpd/conf.d/nemea-status.conf"
+}

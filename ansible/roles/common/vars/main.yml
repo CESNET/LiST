@@ -1,1 +1,1 @@
-supported_distribution: "CentOS/7"
+supported_distributions: "CentOS/7;Scientific/7"

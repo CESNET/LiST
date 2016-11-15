@@ -1,0 +1,13 @@
+<module>
+<name>haddrscan2idea</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/haddrscan2idea.py</path>
+<params>--name=cz.cesnet.nemea.haddrscan --mongodb=nemeadb --mongodb-coll=alerts_new</params>
+<trapinterfaces>
+<interface>
+  <type>TCP</type>
+  <direction>IN</direction>
+  <params>12008</params>
+</interface>
+</trapinterfaces>
+</module>

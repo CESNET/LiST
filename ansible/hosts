@@ -1,2 +1,7 @@
 [production]
 
+[demo]
+staas-demo.liberouter.org
+
+[warden]
+staas-demo.liberouter.org

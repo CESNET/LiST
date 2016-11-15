@@ -1,0 +1,13 @@
+<module>
+<name>dnstunnel_logger</name>
+<enabled>false</enabled>
+<path>/usr/bin/nemea/logger</path>
+<params>-t -T -a /data/dnstunnel_detection/alerts.log</params>
+<trapinterfaces>
+<interface>
+  <type>TCP</type>
+  <direction>IN</direction>
+  <params>12004</params>
+</interface>
+</trapinterfaces>
+</module>

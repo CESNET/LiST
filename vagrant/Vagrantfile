@@ -7,7 +7,7 @@ SCRIPT
 
 Vagrant.configure(2) do |config|
 
-  config.vm.define "staas" do |staas|
+  config.vm.define "staas-vagrant" do |staas|
     staas.vm.box = "centos/7"
     staas.vm.network "forwarded_port", guest: 80, host: 8888
     staas.vm.network "forwarded_port", guest: 22, host: 22222
@@ -19,7 +19,11 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "../ansible/site.yml"
       ansible.tags = "install"
       ansible.host_vars = {
-        "staas" => {"ansible_become" => true}
+        "staas-vagrant" => {"ansible_become" => true}
+      }
+      ansible.groups = {
+        "devel" => ["staas-vagrant"],
+        "warden" => ["staas-vagrant"]
       }
     end
 

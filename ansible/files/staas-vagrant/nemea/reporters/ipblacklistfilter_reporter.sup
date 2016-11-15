@@ -1,0 +1,13 @@
+<module>
+<name>ipblacklist2idea</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/ipblacklist2idea.py</path>
+<params>--name=cz.cesnet.nemea.ipblacklistfilter --mongodb=nemeadb --mongodb-coll=alerts_new</params>
+<trapinterfaces>
+<interface>
+  <type>TCP</type>
+  <direction>IN</direction>
+  <params>12006</params>
+</interface>
+</trapinterfaces>
+</module>

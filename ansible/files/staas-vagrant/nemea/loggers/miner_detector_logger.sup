@@ -1,0 +1,13 @@
+<module>
+<name>miner_detector_logger</name>
+<enabled>false</enabled>
+<path>/usr/bin/nemea/logger</path>
+<params>-t -T -a /data/miner_detector/detected.log</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>miner_detector_data_out</params>
+</interface>
+</trapinterfaces>
+</module>

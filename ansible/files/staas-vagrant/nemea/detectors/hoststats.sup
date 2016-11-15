@@ -1,0 +1,18 @@
+<module>
+<name>hoststatsnemea</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/hoststatsnemea</path>
+<params>-c /etc/nemea/hoststats.conf</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>flow_data_source</params>
+</interface>
+<interface>
+  <type>TCP</type>
+  <direction>OUT</direction>
+  <params>12002</params>
+</interface>
+</trapinterfaces>
+</module>

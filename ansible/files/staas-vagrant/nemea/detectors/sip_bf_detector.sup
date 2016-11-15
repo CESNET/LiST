@@ -1,0 +1,23 @@
+<module>
+<name>sip_bf_detector</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/sip_bf_detector</path>
+<params>-a 50 -c 300 -f 1800</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>voip_data_source</params>
+</interface>
+<interface>
+  <type>TCP</type>
+  <direction>OUT</direction>
+  <params>12009</params>
+</interface>
+<interface>
+  <type>TCP</type>
+  <direction>OUT</direction>
+  <params>12321</params>
+</interface>
+</trapinterfaces>
+</module>

@@ -1,0 +1,4 @@
+dependencies:
+  - common
+  - apache
+  - { role: nemea, tags: nemea }

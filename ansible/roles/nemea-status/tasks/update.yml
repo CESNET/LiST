@@ -1,0 +1,9 @@
+- name: Update Nemea status dependencies
+  yum: "name={{ packages }} state=latest"
+
+- name: Update Nemea-Supervisor git
+  git:
+    repo: "{{ git.repo }}"
+    dest: "{{ git.dest }}"
+    update: true
+  notify: Apache restart

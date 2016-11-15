@@ -1,0 +1,36 @@
+<module>
+<name>haddrscan_detector</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/haddrscan_detector</path>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>flow_data_source</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>haddrscan_out</params>
+</interface>
+</trapinterfaces>
+</module>
+
+<module>
+<name>haddrscan_aggregator</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/haddrscan_aggregator.py</path>
+<params>-t 10</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>haddrscan_out</params>
+</interface>
+<interface>
+  <type>TCP</type>
+  <direction>OUT</direction>
+  <params>12008</params>
+</interface>
+</trapinterfaces>
+</module>

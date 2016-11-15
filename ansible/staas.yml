@@ -6,3 +6,4 @@
     - { role: nemea, tags: nemea }
     - { role: munin, tags: munin }
     - { role: ipfixcol, tags: ipfixcol }
+    - { role: nemea-status, tags: nemea-status }

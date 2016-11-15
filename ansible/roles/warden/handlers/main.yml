@@ -1,2 +1,7 @@
 - name: MariaDB restart
   service: name=mariadb state=restarted
+
+# This is an ugly hack so that we do not need to include the whole nemea role
+- name: Restart NEMEA supervisor
+  service: name=nemea-supervisor state=restarted
+  ignore_errors: yes

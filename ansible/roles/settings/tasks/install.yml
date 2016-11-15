@@ -8,3 +8,6 @@
 - name: Set hostname to /etc/hosts
   lineinfile: dest={{ hosts_file }} regexp='.*{{ hostname }}$' line="{{ ansible_default_ipv4.address }} {{ hostname }}" state=present
   when: ansible_default_ipv4.address is defined
+
+- name: Common tasks
+  include: common.yml

@@ -1,0 +1,18 @@
+<module>
+<name>voip_fraud_detection</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/voip_fraud_detection</path>
+<params>-o -w -l /data/voip_fraud_detection/log</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>voip_data_source</params>
+</interface>
+<interface>
+  <type>TCP</type>
+  <direction>OUT</direction>
+  <params>12003</params>
+</interface>
+</trapinterfaces>
+</module>

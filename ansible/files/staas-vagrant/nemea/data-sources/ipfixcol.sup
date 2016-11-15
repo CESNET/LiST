@@ -1,0 +1,6 @@
+<module>
+<name>ipfixcol</name>
+<enabled>true</enabled>
+<path>/usr/bin/ipfixcol</path>
+<params>-c /etc/nemea/ipfixcol-startup.xml</params>
+</module>

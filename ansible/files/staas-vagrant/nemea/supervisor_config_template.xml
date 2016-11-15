@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<nemea-supervisor>
+<!-- include /usr/share/nemea-supervisor/warning.sup -->
+
+  <modules>
+    <name>Data sources</name>
+    <enabled>true</enabled>
+    <!-- include /etc/nemea/data-sources -->
+  </modules>
+
+  <modules>
+    <name>Detectors</name>
+    <enabled>true</enabled>
+    <!-- include /etc/nemea/detectors -->
+  </modules>
+
+  <modules>
+    <name>Reporters</name>
+    <enabled>true</enabled>
+    <!-- include /etc/nemea/reporters -->
+  </modules>
+
+  <modules>
+    <name>Loggers</name>
+    <enabled>true</enabled>
+    <!-- include /etc/nemea/loggers -->
+  </modules>
+</nemea-supervisor>

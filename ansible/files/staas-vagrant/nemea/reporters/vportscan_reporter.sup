@@ -1,0 +1,13 @@
+<module>
+<name>vportscan2idea</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/vportscan2idea.py</path>
+<params>--name=cz.cesnet.nemea.vportscan --mongodb=nemeadb --mongodb-coll=alerts_new</params>
+<trapinterfaces>
+<interface>
+  <type>TCP</type>
+  <direction>IN</direction>
+  <params>12005</params>
+</interface>
+</trapinterfaces>
+</module>

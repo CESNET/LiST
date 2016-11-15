@@ -1,0 +1,14 @@
+<module>
+<name>sipbf2idea</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/sipbf2idea.py</path>
+<params>--name=cz.cesnet.nemea.sip_bf_detector --mongodb=nemeadb --mongodb-coll=alerts_new</params>
+<trapinterfaces>
+<interface>
+  <type>TCP</type>
+  <direction>IN</direction>
+  <params>12009</params>
+</interface>
+</trapinterfaces>
+</module>
+

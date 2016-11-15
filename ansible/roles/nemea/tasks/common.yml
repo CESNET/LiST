@@ -5,8 +5,36 @@
     archive: no
     recursive: yes
     times: yes
+    delete: yes
+    rsync_opts:
+      - "--omit-dir-times --exclude supervisor_config_gener.xml"
+  notify:
+    - Restart NEMEA supervisor
+  ignore_errors: yes
+
+- name: Check for Warden config dir
+  local_action: stat path={{ configuration_warden.local }}
+  register: warden_conf_dir
+  ignore_errors: True
+
+- name: Copy Warden client configuration for NEMEA
+  synchronize:
+    src: "{{ configuration_warden.local }}"
+    dest: "{{ configuration_warden.dest }}"
+    archive: no
+    recursive: yes
+    times: yes
+    delete: yes
     rsync_opts:
       - "--omit-dir-times"
   notify:
     - Restart NEMEA supervisor
-  ignore_errors: yes
+  when: warden_conf_dir.stat.exists
+
+- name: Install warden client
+  copy:
+    src: "{{ warden_client_file.src }}"
+    dest: "{{ warden_client_file.dest }}"
+    group: "{{ warden_client_file.group }}"
+    owner: "{{ warden_client_file.owner }}"
+    mode: "{{ warden_client_file.mode }}"

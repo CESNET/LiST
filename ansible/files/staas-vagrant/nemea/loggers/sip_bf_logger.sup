@@ -1,0 +1,13 @@
+<module>
+<name>sip_bf_logger</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/logger</path>
+<params>-t -a /data/sip_bf_detector/alerts.log</params>
+<trapinterfaces>
+<interface>
+  <type>TCP</type>
+  <direction>IN</direction>
+  <params>12009</params>
+</interface>
+</trapinterfaces>
+</module>

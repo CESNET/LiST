@@ -1,0 +1,7 @@
+- name: Nemea Dashboard install
+  include: install.yml
+  tags: install
+
+- name: Nemea Dashboard update
+  include: update.yml
+  tags: update

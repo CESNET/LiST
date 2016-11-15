@@ -14,3 +14,16 @@ configuration: {
   creates: "/etc/nemea/config_example.xml",
   local: "{{ inventory_hostname }}/nemea/"
 }
+
+configuration_warden: {
+  dest: "/etc/warden/",
+  local: "{{ playbook_dir }}/files/{{ inventory_hostname }}/warden"
+}
+
+warden_client_file: {
+  src: "warden_client.py",
+  dest: "/usr/lib/python2.7/site-packages/warden_client.py",
+  owner: "root",
+  group: "root",
+  mode: "0664"
+}

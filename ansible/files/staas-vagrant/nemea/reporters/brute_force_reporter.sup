@@ -1,0 +1,13 @@
+<module>
+<name>bruteforce2idea</name>
+<enabled>true</enabled>
+<path>python</path>
+<params>/usr/bin/nemea/bruteforce2idea.py --name=cz.cesnet.nemea.bruteforce_detector --mongodb=nemeadb --mongodb-coll=alerts_new</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>bfd_data_out</params>
+</interface>
+</trapinterfaces>
+</module>

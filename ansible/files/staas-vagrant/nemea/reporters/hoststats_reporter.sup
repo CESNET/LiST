@@ -1,0 +1,13 @@
+<module>
+<name>hoststats2idea</name>
+<enabled>true</enabled>
+<path>python</path>
+<params>/usr/bin/nemea/hoststats2idea.py --name=cz.cesnet.nemea.hoststats --mongodb=nemeadb --mongodb-coll=alerts_new</params>
+<trapinterfaces>
+<interface>
+  <type>TCP</type>
+  <direction>IN</direction>
+  <params>12002</params>
+</interface>
+</trapinterfaces>
+</module>

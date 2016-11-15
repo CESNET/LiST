@@ -1,0 +1,18 @@
+<module>
+<name>brute_force_detector</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/brute_force_detector</path>
+<params>-R -S -T</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>flow_data_source</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>bfd_data_out</params>
+</interface>
+</trapinterfaces>
+</module>

@@ -9,6 +9,7 @@
     dest: "{{ git.dest }}"
     depth: 1
     update: yes
+    version: "{{ git.branch }}"
   notify:
     - Nemea-Dashboard restart
 

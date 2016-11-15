@@ -1,0 +1,18 @@
+<module>
+<name>miner_detector</name>
+<enabled>false</enabled>
+<path>/usr/bin/nemea/miner_detector</path>
+<params>-u /etc/nemea/miner_detector/userConfigFile.xml</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>flow_data_source</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>miner_detector_data_out</params>
+</interface>
+</trapinterfaces>
+</module>
