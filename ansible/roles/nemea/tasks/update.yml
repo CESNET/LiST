@@ -1,5 +1,5 @@
 - name: Update NEMEA packages
-  yum: "name={{ packages }} state=latest"
+  yum: "name={{ packages }} state=latest update_cache=yes"
   notify:
     - Restart NEMEA supervisor
 

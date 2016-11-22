@@ -1,5 +1,5 @@
 - name: Update Nemea status dependencies
-  yum: "name={{ packages }} state=latest"
+  yum: "name={{ packages }} state=latest update_cache=yes"
 
 - name: Update Nemea-Supervisor git
   git:

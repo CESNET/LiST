@@ -1,2 +1,2 @@
 - name: Update Apache
-  yum: "name={{ packages }} state=latest"
+  yum: "name={{ packages }} state=latest update_cache=yes"

@@ -1,5 +1,5 @@
 - name: Update Packages
-  yum: "name={{ packages }} state=latest"
+  yum: "name={{ packages }} state=latest update_cache=yes"
   notify:
     - Mongo restart
 
@@ -9,7 +9,6 @@
     dest: "{{ git.dest }}"
     depth: 1
     update: yes
-    version: "{{ git.branch }}"
   notify:
     - Nemea-Dashboard restart
 
