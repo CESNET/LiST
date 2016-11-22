@@ -28,7 +28,7 @@ warden_schema: {
 
 warden_register: {
   script: "/tmp/warden/generate-warden-cfg.sh",
-  creates: "/etc/nemea/warden/dnstunnel.cfg"
+  creates: "/etc/warden/dnstunnel.cfg"
 }
 
 warden_files: {
