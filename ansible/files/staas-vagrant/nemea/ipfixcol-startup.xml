@@ -40,4 +40,7 @@
                 <singleManager>yes</singleManager>
         </exportingProcess>
 
+        <intermediatePlugins>
+                <timenow/>
+        </intermediatePlugins>
 </ipfix>
