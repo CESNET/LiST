@@ -1,4 +1,4 @@
-- name: Set default hosname from inventory file
+- name: Set default hostname from inventory file
   set_fact: hostname={{ ansible_fqdn }}
   when: hostname is not defined
 
