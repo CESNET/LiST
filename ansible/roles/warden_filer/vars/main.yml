@@ -1,0 +1,22 @@
+warden_filer: {
+  src: "warden_filer.py",
+  dest: "/usr/local/bin/warden_filer.py",
+  mode: "0755"
+}
+
+warden_filer_service: {
+  src: "warden_filer_receiver",
+  dest: "/etc/init.d/warden_filer_receiver",
+  mode: "0755"
+}
+
+warden_filer_register: {
+  script: "generate-warden_filer-cfg.sh",
+  creates: "/etc/warden/warden_filer.cfg"
+}
+
+warden_filer_cleanup: {
+  src: "warden_filer_cleanup",
+  dest: "/etc/cron.d/warden_filer_cleanup",
+  mode: "0755"
+}

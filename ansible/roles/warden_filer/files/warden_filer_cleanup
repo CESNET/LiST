@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find /var/www/html/warden_receiver/ -type f -mmin +60 -delete

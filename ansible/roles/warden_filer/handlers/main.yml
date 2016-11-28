@@ -1,0 +1,2 @@
+- name: Restart Warden filer
+  service: name=warden_filer_receiver state=restarted

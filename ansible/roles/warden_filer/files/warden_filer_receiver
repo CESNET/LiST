@@ -1,0 +1,47 @@
+#!/bin/sh
+#
+### BEGIN INIT INFO
+# Provides:          warden_filer_receiver
+# Required-Start:    $local_fs $syslog
+# Required-Stop:     $local_fs $syslog
+# Should-Start:      $network $named
+# Should-Stop:       $network $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Warden Filer - receiver
+### END INIT INFO
+
+DAEMON_NAME=warden_filer
+FUNC=receiver
+DAEMON_PATH=/usr/local/bin/"$DAEMON_NAME".py
+SERVICE_NAME="${DAEMON_NAME}_${FUNC}"
+PID=/var/run/"$DAEMON_NAME"/"$FUNC".pid
+CONFIG=/etc/warden/"$DAEMON_NAME".cfg
+
+. /etc/rc.d/init.d/functions
+
+ACTION="$1"
+
+case "$ACTION" in
+	start)
+		mkdir -p "${PID%/*}"
+		#log_daemon_msg "Starting $SERVICE_NAME" "$SERVICE_NAME"
+		daemon --pidfile "$PID" "$DAEMON_PATH" -c "$CONFIG" --pid_file "$PID" --daemon "$FUNC"
+		#log_end_msg $?
+		;;
+	stop)
+		#log_daemon_msg "Stopping $SERVICE_NAME" "$SERVICE_NAME"
+		killproc -p "$PID" "$DAEMON_PATH"
+		#log_end_msg $?
+		;;
+	restart|force-reload)
+		$0 stop && sleep 2 && exec $0 start
+		;;
+	status)
+		status -p "$PID" "$DAEMON_PATH"
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 2
+		;;
+esac

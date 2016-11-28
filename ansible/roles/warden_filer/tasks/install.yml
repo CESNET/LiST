@@ -1,0 +1,32 @@
+- name: Copy Warden filer python file
+  copy:
+    src: "{{ warden_filer.src }}"
+    dest: "{{ warden_filer.dest }}"
+    mode: "{{ warden_filer.mode }}"
+  notify:
+    - Restart Warden filer
+
+- name: Copy Warden filer service file
+  copy:
+    src: "{{ warden_filer_service.src }}"
+    dest: "{{ warden_filer_service.dest }}"
+    mode: "{{ warden_filer_service.mode }}"
+  notify:
+    - Restart Warden filer
+
+- name: Copy Warden filer cleanup cronjob
+  copy:
+    src: "{{ warden_filer_cleanup.src }}"
+    dest: "{{ warden_filer_cleanup.dest }}"
+    mode: "{{ warden_filer_cleanup.mode }}"
+
+- name: Warden filer service enable
+  service: name=warden_filer_receiver enabled=yes
+
+- name: Register filer to Warden server and create config
+  script: "{{ warden_filer_register.script }}"
+  args:
+    creates: "{{ warden_filer_register.creates }}"
+  notify:
+    - Restart Warden filer
+

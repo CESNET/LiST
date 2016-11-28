@@ -1,0 +1,21 @@
+- name: Copy Warden filer python file
+  copy:
+    src: "{{ warden_filer.src }}"
+    dest: "{{ warden_filer.dest }}"
+    mode: "{{ warden_filer.mode }}"
+  notify:
+    - Restart Warden filer
+
+- name: Copy Warden filer service file
+  copy:
+    src: "{{ warden_filer_service.src }}"
+    dest: "{{ warden_filer_service.dest }}"
+    mode: "{{ warden_filer_service.mode }}"
+  notify:
+    - Restart Warden filer
+
+- name: Copy Warden filer cleanup cronjob
+  copy:
+    src: "{{ warden_filer_cleanup.src }}"
+    dest: "{{ warden_filer_cleanup.dest }}"
+    mode: "{{ warden_filer_cleanup.mode }}"
