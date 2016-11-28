@@ -1,0 +1,4 @@
+- name: Copy web main page
+  copy:
+    src: "{{ index.src }}"
+    dest: "{{ index.dest }}"

@@ -1,7 +1,5 @@
-- name: Copy web main page
-  copy:
-    src: "{{ index.src }}"
-    dest: "{{ index.dest }}"
-  tags:
-    - install
-    - update
+- include: install.yml
+  tags: install
+
+- include: update.yml
+  tags: update

@@ -43,7 +43,7 @@ header {
     padding-bottom: 1px;
 }
 main {
-    padding-top: 50px;
+    padding-top: 25px;
     margin: 0 auto;
     display: table;
 }
@@ -54,15 +54,12 @@ main {
     width: 200px;
     height: 200px;
     line-height: 200px;
-    margin-left: 50px;
+    margin: 25px;
     text-align: center;
     font-width: bold;
     font-size: 30px;
     color: black;
     text-decoration: none;
-}
-.pane.first {
-    margin-left: 0px;
 }
 .pane span {
     display: inline-block;
@@ -78,9 +75,21 @@ main {
     </header>
 
     <main>
-        <a href="/Nemea-Dashboard" class="pane first"><span>Nemea Dashboard</span></a>
+    <?php if (file_exists("Nemea-Dashboard")) {?>
+        <a href="/Nemea-Dashboard" class="pane"><span>Nemea Dashboard</span></a>
+    <?php } ?>
+
+    <?php if (file_exists("nemea-status")) {?>
         <a href="/nemea-status" class="pane"><span>Nemea Status</span></a>
+    <?php } ?>
+
+    <?php if (file_exists("munin")) {?>
         <a href="/munin" class="pane">Munin</a>
+    <?php } ?>
+
+    <?php if (file_exists("warden_receiver")) {?>
+        <a href="/warden_receiver/incoming" class="pane"><span>Warden receiver</span></a>
+    <?php } ?>
     </main>
 
     <footer>

@@ -1,0 +1,6 @@
+- name: Install Dependencies
+  yum: "name={{ packages }} state=latest update_cache=yes"
+  notify:
+    - Apache restart
+
+- include: common.yml
