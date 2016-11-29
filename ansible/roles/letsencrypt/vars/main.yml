@@ -1,0 +1,13 @@
+packages: [python-certbot-apache]
+
+letsencrypt_cron: {
+  src: "letsencrypt",
+  dest: "/etc/cron.d/letsencrypt",
+  mode: "0644"
+}
+
+letsencrypt_script: {
+  src: "letsencrypt-renew",
+  dest: "/usr/local/bin/letsencrypt-renew",
+  mode: "0755"
+}

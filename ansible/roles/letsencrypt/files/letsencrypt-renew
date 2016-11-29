@@ -1,0 +1,5 @@
+#!/bin/bash
+
+/bin/certbot renew --quiet
+cp -u /etc/letsencrypt/live/`hostname -f`/privkey.pem /etc/httpd/certificate/certificate.key
+cp -u /etc/letsencrypt/live/`hostname -f`/cert.pem /etc/httpd/certificate/certificate.crt

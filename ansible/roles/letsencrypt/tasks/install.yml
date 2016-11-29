@@ -1,0 +1,25 @@
+- name: Install certbot
+  yum: "name={{ packages }} state=installed"
+
+- name: Generate let's encrypt certificate
+  shell: |
+    certbot --non-interactive --agree-tos --email staas@cesnet.cz --apache --domains {{ hostname }} certonly
+    cp -u /etc/letsencrypt/live/{{ hostname }}/privkey.pem /etc/httpd/certificate/certificate.key
+    cp -u /etc/letsencrypt/live/{{ hostname }}/cert.pem /etc/httpd/certificate/certificate.crt
+  args:
+    creates: "/etc/letsencrypt/live/"
+  notify:
+    - Nemea-Dashboard restart
+    - Apache restart
+
+- name: Copy certificate renew script
+  copy:
+    src: "{{ letsencrypt_script.src }}"
+    dest: "{{ letsencrypt_script.dest }}"
+    mode: "{{ letsencrypt_script.mode }}"
+
+- name: Copy certificate renew cronjob
+  copy:
+    src: "{{ letsencrypt_cron.src }}"
+    dest: "{{ letsencrypt_cron.dest }}"
+    mode: "{{ letsencrypt_cron.mode }}"

@@ -1,0 +1,8 @@
+- name: Warden install
+  include: install.yml
+  tags: install
+
+# Update is the same as install, do not duplicate
+- name: Warden update
+  include: install.yml
+  tags: update

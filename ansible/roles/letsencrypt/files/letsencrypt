@@ -1,0 +1,4 @@
+# Check whether the cert needs to be renewed
+MAILTO=root
+
+13 4 * * *     root find /usr/local/bin/letsencrypt-renew

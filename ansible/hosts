@@ -5,3 +5,6 @@ staas-demo.liberouter.org
 
 [warden]
 staas-demo.liberouter.org
+
+[letsencrypt]
+staas-demo.liberouter.org

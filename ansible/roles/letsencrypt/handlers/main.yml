@@ -1,0 +1,2 @@
+- name: Nemea-Dashboard restart
+  service: name=nemea-dashboard state=restarted

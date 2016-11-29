@@ -1,0 +1,4 @@
+- hosts: letsencrypt
+  force_handlers: true
+  roles:
+    - { role: letsencrypt, tags: letsencrypt }
