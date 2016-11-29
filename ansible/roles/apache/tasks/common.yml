@@ -1,0 +1,31 @@
+- name: Check for certificates dir
+  local_action: stat path={{ apache_configuration.cert_local }}
+  register: apache_cert_dir
+  ignore_errors: True
+
+- name: Copy certificates
+  synchronize:
+    src: "{{ apache_configuration.cert_local }}"
+    dest: "{{ apache_configuration.dest }}"
+    archive: no
+    recursive: yes
+    times: yes
+    delete: yes
+    rsync_opts:
+      - "--omit-dir-times"
+  when: apache_cert_dir.stat.exists
+
+- name: Create fallback certificate dir
+  file:
+    path: "{{ apache_configuration.dest }}/certificate"
+    state: directory
+
+- name: Fallback to local certificate
+  shell: cp /etc/pki/tls/certs/localhost.crt {{ apache_configuration.cert_file }}
+  args:
+    creates: "{{ apache_configuration.cert_file }}"
+
+- name: Fallback to local certificate key
+  shell: cp /etc/pki/tls/private/localhost.key {{ apache_configuration.key_file }}
+  args:
+    creates: "{{ apache_configuration.key_file }}"

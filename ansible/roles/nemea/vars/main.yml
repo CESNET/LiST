@@ -16,7 +16,7 @@ configuration: {
 }
 
 configuration_warden: {
-  dest: "/etc/warden/",
+  dest: "/etc/",
   local: "{{ playbook_dir }}/files/{{ inventory_hostname }}/warden"
 }
 

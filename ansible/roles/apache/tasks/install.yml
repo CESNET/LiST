@@ -4,8 +4,24 @@
 - name: Disable unsecure http
   replace:
     dest: "{{ httpd_conf }}"
-    regexp: 'Listen 80'
+    regexp: '^Listen 80'
     replace: '#Listen 80'
+
+- include: common.yml
+
+- name: Set path to SSL certificate
+  replace:
+    dest: "{{ ssl_conf }}"
+    regexp: 'SSLCertificateFile /etc/.*'
+    replace: 'SSLCertificateFile {{ apache_configuration.cert_file }}'
+  notify: Apache restart
+
+- name: Set path to SSL certificate key
+  replace:
+    dest: "{{ ssl_conf }}"
+    regexp: 'SSLCertificateKeyFile /etc/.*'
+    replace: 'SSLCertificateKeyFile {{ apache_configuration.key_file }}'
+  notify: Apache restart
 
 - name: Start & enable Apache
   service: name=httpd enabled=yes state=started

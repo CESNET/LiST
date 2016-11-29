@@ -1,2 +1,4 @@
 - name: Update Apache
   yum: "name={{ packages }} state=latest update_cache=yes"
+
+- include: common.yml

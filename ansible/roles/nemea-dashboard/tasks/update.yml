@@ -9,8 +9,11 @@
     dest: "{{ git.dest }}"
     depth: 1
     update: yes
+    force: yes
   notify:
     - Nemea-Dashboard restart
+
+- include: common.yml
 
 - name: Update Nemea-Dashboard pip requirements
   pip:

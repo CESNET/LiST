@@ -30,3 +30,9 @@ service: {
   src: "/var/www/html/Nemea-Dashboard/nemea-dashboard.service",
   dest: "/usr/lib/systemd/system/nemea-dashboard.service",
 }
+
+nemea_dashboard_conf: {
+  template_file: "config.json",
+  conf_file: "/var/www/html/Nemea-Dashboard/api/config.json",
+  conf_file_js: "/var/www/html/Nemea-Dashboard/public/config.js"
+}

@@ -22,6 +22,7 @@
     repo: "{{ git.repo }}"
     dest: "{{ git.dest }}"
     depth: 1
+    force: yes
 
 - name: Install requirements for dashboard
   pip:
@@ -43,6 +44,8 @@
     src: "{{ service.src }}"
     dest: "{{ service.dest }}"
     remote_src: true
+
+- include: common.yml
 
 - name: Start & enable Nemea-Dashboard backend
   service: name=nemea-dashboard state=started enabled=yes

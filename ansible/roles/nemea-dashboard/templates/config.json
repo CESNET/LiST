@@ -1,0 +1,23 @@
+{
+  "db": {
+    "host": "localhost",
+    "port": 27017,
+    "user": null,
+    "password": null,
+    "database": "nemeadb",
+    "collection": {
+      "events": "alerts_new",
+      "users": "users",
+      "sessions": "sessions"
+    }
+  },
+  "api": {
+    "version": "v2",
+    "port": 5555,
+    "host": "0.0.0.0"
+  },
+  "ssl": true,
+  "ssl_key": "{{ apache_configuration.key_file }}",
+  "ssl_crt": "{{ apache_configuration.cert_file }}",
+  "debug": false
+}

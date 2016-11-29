@@ -1,0 +1,21 @@
+- name: Configure the dashboard API
+  template:
+    src: "{{ nemea_dashboard_conf.template_file }}"
+    dest: "{{ nemea_dashboard_conf.conf_file }}"
+  notify: Nemea-Dashboard restart
+
+- name: Configure the dashboard frontend
+  replace:
+    dest: "{{ nemea_dashboard_conf.conf_file_js }}"
+    regexp: "http://"
+    replace: "https://"
+
+- name: Set premissions on the certificate key
+  file:
+    path: "{{ item }}"
+    state: file
+    mode: 0640
+    group: nemead
+  with_items:
+    - "{{ apache_configuration.cert_file }}"
+    - "{{ apache_configuration.key_file }}"

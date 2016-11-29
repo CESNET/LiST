@@ -39,6 +39,24 @@ Defaults   !requiretty
 SELINUX=permissive
 ```
 
+## STaaS per host configuration
+
+It is possible to specify per host variables and configuration file to 
+differentiate between managed hosts.
+
+Several variables can be set in the `host_vars/hostname` file:
+```
+hostname: staas-demo.liberouter.org
+timezone: Europe/Prague
+ansible_become: true
+```
+
+Configuration files are located in `files/hostname/`
+- `nemea` directory copies to /etc/nemea
+- `warden` directory copies to /etc/warden and contains configuration for warden client
+- `certificate` directory must contain `certificate.crt` and `certificate.key` files
+that are used for apache and nemea-dashboard API
+
 ## STaaS Vagrant box
 
 Local development and testing of STaaS can be easily done using Vagrant box. Just go to vagrant directory and call
