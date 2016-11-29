@@ -18,5 +18,5 @@ warden_filer_register: {
 warden_filer_cleanup: {
   src: "warden_filer_cleanup",
   dest: "/etc/cron.d/warden_filer_cleanup",
-  mode: "0755"
+  mode: "0644"
 }

@@ -1,3 +1,4 @@
-#!/bin/bash
+# Remove warden receiver files older than one hour
+MAILTO=root
 
-find /var/www/html/warden_receiver/ -type f -mmin +60 -delete
+0 * * * *     root find /var/www/html/warden_receiver/ -type f -mmin +60 -delete
