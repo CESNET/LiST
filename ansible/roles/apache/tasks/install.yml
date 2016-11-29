@@ -1,5 +1,11 @@
 - name: Install Apache
   yum: "name={{ packages }} state=installed"
 
+- name: Disable unsecure http
+  replace:
+    dest: "{{ httpd_conf }}"
+    regexp: 'Listen 80'
+    replace: '#Listen 80'
+
 - name: Start & enable Apache
   service: name=httpd enabled=yes state=started

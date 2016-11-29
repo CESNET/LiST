@@ -1,1 +1,4 @@
 packages: [httpd]
+
+ssl_conf: "/etc/httpd/conf.d/ssl.conf"
+httpd_conf: "/etc/httpd/conf/httpd.conf"
