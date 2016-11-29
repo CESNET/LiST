@@ -1,4 +1,4 @@
-packages: [httpd]
+packages: [httpd, mod_ssl]
 
 ssl_conf: "/etc/httpd/conf.d/ssl.conf"
 httpd_conf: "/etc/httpd/conf/httpd.conf"
