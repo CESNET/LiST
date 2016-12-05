@@ -1,2 +1,19 @@
 - name: Update IPFIXcol
   yum: "name={{ packages }} state=latest update_cache=yes"
+
+- name: Check for host specific startup.xml
+  local_action: stat path={{ ipfixcol_startup_xml.host }}
+  register: host_startup_xml
+  ignore_errors: True
+
+- name: Select host specific startup.xml
+  set_fact:
+    ipfixcol_startup_xml_src: "{{ ipfixcol_startup_xml.host }}"
+  when: host_startup_xml.stat.exists
+
+
+- name: Copy startup.xml configuration template
+  copy:
+    src: "{{ ipfixcol_startup_xml_src }}"
+    dest: "{{ ipfixcol_startup_xml.dest }}"
+    force: yes

@@ -11,3 +11,12 @@ repo: {
   },
   mode: 664
 }
+
+ipfixcol_startup_xml: {
+  src: "ipfixcol-startup.xml",
+  dest: "/etc/ipfixcol/ipfixcol-startup.xml",
+  host: "{{ playbook_dir }}/files/{{ inventory_hostname }}/ipfixcol/ipfixcol-startup.xml"
+}
+
+# This is just a copy that can be set in the set_fact task
+ipfixcol_startup_xml_src: "{{ ipfixcol_startup_xml.src }}"

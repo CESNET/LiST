@@ -38,3 +38,35 @@
     group: "{{ warden_client_file.group }}"
     owner: "{{ warden_client_file.owner }}"
     mode: "{{ warden_client_file.mode }}"
+
+- name: Add configuration to startup.xml
+  blockinfile:
+    dest: "{{ ipfixcol_startup_xml.dest }}"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    insertbefore: "<singleManager>"
+    content: |
+                <destination>
+                        <name>Make unirec from the flow data</name>
+                        <fileWriter>
+                                <fileFormat>unirec</fileFormat>
+                                <!-- Default interface -->
+                                <interface>
+                                        <type>u</type>
+                                        <params>flow_data_source</params>
+                                        <ifcTimeout>10000</ifcTimeout>
+                                        <flushTimeout>1000000</flushTimeout>
+                                        <bufferSwitch>1</bufferSwitch>
+                                        <format>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,PACKETS,?DST_PORT,?SRC_PORT,DIR_BIT_FIELD,PROTOCOL,?TCP_FLAGS,?TOS,?TTL</format>
+                                </interface>
+                               <!-- VOIP interface -->
+                                <interface>
+                                        <type>u</type>
+                                        <params>voip_data_source</params>
+                                        <ifcTimeout>1000</ifcTimeout>
+                                        <flushTimeout>1000000</flushTimeout>
+                                        <bufferSwitch>1</bufferSwitch>
+                                        <format>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,PACKETS,?DST_PORT,SIP_MSG_TYPE,?SIP_STATUS_CODE,?SRC_PORT,DIR_BIT_FIELD,PROTOCOL,?TCP_FLAGS,?TOS,?TTL,SIP_CALLED_PARTY,SIP_CALLING_PARTY,?SIP_CALL_ID,?SIP_CSEQ,?SIP_REQUEST_URI,?SIP_USER_AGENT,?SIP_VIA</format>
+                                </interface>
+                        </fileWriter>
+                </destination>
+  notify: Restart NEMEA supervisor
