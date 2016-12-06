@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!-- Live profile (default - always must exists) -->
+<profile name="live">
+	<!--## Type of a profile -->
+	<type>normal</type>
+	<!--## Directory for data store of valuable data and statistics -->
+	<directory>/data/flow/live/</directory>
+
+	<!-- List of channels that belong to the profile -->
+	<channelList>
+		<channel name="ipv4">
+			<!--## List of sources from which channel will receive data -->
+			<sourceList>
+				<!--## Live profile always use "*" -->
+				<source>*</source>
+			</sourceList>
+			<!--## Filter applied on records, specifying whether it belongs to the profile -->
+			<filter>ipVersion = 4</filter>
+		</channel>
+		<channel name="ipv6">
+			<sourceList>
+				<source>*</source>
+			</sourceList>
+			<filter>ipVersion = 6</filter>
+		</channel>
+	</channelList>
+
+	<!--## List of subprofiles that belong to the live profile -->
+	<subprofileList>
+		<!--## Example subprofile for -->
+		<profile name="emails">
+			<type>normal</type>
+			<directory>/data/flow/live/emails/</directory>
+
+			<channelList>
+				<!-- POP3 flows -->
+				<channel name="pop3">
+					<sourceList>
+						<!--## Sources are channels only from the parent profile -->
+						<source>ipv4</source>
+						<source>ipv6</source>
+					</sourceList>
+					<filter>
+						sourceTransportPort == 110 OR
+						destinationTransportPort == 110 OR
+						sourceTransportPort == 995 OR
+						destinationTransportPort == 995
+					</filter>
+				</channel>
+
+				<!-- IMAP flows -->
+				<channel name="imap">
+					<sourceList>
+						<source>ipv4</source>
+						<source>ipv6</source>
+					</sourceList>
+					<filter>
+						sourceTransportPort == 143 OR
+						destinationTransportPort == 143 OR
+						sourceTransportPort == 993 OR
+						destinationTransportPort == 993
+					</filter>
+				</channel>
+				
+				<!-- SMTP flows -->
+				<channel name="smtp">
+					<sourceList>
+						<source>ipv4</source>
+						<source>ipv6</source>
+					</sourceList>
+					<filter>
+						sourceTransportPort == 25 OR
+						destinationTransportPort == 25 OR
+						sourceTransportPort == 465 OR
+						destinationTransportPort == 465
+					</filter>
+				</channel>
+			</channelList>
+		</profile>
+	</subprofileList>
+</profile>

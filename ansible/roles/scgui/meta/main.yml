@@ -1,0 +1,5 @@
+dependencies:
+  - role: common
+  - role: apache
+  - { role: ipfixcol, tags: ipfixcol }
+  - { role: nemea, tags: nemea }

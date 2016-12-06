@@ -1,0 +1,12 @@
+- name: Install fdistdump and ipfixcol plugins
+  yum: "name={{ packages }} state=latest update_cache=yes"
+
+- name: Clone SC GUI git
+  git:
+    repo: "{{ git.repo }}"
+    dest: "{{ git.dest }}"
+    depth: 1
+    force: yes
+    update: yes
+
+- include: common.yml

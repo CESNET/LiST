@@ -1,0 +1,82 @@
+# This is needed to generate images in GUI
+- name: Set permissions on SC GUI dir
+  file:
+    path: "{{ git.dest }}"
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: Copy scgui config
+  copy:
+    src: "{{ scgui_config.src }}"
+    dest: "{{ scgui_config.dest }}"
+
+- name: Add destination configuration to startup.xml
+  blockinfile:
+    dest: "{{ ipfixcol_startup_xml.dest }}"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK (SCGUI LNFSTORE) -->"
+    insertbefore: "<singleManager>"
+    backup: yes
+    content: |
+                <destination>
+                        <name>Storage</name>
+                        <fileWriter>
+                                <fileFormat>lnfstore</fileFormat>
+                                <profiles>yes</profiles>
+                                <storagePath>/data/flow/</storagePath>
+                                <prefix>nfcapd.</prefix>
+                                <suffixMask>%Y%m%d%H%M</suffixMask>
+                                <identificatorField>staas</identificatorField>
+                                <compress>yes</compress>
+                                <dumpInterval>
+                                        <timeWindow>300</timeWindow>
+                                        <align>yes</align>
+                                </dumpInterval>
+                        </fileWriter>
+                </destination>
+  notify: Restart NEMEA supervisor
+
+- name: Add intermediate plugins to startup.xml
+  blockinfile:
+    dest: "{{ ipfixcol_startup_xml.dest }}"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK (SCGUI INTERMEDIATE PLGUINS) -->"
+    insertbefore: "</intermediatePlugins>"
+    backup: yes
+    content: |
+                <profiler/>
+                <profilestats>
+                        <interval>300</interval>
+                </profilestats>
+  notify: Restart NEMEA supervisor
+
+- name: Add profile configuration to startup.xml
+  blockinfile:
+    dest: "{{ ipfixcol_startup_xml.dest }}"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK (SCGUI PROFILE CONF) -->"
+    insertbefore: "</collectingProcess>"
+    backup: yes
+    content: |
+                <profiles>/etc/ipfixcol/profiles.xml</profiles>
+  notify: Restart NEMEA supervisor
+
+- name: Check for host specific profiles.xml
+  local_action: stat path={{ scgui_profiles.host }}
+  register: host_profiles
+  ignore_errors: True
+
+- name: Select host specific profiles.xml
+  set_fact:
+    scgui_profiles_src: "{{ scgui_profiles.host }}"
+  when: host_profiles.stat.exists
+
+- name: Install ipfixcol profiles
+  copy:
+    src: "{{ scgui_profiles_src }}"
+    dest: "{{ scgui_profiles.dest }}"
+    owner: "{{ scgui_profiles.owner }}"
+  notify: Restart NEMEA supervisor
+
+- name: Install cron job for periodic data cleanup
+  template:
+    src: "{{ scgui_cron.src }}"
+    dest: "{{ scgui_cron.dest }}"

@@ -3,6 +3,7 @@
   roles:
     - { role: settings, tags: settings }
     - { role: nemea-dashboard, tags: nemea-dashboard }
+    - { role: scgui, tags: scgui }
     - { role: nemea, tags: nemea }
     - { role: munin, tags: munin }
     - { role: ipfixcol, tags: ipfixcol }

@@ -27,3 +27,6 @@ warden_client_file: {
   group: "root",
   mode: "0664"
 }
+
+nemea_user: "nemead"
+nemea_group: "nemead"

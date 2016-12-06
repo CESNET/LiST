@@ -42,8 +42,9 @@
 - name: Add configuration to startup.xml
   blockinfile:
     dest: "{{ ipfixcol_startup_xml.dest }}"
-    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK (NEMEA UNIREC OUTPUT) -->"
     insertbefore: "<singleManager>"
+    backup: yes
     content: |
                 <destination>
                         <name>Make unirec from the flow data</name>

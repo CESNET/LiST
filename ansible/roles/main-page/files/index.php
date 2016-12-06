@@ -79,6 +79,10 @@ main {
         <a href="/Nemea-Dashboard" class="pane"><span>Nemea Dashboard</span></a>
     <?php } ?>
 
+    <?php if (file_exists("scgui")) {?>
+        <a href="/scgui" class="pane"><span>Security Cloud GUI</span></a>
+    <?php } ?>
+
     <?php if (file_exists("nemea-status")) {?>
         <a href="/nemea-status" class="pane"><span>Nemea Status</span></a>
     <?php } ?>

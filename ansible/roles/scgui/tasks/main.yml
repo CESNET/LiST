@@ -1,0 +1,7 @@
+- name: IPFIXcol install
+  include: install.yml
+  tags: install
+
+- name: IPFIXcol update
+  include: update.yml
+  tags: update

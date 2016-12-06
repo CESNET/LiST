@@ -1,0 +1,10 @@
+rrdtool_packages: [libpng-devel, libxml2-devel, pango-devel, perl-ExtUtils-MakeMaker]
+
+rrdtool_tmp: "/tmp"
+
+rrdtool_src: {
+  url: "http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.6.0.tar.gz",
+  dest: "{{ rrdtool_tmp }}/rrdtool-1.6.0.tar.gz",
+  dir: "{{ rrdtool_tmp }}/rrdtool-1.6.0",
+  creates: "/opt/rrdtool-1.6.0/bin/rrdtool"
+}

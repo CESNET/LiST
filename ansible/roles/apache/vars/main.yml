@@ -9,3 +9,6 @@ apache_configuration: {
   key_file: "/etc/httpd/certificate/certificate.key",
   cert_local: "{{ playbook_dir }}/files/{{ inventory_hostname }}/certificate"
 }
+
+apache_user: "apache"
+apache_group: "apache"

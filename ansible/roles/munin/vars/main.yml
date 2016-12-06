@@ -7,8 +7,8 @@ config_file: {
 
 log_file: {
   dest: "/var/log/munin/munin-cgi-graph.log",
-  owner: "apache",
-  group: "apache",
+  owner: "{{ apache_user }}",
+  group: "{{ apache_group }}",
   mode: "0664"
 }
 

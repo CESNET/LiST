@@ -1,0 +1,47 @@
+- name: Add fdistdump repo
+  get_url:
+    url: "{{ repo.fdistdump.url }}"
+    dest: "{{ repo.fdistdump.dest }}"
+    mode: "{{ repo.mode }}"
+
+- name: Install fdistdump and ipfixcol plugins
+  yum: "name={{ packages }} state=installed"
+
+- name: Create flow data directory
+  shell: |
+    mkdir -p {{ flow_data_dir }}
+    chown {{ nemea_user }}:{{ nemea_group }} {{ flow_data_dir }}
+  args:
+    creates: "{{ flow_data_dir }}"
+
+- name: Copy httpd config
+  copy:
+    src: "{{ scgui_httpd.src }}"
+    dest: "{{ scgui_httpd.dest }}"
+  notify: Apache restart
+
+- name: Create temporary dir for scgui
+  file:
+    path: "{{ tmp_dir.path }}"
+    state: directory
+    owner: "{{ tmp_dir.owner }}"
+    group: "{{ tmp_dir.group }}"
+
+# Needed for the GUI to send signal to IPFIXcol to reload profiles.xml
+- name: Add apache user to nemead group
+  user:
+    name: "{{ apache_user }}"
+    groups: "{{ nemea_group }}"
+    append: yes
+
+- name: Clone SC GUI git
+  git:
+    repo: "{{ git.repo }}"
+    dest: "{{ git.dest }}"
+    depth: 1
+    force: yes
+
+- include: common.yml
+
+# install necessary rrdtool 1.6
+- include: rrdtool.yml

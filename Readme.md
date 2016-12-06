@@ -11,10 +11,13 @@ Following Components can be installed using ansible:
 - Nemea Dashboard
 - Nemea status
 - munin
+- SecurityCloud GUI
 
 Optional:
 
 - Local Warden server for testing
+- Local Warden client that writes to files
+- Let's Encrypt certificate
 
 ## STaaS server initial configuration
 
@@ -54,8 +57,10 @@ ansible_become: true
 Configuration files are located in `files/hostname/`
 - `nemea` directory copies to /etc/nemea
 - `warden` directory copies to /etc/warden and contains configuration for warden client
-- `certificate` directory must contain `certificate.crt` and `certificate.key` files
-that are used for apache and nemea-dashboard API
+- `certificate` directory must contain `certificate.crt` and `certificate.key` files that are used for apache and nemea-dashboard API
+- `ipfixcol` directory can contain:
+  - `ipfixcol-startup.xml`, which is the base to which other configuration parts are added.
+  - `profiles.xml`, which is used to configure profiles by the SecurityCloud GUI
 
 ## STaaS Vagrant box
 

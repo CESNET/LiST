@@ -1,0 +1,21 @@
+- name: Include rrdtool vars
+  include_vars: "rrdtool.yml"
+
+- name: Install rrdtool dependencies
+  yum: "name={{ rrdtool_packages }} state=installed"
+
+- name: Download rrdtool archive
+  get_url:
+    url: "{{ rrdtool_src.url }}"
+    dest: "{{ rrdtool_src.dest }}"
+
+- name: Compile and install rrdtool
+  shell: |
+    tar -xzpf "{{ rrdtool_src.dest }}"
+    cd "{{ rrdtool_src.dir }}"
+    ./configure
+    make
+    make install
+  args:
+    chdir: "{{ rrdtool_tmp }}"
+    creates: "{{ rrdtool_src.creates }}"

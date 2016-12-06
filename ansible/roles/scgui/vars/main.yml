@@ -1,0 +1,47 @@
+packages: [fdistdump-mpich, ipfixcol-lnfstore-output, ipfixcol-profilestats-inter, ipfixcol-profiler-inter]
+
+repo: {
+  fdistdump: {
+    url: "http://download.opensuse.org/repositories/home:/jwrona/CentOS_7/home:jwrona.repo",
+    dest: "/etc/yum.repos.d/jwrona.repo"
+  },
+  mode: 664
+}
+
+git: {
+  repo: "https://github.com/CESNET/SecurityCloudGUI.git",
+  dest: "/var/www/html/scgui"
+}
+
+flow_data_dir: "/data/flow/"
+
+scgui_httpd: {
+  src: "scgui.conf",
+  dest: "/etc/httpd/conf.d/scgui.conf"
+}
+
+scgui_config: {
+  src: "config.php",
+  dest: "/var/www/html/scgui/web/php/config.php"
+}
+
+scgui_profiles: {
+  src: "profiles.xml",
+  dest: "/etc/ipfixcol/profiles.xml",
+  host: "{{ playbook_dir }}/files/{{ inventory_hostname }}/ipfixcol/profiles.xml",
+  owner: "{{ apache_user }}"
+}
+
+# This is just a copy that can be set in the set_fact task
+scgui_profiles_src: "{{ scgui_profiles.src }}"
+
+tmp_dir: {
+  path: "/tmp/scgui/",
+  owner: "{{ apache_user }}",
+  group: "{{ apache_group }}"
+}
+
+scgui_cron: {
+  src: "scgui_cleanup",
+  dest: "/etc/cron.d/scgui_cleanup"
+}
