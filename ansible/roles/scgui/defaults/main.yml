@@ -1,1 +1,2 @@
-scgui_history_days: 30
+# Keep last 30 days (30*24*60)
+scgui_history_minutes: 43200

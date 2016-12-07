@@ -5,6 +5,7 @@
   git:
     repo: "{{ git.repo }}"
     dest: "{{ git.dest }}"
+    version: "{{ git.branch }}"
     depth: 1
     force: yes
     update: yes

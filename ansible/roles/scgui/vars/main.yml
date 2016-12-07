@@ -10,7 +10,8 @@ repo: {
 
 git: {
   repo: "https://github.com/CESNET/SecurityCloudGUI.git",
-  dest: "/var/www/html/scgui"
+  dest: "/var/www/html/scgui",
+  branch: "devel"
 }
 
 flow_data_dir: "/data/flow/"

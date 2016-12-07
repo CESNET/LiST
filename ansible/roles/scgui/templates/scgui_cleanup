@@ -1,4 +1,4 @@
-# Remove flow data files older than {{ scgui_history_days }} days
+# Remove flow data files older than {{ scgui_history_minutes }} days
 MAILTO=root
 
-0 * * * *     root find /data/flow/ -type f -mtime +{{ scgui_history_days }} -delete
+0 * * * *     root find /data/flow/ -type f -mmin +{{ scgui_history_minutes }} -delete

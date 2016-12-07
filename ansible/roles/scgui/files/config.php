@@ -6,6 +6,7 @@
 $BASE_DIR = '/var/www/html/scgui/web/';
 $MAX_TABS = 8;
 $FDUMP = '/usr/lib64/mpich/bin/mpiexec -n 2 /usr/lib64/mpich/bin/fdistdump_mpich';
+$FDUMP_ENV = array();
 $SINGLE_MACHINE = true;
 $RRDTOOL = '/opt/rrdtool-1.6.0/bin/rrdtool';
 $USERSTAMP_LENGTH = 16;
