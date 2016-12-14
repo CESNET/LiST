@@ -2,8 +2,8 @@ packages: [fdistdump-mpich, ipfixcol-lnfstore-output, ipfixcol-profilestats-inte
 
 repo: {
   fdistdump: {
-    url: "http://download.opensuse.org/repositories/home:/jwrona/CentOS_7/home:jwrona.repo",
-    dest: "/etc/yum.repos.d/jwrona.repo"
+    url: "https://copr.fedorainfracloud.org/coprs/g/CESNET/fdistdump/repo/epel-7/group_CESNET-fdistdump-epel-7.repo",
+    dest: "/etc/yum.repos.d/group_CESNET-fdistdump-epel-7.repo"
   },
   mode: 664
 }
