@@ -9,3 +9,7 @@
 - name: Check for tags
   fail: msg="Use one of [install | update] tags"
   when: tags is not defined
+
+- name: Install necessary packages for Ansible run
+  yum: "name={{ packages }} state=installed"
+  tags: install
