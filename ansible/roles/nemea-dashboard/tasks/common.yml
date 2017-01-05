@@ -5,10 +5,9 @@
   notify: Nemea-Dashboard restart
 
 - name: Configure the dashboard frontend
-  replace:
+  copy:
+    src: "{{ nemea_dashboard_conf.local_file_js }}"
     dest: "{{ nemea_dashboard_conf.conf_file_js }}"
-    regexp: "http://"
-    replace: "https://"
 
 - name: Set premissions on the certificate key
   file:
