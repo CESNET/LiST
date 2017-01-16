@@ -97,7 +97,7 @@ main {
     </main>
 
     <footer>
-        CESNET z. s. p. o. 2016
+        CESNET z. s. p. o. 2017
     </footer>
 
 </body>
