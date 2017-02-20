@@ -25,6 +25,11 @@
   notify:
     - Munin-node restart
 
+- name: Install autoconf plugins
+  shell: munin-node-configure --shell --suggest | bash
+  notify:
+    - Munin-node restart
+
 - name: Change munin hostname
   replace:
     dest: "{{ munin_conf }}"

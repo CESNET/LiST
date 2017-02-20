@@ -1,3 +1,8 @@
+- name: Install new autoconf plugins
+  shell: munin-node-configure --shell --suggest | bash
+  notify:
+    - Munin-node restart
+
 - name: Update Munin
   yum: "name={{ packages }} state=latest update_cache=yes"
   notify:
