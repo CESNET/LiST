@@ -1,11 +1,11 @@
 - name: Install Apache
   yum: "name={{ packages }} state=installed"
 
-- name: Disable unsecure http
-  replace:
-    dest: "{{ httpd_conf }}"
-    regexp: '^Listen 80'
-    replace: '#Listen 80'
+- name: Redirect HTTP to HTTPs
+  copy:
+    src: "{{ apache_redirect_conf.src }}"
+    dest: "{{ apache_redirect_conf.dest }}"
+  notify: Apache restart
 
 - include: common.yml
 

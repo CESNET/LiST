@@ -1,13 +1,17 @@
 packages: [httpd, mod_ssl]
 
 ssl_conf: "/etc/httpd/conf.d/ssl.conf"
-httpd_conf: "/etc/httpd/conf/httpd.conf"
 
 apache_configuration: {
   dest: "/etc/httpd/",
   cert_file: "/etc/httpd/certificate/certificate.crt",
   key_file: "/etc/httpd/certificate/certificate.key",
   cert_local: "{{ playbook_dir }}/files/{{ inventory_hostname }}/certificate"
+}
+
+apache_redirect_conf: {
+  src: "redirect.conf",
+  dest: "{{ apache_configuration.dest }}/conf.d"
 }
 
 apache_user: "apache"
