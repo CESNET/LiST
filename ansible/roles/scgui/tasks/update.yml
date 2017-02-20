@@ -5,7 +5,7 @@
   git:
     repo: "{{ git.repo }}"
     dest: "{{ git.dest }}"
-    version: "{{ git.branch }}"
+    version: "{{ scgui_branch }}"
     depth: 1
     force: yes
     update: yes

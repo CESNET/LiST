@@ -1,2 +1,3 @@
 # Keep last 30 days (30*24*60)
 scgui_history_minutes: 43200
+scgui_branch: devel
