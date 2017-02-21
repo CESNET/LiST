@@ -1,0 +1,5 @@
+- name: Install nemea status configuration
+  template:
+    src: "{{ nemea_status_conf.src }}"
+    dest: "{{ nemea_status_conf.dest }}"
+  notify: Apache restart

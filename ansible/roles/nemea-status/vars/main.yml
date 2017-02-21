@@ -9,3 +9,8 @@ nemea_status_httpd: {
   src: "nemea-status.conf",
   dest: "/etc/httpd/conf.d/nemea-status.conf"
 }
+
+nemea_status_conf: {
+  src: "nemea_status.conf",
+  dest: "/etc/nemea/nemea_status.conf"
+}

@@ -7,3 +7,5 @@
     dest: "{{ git.dest }}"
     update: true
   notify: Apache restart
+
+- include: common.yml

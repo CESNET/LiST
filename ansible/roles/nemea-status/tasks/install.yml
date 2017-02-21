@@ -20,3 +20,5 @@
     src: "{{ nemea_status_httpd.src }}"
     dest: "{{ nemea_status_httpd.dest }}"
   notify: Apache restart
+
+- include: common.yml
