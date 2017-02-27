@@ -28,7 +28,7 @@ scgui_config: {
 scgui_profiles: {
   src: "profiles.xml",
   dest: "/etc/ipfixcol/profiles.xml",
-  host: "{{ playbook_dir }}/files/{{ inventory_hostname }}/ipfixcol/profiles.xml",
+  host: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/ipfixcol/profiles.xml",
   owner: "{{ apache_user }}"
 }
 

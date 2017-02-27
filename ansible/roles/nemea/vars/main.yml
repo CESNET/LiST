@@ -12,12 +12,12 @@ configuration: {
   src: "/usr/share/nemea-supervisor/*",
   dest: "/etc/nemea/",
   creates: "/etc/nemea/config_example.xml",
-  local: "{{ inventory_hostname }}/nemea/"
+  local: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/nemea/"
 }
 
 configuration_warden: {
   dest: "/etc/",
-  local: "{{ playbook_dir }}/files/{{ inventory_hostname }}/warden"
+  local: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/warden"
 }
 
 warden_client_file: {
