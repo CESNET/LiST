@@ -1,0 +1,11 @@
+[devel]
+staas-vagrant
+
+[warden]
+staas-vagrant
+
+[letsencrypt]
+
+# this is a workaround to set ssh key since host_vars do not expand variables
+[staas-vagrant-ssh-key]
+staas-vagrant

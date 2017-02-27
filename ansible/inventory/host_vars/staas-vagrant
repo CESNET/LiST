@@ -1,0 +1,9 @@
+hostname: staas-vagrant
+timezone: Europe/Prague
+scgui_history_minutes: 120
+scgui_branch: no_sidebar
+
+ansible_host: localhost
+ansible_port: 22222
+ansible_user: vagrant
+ansible_become: true

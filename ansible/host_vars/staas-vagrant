@@ -1,4 +1,0 @@
-hostname: staas-vagrant
-timezone: Europe/Prague
-scgui_history_minutes: 120
-scgui_branch: no_sidebar
