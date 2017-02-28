@@ -1,5 +1,10 @@
 #!/bin/bash
 
+HOSTNAME=`hostname -f`
+
 /bin/certbot renew --quiet
-cp -u /etc/letsencrypt/live/`hostname -f`/privkey.pem /etc/httpd/certificate/certificate.key
-cp -u /etc/letsencrypt/live/`hostname -f`/cert.pem /etc/httpd/certificate/certificate.crt
+cp -u /etc/letsencrypt/live/$HOSTNAME/privkey.pem /etc/httpd/certificate/certificate.key
+cp -u /etc/letsencrypt/live/$HOSTNAME/cert.pem /etc/httpd/certificate/certificate.crt
+
+ISNEW=`find /etc/letsencrypt/live/$HOSTNAME/privkey.pem -mmin +60`
+[ -z "$ISNEW" ] && apachectl graceful
