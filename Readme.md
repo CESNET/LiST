@@ -1,4 +1,8 @@
-# STaaS Installation
+# What is Security Tools as a Service
+
+Security Tools as a Service (STaaS) is an initiative to provide an easy way to setup and operate network monitoring and analysis toolset provided by CESNET. It takes flow records in form of NetFlow or IPFIX messages and provided tools for reception, processing, storing, analysing and displaying the data and processed results. For complete list of features read ahead to section StaaS components
+
+# STaaS installation
 
 STaaS uses [ansible](https://www.ansible.com/) to automate installation and manage running instances.
 The STaaS playbook requires at least version 2.1.0 and is targeted at CentOS 7 and Scientific Linux 7 systems.
@@ -7,10 +11,10 @@ The STaaS playbook requires at least version 2.1.0 and is targeted at CentOS 7 a
 
 Following Components can be installed using ansible:
 
-- Nemea system
+- Nemea system including Warden client
 - Nemea Dashboard
 - Nemea status
-- munin
+- munin with plugins for Nemea
 - SecurityCloud GUI
 
 Optional:
@@ -45,16 +49,22 @@ SELINUX=permissive
 ## STaaS per host configuration
 
 It is possible to specify per host variables and configuration file to 
-differentiate between managed hosts.
+differentiate between managed hosts. This configuration can be found 
+under the `inventory` directory. IT is possible to have a completely 
+separate inventory, for example to track changes in hosts configuration 
+ in a repository.
 
 Several variables can be set in the `host_vars/hostname` file:
 ```
 hostname: staas-demo.liberouter.org
 timezone: Europe/Prague
+scgui_history_minutes: 120
+scgui_branch: devel
+
 ansible_become: true
 ```
 
-Configuration files are located in `files/hostname/`
+Configuration files are located in `host_files/hostname/`
 - `nemea` directory copies to /etc/nemea
 - `warden` directory copies to /etc/warden and contains configuration for warden client
 - `certificate` directory must contain `certificate.crt` and `certificate.key` files that are used for apache and nemea-dashboard API
