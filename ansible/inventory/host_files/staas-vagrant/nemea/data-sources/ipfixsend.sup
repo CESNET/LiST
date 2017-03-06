@@ -2,5 +2,5 @@
 <name>ipfixsend</name>
 <enabled>true</enabled>
 <path>/usr/bin/ipfixsend</path>
-<params>-i /etc/nemea/data/data.ipfix -R 0.5</params>
+<params>-i /data/ipfix_data/data.ipfix -R 0.5</params>
 </module>

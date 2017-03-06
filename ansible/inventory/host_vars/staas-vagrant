@@ -2,6 +2,7 @@ hostname: staas-vagrant
 timezone: Europe/Prague
 scgui_history_minutes: 120
 scgui_branch: no_sidebar
+sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
 
 ansible_host: localhost
 ansible_port: 22222

@@ -60,9 +60,13 @@ hostname: staas-demo.liberouter.org
 timezone: Europe/Prague
 scgui_history_minutes: 120
 scgui_branch: devel
+sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
 
 ansible_become: true
 ```
+The sample data URL should point to bzipped2 ipfix file with data 
+stored by ipfix plugin of IPFIXcol collector.
+
 
 Configuration files are located in `host_files/hostname/`
 - `nemea` directory copies to /etc/nemea

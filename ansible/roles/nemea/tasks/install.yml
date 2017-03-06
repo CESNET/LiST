@@ -13,6 +13,15 @@
 #  args:
 #    creates: "{{ configuration.creates }}"
 
+- name: Get sample data
+  shell: |
+    mkdir -p {{ sample_data.dir }}
+    wget {{ sample_data_src }} -O {{ sample_data.dir }}/data.ipfix.bz2
+    bunzip2 {{ sample_data.dir }}/data.ipfix.bz2
+  args:
+    creates: "{{ sample_data.dir }}/data.ipfix"
+  when: sample_data_src is defined
+
 - name: Common tasks
   include: common.yml
 

@@ -8,6 +8,10 @@ repo: {
   mode: 664
 }
 
+sample_data: {
+  dir: "/data/ipfix_data/"
+}
+
 configuration: {
   src: "/usr/share/nemea-supervisor/*",
   dest: "/etc/nemea/",
