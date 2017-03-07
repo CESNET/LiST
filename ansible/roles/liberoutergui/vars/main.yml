@@ -1,0 +1,25 @@
+packages: [unzip, httpd-devel]
+
+pip_packages: [virtualenv, mod_wsgi]
+
+liberoutergui_path: "/var/www/html/liberouter-gui"
+
+liberoutergui: {
+  httpdconf: {
+    src: "liberouter-gui.conf",
+    dest: "/etc/httpd/conf.d/liberouter-gui.conf"
+  },
+  httpdwsgi: {
+    src: "10-wsgi.conf",
+    dest: "/etc/httpd/conf.modules.d/10-wsgi.conf"
+  },
+  conf: {
+    src: "{{ liberoutergui_path }}/config-sample.ini",
+    dest: "{{ liberoutergui_path }}/config.ini"
+  },
+  git_repo: "https://github.com/CESNET/liberouter-gui.git",
+  release: {
+    url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.2-alpha/liberouter-gui-v0.2-alpha.zip",
+    zip: "{{ liberoutergui_path }}/liberouter-gui.zip"
+  }
+}

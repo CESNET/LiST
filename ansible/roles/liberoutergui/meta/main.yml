@@ -1,0 +1,7 @@
+dependencies:
+  - common
+  - settings
+  - epel
+  - mongodb
+  - pip3.4
+  - { role: apache, tags: apache }

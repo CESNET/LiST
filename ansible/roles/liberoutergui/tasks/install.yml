@@ -1,0 +1,30 @@
+- name: Install dependencies
+  yum: "name={{ packages }} state=installed"
+
+- name: Install pip3 dependencies
+  pip:
+    name: "{{ item }}"
+    executable: pip3
+  with_items:  "{{ pip_packages }}"
+
+- name: Load python3.4 wsgi module in Apache
+  copy:
+    src: "{{ liberoutergui.httpdwsgi.src }}"
+    dest: "{{ liberoutergui.httpdwsgi.dest }}"
+  notify: Apache restart
+
+- name: Clone Liberouter GUI git
+  git:
+    repo: "{{ liberoutergui.git_repo }}"
+    dest: "{{ liberoutergui_path }}"
+    depth: 1
+    force: yes
+    recursive: yes
+  notify: Apache restart
+
+- name: Create default Liberouter GUI admin/admin user
+  shell: |
+    mongo liberouter <<< 'db.users.drop(); db.users.insert({ "_id" : ObjectId("58172c575d47e20e452adcfb"), "first_name" : "Petr", "username" : "admin", "settings" : null, "last_name" : null, "user_id" : null, "email" : null, "password" : BinData(0,"JDJiJDEyJExLd3NkY2R0UUdjdnNzalBMLmxKTC56a2RXQUtYU09aL1Y1R2JlVjk1QzVpWFVsdGdnUFJh"), "role" : 0 })'
+
+- name: Common tasks
+  include: common.yml

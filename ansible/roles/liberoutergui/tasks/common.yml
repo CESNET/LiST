@@ -1,0 +1,40 @@
+- name: Configuration for Apache
+  template:
+    src: "{{ liberoutergui.httpdconf.src }}"
+    dest: "{{ liberoutergui.httpdconf.dest }}"
+  notify: Apache restart
+
+- name: Download Liberouter GUI release
+  get_url:
+    url: "{{ liberoutergui.release.url }}"
+    dest: "{{ liberoutergui.release.zip }}"
+
+- name: Unpack Liberouter GUI release
+  unarchive:
+    src: "{{ liberoutergui.release.zip }}"
+    dest: "{{ liberoutergui_path }}"
+    copy: no
+
+- name: Set path in index.html
+  lineinfile:
+    dest: "{{ liberoutergui_path }}/index.html"
+    state: present
+    regexp: '<base href=".*>'
+    line: '  <base href="/liberouter-gui/">'
+  notify: Apache restart
+
+- name: Create Liberouter GUI config
+  copy:
+    src: "{{ liberoutergui.conf.src }}"
+    dest: "{{ liberoutergui.conf.dest }}"
+    remote_src: true
+  notify: Apache restart
+
+- name: Install python requirements to virtual environment
+  pip:
+    requirements: "{{ liberoutergui_path }}/requirements.txt"
+    virtualenv: "{{ liberoutergui_path }}/venv"
+    virtualenv_python: python3.4
+    virtualenv_site_packages: yes
+    state: latest
+  notify: Apache restart

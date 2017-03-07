@@ -1,0 +1,7 @@
+- name: NEMEA install
+  include: install.yml
+  tags: install
+
+- name: NEMEA update
+  include: update.yml
+  tags: update
