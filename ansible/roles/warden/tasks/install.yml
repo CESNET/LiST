@@ -30,11 +30,34 @@
   args:
      creates: "{{ warden_db.creates }}"
 
-- name: Copy ssl.conf
+- name: Copy httpd-warden.conf
   copy:
-    src: "{{ warden_ssl.src }}"
-    dest: "{{ warden_ssl.dest }}"
-  notify: Apache restart
+    src: "{{ httpd_warden.conf.src }}"
+    dest: "{{ httpd_warden.conf.dest }}"
+  notify: Apache-warden restart
+
+- name: Copy httpd-warden
+  copy:
+    src: "{{ httpd_warden.sysconfig.src }}"
+    dest: "{{ httpd_warden.sysconfig.dest }}"
+  notify: Apache-warden restart
+
+- name: Copy httpd-warden moudules configuration
+  synchronize:
+    src: "{{ httpd_warden.modules.src }}"
+    dest: "{{ httpd_warden.modules.dest }}"
+    archive: no
+    recursive: yes
+    times: yes
+    rsync_opts:
+      - "--omit-dir-times"
+  notify: Apache-warden restart
+
+- name: Copy httpd-warden.service
+  copy:
+    src: "{{ httpd_warden.service.src }}"
+    dest: "{{ httpd_warden.service.dest }}"
+  notify: Apache-warden restart
 
 - name: Copy Warden server and client
   synchronize:
@@ -51,9 +74,13 @@
     url: "{{ warden_schema.url }}"
     dest: "{{ warden_schema.dest }}"
 
+- name: Install httpd-warden service
+  service: name=httpd-warden enabled=yes
+
 - name: Register client to Warden server & create NEMEA config
   shell: "{{ warden_register.script }}"
   args:
     creates: "{{ warden_register.creates }}"
   notify:
     - Restart NEMEA supervisor
+

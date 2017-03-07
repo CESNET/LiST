@@ -16,9 +16,23 @@ warden_db: {
   creates: "/tmp/warden/db.created"
 }
 
-warden_ssl: {
-  src: "warden-ssl.conf",
-  dest: "/etc/httpd/conf.d/warden-ssl.conf"
+httpd_warden: {
+  sysconfig: {
+    src: "httpd/httpd-warden",
+    dest: "/etc/sysconfig/httpd-warden"
+  },
+  conf: {
+    src: "httpd/httpd-warden.conf",
+    dest: "/etc/httpd/conf/httpd-warden.conf"
+  },
+  modules: {
+    src: "httpd/conf.modules.d-warden",
+    dest: "/etc/httpd"
+  },
+  service: {
+    src: "httpd/httpd-warden.service",
+    dest: "/usr/lib/systemd/system/httpd-warden.service"
+  }
 }
 
 warden_schema: {
