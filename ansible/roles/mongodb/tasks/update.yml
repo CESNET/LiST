@@ -1,0 +1,4 @@
+- name: Update Packages
+  yum: "name={{ packages }} state=latest update_cache=yes"
+  notify:
+    - Mongo restart

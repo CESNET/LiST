@@ -1,0 +1,10 @@
+- name: Add Mongo repository
+  copy:
+    src: "{{ repo.mongo.src }}"
+    dest: "{{ repo.mongo.dest }}"
+
+- name: Install Mongo, python, etc
+  yum: "name={{ packages }} state=installed"
+
+- name: Start & enable Mongo
+  service: name=mongod state=started enabled=yes

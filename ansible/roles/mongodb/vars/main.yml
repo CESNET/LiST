@@ -1,0 +1,8 @@
+packages: [mongodb-org, python-pymongo]
+
+repo: {
+  mongo: {
+    src: "mongodb-org-3.2.repo",
+    dest: "/etc/yum.repos.d/mongodb-org-3.2.repo"
+  }
+}

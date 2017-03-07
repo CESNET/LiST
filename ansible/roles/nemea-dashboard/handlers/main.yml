@@ -1,5 +1,2 @@
 - name: Nemea-Dashboard restart
   service: name=nemea-dashboard state=restarted
-
-- name: Mongo restart
-  service: name=mongod state=restarted

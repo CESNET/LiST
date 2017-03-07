@@ -2,4 +2,6 @@ dependencies:
   - common
   - epel
   - apache
+  - mongodb
+  - pip3.4
   - { role: nemea, tags: nemea } # needs user nemead

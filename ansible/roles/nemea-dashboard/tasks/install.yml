@@ -1,21 +1,5 @@
-- name: Add Mongo repository
-  copy:
-    src: "{{ repo.mongo.src }}"
-    dest: "{{ repo.mongo.dest }}"
-
-- name: Install Mongo, python, etc
+- name: Install dependencies
   yum: "name={{ packages }} state=installed"
-
-- name: Get python pip
-  get_url:
-    url: "{{ pip.url }}"
-    dest: "{{ pip.tmp }}"
-
-- name: Install python pip
-  command: python3.4 "{{ pip.tmp }}" creates="{{ pip.creates }}"
-
-- name: Start & enable Mongo
-  service: name=mongod state=started enabled=yes
 
 - name: Clone Nemea-Dashboard
   git:

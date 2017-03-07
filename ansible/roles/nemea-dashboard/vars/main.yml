@@ -1,16 +1,6 @@
-packages: [mongodb-org, python34, python34-devel, python-pymongo, "@Development tools"]
-
-repo: {
-  mongo: {
-    src: "mongodb-org-3.2.repo",
-    dest: "/etc/yum.repos.d/mongodb-org-3.2.repo"
-  }
-}
+packages: [python34]
 
 pip: {
-  url: "https://bootstrap.pypa.io/get-pip.py",
-  tmp: "/tmp/get-pip.py",
-  creates: "/bin/pip",
   requirements: "/var/www/html/Nemea-Dashboard/requirements.txt"
 }
 

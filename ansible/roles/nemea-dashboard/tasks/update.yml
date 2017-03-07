@@ -1,7 +1,6 @@
-- name: Update Packages
+- name: Update packages
   yum: "name={{ packages }} state=latest update_cache=yes"
   notify:
-    - Mongo restart
 
 - name: Update Nemea-Dashboard
   git:
