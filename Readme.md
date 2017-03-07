@@ -16,6 +16,8 @@ Following Components can be installed using ansible:
 - Nemea status
 - munin with plugins for Nemea
 - SecurityCloud GUI
+- Liberouter GUI
+- IPFIXcol
 
 Optional:
 
