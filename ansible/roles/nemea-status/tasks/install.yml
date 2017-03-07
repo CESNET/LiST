@@ -12,9 +12,6 @@
 #    setype: httpd_git_rw_content_t
 #    state: present
 
-- name: Set SELinux policy to permissive
-  selinux: policy=targeted state=permissive
-
 - name: Copy httpd config
   copy:
     src: "{{ nemea_status_httpd.src }}"
