@@ -6,6 +6,9 @@ staas-vagrant
 
 [letsencrypt]
 
-# this is a workaround to set ssh key since host_vars do not expand variables
+# this is a workaround to set ssh key since host vars do not expand variables
 [staas-vagrant-ssh-key]
 staas-vagrant
+
+[staas-vagrant-ssh-key:vars]
+ansible_ssh_private_key_file="{{ playbook_dir }}/../vagrant/.vagrant/machines/staas-vagrant/virtualbox/private_key"
