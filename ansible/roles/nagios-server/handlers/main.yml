@@ -1,0 +1,2 @@
+- name: Nagios restart
+  service: name=nagios state=restarted

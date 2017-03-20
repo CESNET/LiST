@@ -1,0 +1,7 @@
+- name: Install dependencies
+  yum: "name={{ packages }} state=installed"
+
+- include: common.yml
+
+- name: Start & enable Nagios NRPE
+  service: name=nrpe enabled=yes state=started

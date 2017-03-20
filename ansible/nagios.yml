@@ -1,0 +1,9 @@
+- hosts: nagios-clients
+  force_handlers: true
+  roles:
+    - { role: nagios-client, tags: nagios-client }
+
+- hosts: nagios-servers
+  force_handlers: true
+  roles:
+    - { role: nagios-server, tags: nagios-server }

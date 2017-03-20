@@ -1,0 +1,5 @@
+- name: Update dependencies
+  yum: "name={{ packages }} state=latest update_cache=yes"
+  notify: Nagios restart
+
+- include: common.yml

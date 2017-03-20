@@ -95,6 +95,10 @@ main {
         <a href="/munin" class="pane">Munin</a>
     <?php } ?>
 
+    <?php if (file_exists("/usr/share/nagios/html/")) {?>
+        <a href="/nagios" class="pane">Nagios</a>
+    <?php } ?>
+
     <?php if (file_exists("warden_receiver")) {?>
         <a href="/warden_receiver/incoming" class="pane"><span>Warden receiver</span></a>
     <?php } ?>

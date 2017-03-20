@@ -1,10 +1,16 @@
-[devel]
+[staas]
 staas-vagrant
 
 [warden]
 staas-vagrant
 
 [letsencrypt]
+
+[nagios-clients]
+staas-vagrant
+
+[nagios-servers]
+staas-vagrant
 
 # this is a workaround to set ssh key since host vars do not expand variables
 [staas-vagrant-ssh-key]

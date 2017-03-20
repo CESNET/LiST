@@ -21,6 +21,7 @@ Following Components can be installed using ansible:
 
 Optional:
 
+- Nagios monitoring
 - Local Warden server for testing
 - Local Warden client that writes to files
 - Let's Encrypt certificate
@@ -35,7 +36,8 @@ Following configuration is also expected:
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 5555 -j ACCEPT
-ports 80, 443, 5555
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 5666 -j ACCEPT
+ports 80, 443, 5555, 5666
 ```
 
 /etc/sudoers
@@ -63,12 +65,16 @@ timezone: Europe/Prague
 scgui_history_minutes: 120
 scgui_branch: devel
 sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
+nagios_client_hostgroup: nemea-collectors
 
 ansible_become: true
 ```
 The sample data URL should point to bzipped2 ipfix file with data 
 stored by ipfix plugin of IPFIXcol collector.
 
+Nagios client hostgroup is a name of hostgroup to which the host
+belongs. If it is not a default (nemea-collectors), the hostgroup must
+be created by adding configuration file for it (see next lines).
 
 Configuration files are located in `host_files/hostname/`
 - `nemea` directory copies to /etc/nemea
@@ -77,6 +83,9 @@ Configuration files are located in `host_files/hostname/`
 - `ipfixcol` directory can contain:
   - `ipfixcol-startup.xml`, which is the base to which other configuration parts are added.
   - `profiles.xml`, which is used to configure profiles by the SecurityCloud GUI
+- `nagios` directory for configuring Nagios service
+  - `server` directory contents is copied to /etc/nagios/conf.d and 
+  can be used to define new hostgroups and services.
 
 ## STaaS Vagrant box
 

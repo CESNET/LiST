@@ -1,0 +1,35 @@
+- name: Copy Nemea NRPE scripts
+  synchronize:
+    src: "{{ scripts.src }}"
+    dest: "{{ scripts.dest }}"
+    archive: no
+    recursive: yes
+    times: yes
+    delete: no
+    rsync_opts:
+      - "--omit-dir-times"
+  notify:
+    - Nagios NRPE restart
+
+- name: Copy nagios configs
+  copy:
+    src: "{{ item }}"
+    dest: "{{ config_nrpe.dest }}"
+  with_items: "{{ config_nrpe.configs }}"
+  notify: Nagios NRPE restart
+
+- name: Set allowed_hosts in nrpe.cfg
+  lineinfile:
+    dest: "{{ config_nrpe.main }}"
+    state: present
+    regexp: 'allowed_hosts=.*'
+    line: "allowed_hosts={{ groups['nagios-servers'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
+  notify: Nagios NRPE restart
+
+- name: Allow NRPE arguments
+  lineinfile:
+    dest: "{{ config_nrpe.main }}"
+    state: present
+    regexp: 'dont_blame_nrpe=.*'
+    line: "dont_blame_nrpe=1"
+  notify: Nagios NRPE restart

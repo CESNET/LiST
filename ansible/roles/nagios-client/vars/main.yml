@@ -1,0 +1,12 @@
+packages: [nrpe, bc]
+
+config_nrpe: {
+  dest: "/etc/nrpe.d/",
+  configs: ["nrpe-nemea.cfg"],
+  main: "/etc/nagios/nrpe.cfg"
+}
+
+scripts: {
+    src: "scripts/",
+    dest: "/usr/lib64/nagios/plugins/nemea/"
+}

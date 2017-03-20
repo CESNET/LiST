@@ -1,0 +1,8 @@
+packages: [nagios, nagios-plugins-all, nagios-plugins-nrpe]
+
+config_files: {
+  dest: "/etc/nagios/conf.d/",
+  templates: ["hosts.cfg"],
+  configs: ["nemea-collectors.cfg", "nrpe.cfg"],
+  host: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/nagios/server/"
+}
