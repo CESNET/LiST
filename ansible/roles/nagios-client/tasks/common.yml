@@ -33,3 +33,10 @@
     regexp: 'dont_blame_nrpe=.*'
     line: "dont_blame_nrpe=1"
   notify: Nagios NRPE restart
+
+- name: Allow NRPE config dir /etc/nrpe.d/
+  lineinfile:
+    dest: "{{ config_nrpe.main }}"
+    state: present
+    line: "include_dir=/etc/nrpe.d/"
+  notify: Nagios NRPE restart
