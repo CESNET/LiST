@@ -18,12 +18,17 @@
   with_items: "{{ config_nrpe.configs }}"
   notify: Nagios NRPE restart
 
-- name: Set allowed_hosts in nrpe.cfg
+- name: Get allowed_hosts from nrpe.cfg
+  shell: sed -rn 's/^allowed_hosts=(.+)/\1/p' {{ config_nrpe.main }}
+  register: allowed_hosts
+  changed_when: false
+
+- name: Update allowed_hosts in nrpe.cfg
   lineinfile:
     dest: "{{ config_nrpe.main }}"
     state: present
     regexp: 'allowed_hosts=.*'
-    line: "allowed_hosts={{ groups['nagios-servers'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
+    line: "allowed_hosts={{ (allowed_hosts.stdout.split(',') + groups['nagios-servers'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | list) | unique | join(',') }}"
   notify: Nagios NRPE restart
 
 - name: Allow NRPE arguments

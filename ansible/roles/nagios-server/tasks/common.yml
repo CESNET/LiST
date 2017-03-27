@@ -12,6 +12,11 @@
   with_items: "{{ config_files.configs }}"
   notify: Nagios restart
 
+- name: Check host specific Nagios configs
+  local_action: stat path={{ config_files.host }}
+  register: nagios_conf_dir
+  ignore_errors: True
+
 - name: Copy host specific Nagios configs
   synchronize:
     src: "{{ config_files.host }}"
@@ -24,3 +29,4 @@
       - "--omit-dir-times"
   notify:
     - Nagios restart
+  when: nagios_conf_dir.stat.exists
