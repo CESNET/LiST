@@ -39,7 +39,7 @@
 - name: Add intermediate plugins to startup.xml
   blockinfile:
     dest: "{{ ipfixcol_startup_xml.dest }}"
-    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK (SCGUI INTERMEDIATE PLGUINS) -->"
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK (SCGUI INTERMEDIATE PLUGINS) -->"
     insertbefore: "</intermediatePlugins>"
     backup: yes
     content: |
