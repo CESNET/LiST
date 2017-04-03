@@ -11,41 +11,46 @@ The STaaS playbook requires at least version 2.1.0 and is targeted at CentOS 7 a
 
 Following Components can be installed using ansible:
 
-- Nemea system including Warden client
-- Nemea Dashboard
-- Nemea status
-- munin with plugins for Nemea
-- SecurityCloud GUI
-- Liberouter GUI
-- IPFIXcol
+- [NEMEA system](https://github.com/CESNET/nemea) including [Warden client](https://warden.cesnet.cz)
+- [NEMEA Dashboard](https://github.com/CESNET/nemea-dashboard)
+- NEMEA status
+- munin with plugins for NEMEA
+- [SecurityCloud GUI](https://github.com/CESNET/SecurityCloudGUI)
+- [Liberouter GUI](https://github.com/CESNET/Liberouter-GUI)
+- [IPFIXcol](https://github.com/CESNET/ipfixcol)
 
 Optional:
 
-- Nagios monitoring
+- [Nagios](https://nagios.org) monitoring
 - Local Warden server for testing
 - Local Warden client that writes to files
-- Let's Encrypt certificate
+- [Let's Encrypt](https://letsencrypt.org/) certificate
 
 ## STaaS server initial configuration
 
 To install STaaS on a new server, the ansible has to have access to a root or a user with sudo.
 Following configuration is also expected:
 
-/etc/sysconfig/iptables
+`/etc/sysconfig/iptables`
+
 ```
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 5555 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 5666 -j ACCEPT
-ports 80, 443, 5555, 5666
+-A INPUT -p udp --dport 4739 -j ACCEPT
 ```
 
-/etc/sudoers
+To permit ports: 80/TCP (Webserver), 443/TCP (Webserver), 5555/TCP (NEMEA Dashboard backend), 5666/TCP (NRPE - Nagios), 4739/UDP (IPFIXcol).
+
+`/etc/sudoers`
+
 ```
 Defaults   !requiretty
 ```
 
-/etc/sysconfig/selinux
+`/etc/sysconfig/selinux`
+
 ```
 SELINUX=permissive
 ```
@@ -59,6 +64,7 @@ separate inventory, for example to track changes in hosts configuration
  in a repository.
 
 Several variables can be set in the `host_vars/hostname` file:
+
 ```
 hostname: staas-demo.liberouter.org
 timezone: Europe/Prague
@@ -69,6 +75,7 @@ nagios_client_hostgroup: nemea-collectors
 
 ansible_become: true
 ```
+
 The sample data URL should point to bzipped2 ipfix file with data 
 stored by ipfix plugin of IPFIXcol collector.
 
@@ -76,7 +83,8 @@ Nagios client hostgroup is a name of hostgroup to which the host
 belongs. If it is not a default (nemea-collectors), the hostgroup must
 be created by adding configuration file for it (see next lines).
 
-Configuration files are located in `host_files/hostname/`
+Configuration files are located in `host_files/hostname/`:
+
 - `nemea` directory copies to /etc/nemea
 - `warden` directory copies to /etc/warden and contains configuration for warden client
 - `certificate` directory must contain `certificate.crt` and `certificate.key` files that are used for apache and nemea-dashboard API
@@ -90,8 +98,10 @@ Configuration files are located in `host_files/hostname/`
 ## STaaS Vagrant box
 
 Local development and testing of STaaS can be easily done using Vagrant box. Just go to vagrant directory and call
+
 ```
 vagrant up
 ```
 
 It will create new virtual machine and automatically apply the STaaS ansible playbook. 
+

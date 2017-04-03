@@ -105,7 +105,7 @@ main {
     </main>
 
     <footer>
-        CESNET z. s. p. o. 2017
+        <a href="https://github.com/CESNET/STaaS">STaaS</a> | Copyright: <a href="https://www.ces.net">CESNET z. s. p. o.</a>, <a href="https://www.liberouter.org">Liberouter team</a>, 2017
     </footer>
 
 </body>
