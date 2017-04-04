@@ -10,9 +10,9 @@ if [ "$TOTAL" -eq 0 ]; then
   exit 1
 fi
 
-PERCENT=$( echo "scale=2; ($TOTAL-$FREE/$TOTAL)*100" | bc | cut -d'.' -f1)
+PERCENT=$( echo "scale=2; ($FREE/$TOTAL)*100" | bc | cut -d'.' -f1)
 
-if [ "$PERCENT" -gt 80 ]; then
+if [ "$PERCENT" -lt 80 ]; then
    echo "OK."
    exit 0
 else
