@@ -55,6 +55,16 @@ Defaults   !requiretty
 SELINUX=permissive
 ```
 
+## STaaS inventory file
+
+Each hosts file can specify following host groups:
+
+- `[staas]` - Basic STaaS provisioning
+- `[warden]` - Local Warden server installation for testing
+- `[letsencrypt]` - Create Let's encrypt certificate for the hosts, needs public IP
+- `[nagios-clients]` - Clients to be monitored by Nagios server
+- `[nagios-servers]` - Nagios server to monitor the clients
+
 ## STaaS per host configuration
 
 It is possible to specify per host variables and configuration file to 
