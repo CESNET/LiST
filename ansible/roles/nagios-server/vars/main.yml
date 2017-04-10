@@ -4,5 +4,7 @@ config_files: {
   dest: "/etc/nagios/conf.d/",
   templates: ["hosts.cfg"],
   configs: ["nemea-collectors.cfg", "nrpe.cfg"],
-  host: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/nagios/server/"
+  host: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/nagios/server/",
+  web: "/etc/httpd/conf.d/nagios.conf",
+  cgi: "/etc/nagios/cgi.cfg"
 }

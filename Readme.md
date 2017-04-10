@@ -82,6 +82,7 @@ scgui_history_minutes: 120
 scgui_branch: devel
 sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
 nagios_client_hostgroup: nemea-collectors
+nagios_server_nopasswd: false
 
 ansible_become: true
 ```
@@ -92,6 +93,8 @@ stored by ipfix plugin of IPFIXcol collector.
 Nagios client hostgroup is a name of hostgroup to which the host
 belongs. If it is not a default (nemea-collectors), the hostgroup must
 be created by adding configuration file for it (see next lines).
+
+Nagios server can be installed without password (for demo or secure environment)
 
 Configuration files are located in `host_files/hostname/`:
 
@@ -104,6 +107,19 @@ Configuration files are located in `host_files/hostname/`:
 - `nagios` directory for configuring Nagios service
   - `server` directory contents is copied to /etc/nagios/conf.d and 
   can be used to define new hostgroups and services.
+
+## Usage of Ansible
+
+The ansible playbook uses two main tags: `install` and `update`. At least one of them has to be given at any time. The `install` tag is for initial installation, the `update` skips some steps that do not need to be repeated and refreshes repository caches so that latest versions of packages are installed.
+
+To select only part of the playbook, `--skip-tags` can be used with ansible-playbook. Almost all roles can be excluded, list all tags that are to be applied by `--list-tags`
+
+A basic ansible playbook command (call from the `ansible` directory):
+```
+ansible-playbook -i inventory/hosts site.yml --tags install
+```
+
+The `site.yml` playbook includes all parts of the STaaS. You can use only selected playbooks, e.g. `nagios.yml` to setup nagios. In that case, everything except Nagios roles and hostgroups are ignored.
 
 ## STaaS Vagrant box
 
