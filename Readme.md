@@ -131,3 +131,7 @@ vagrant up
 
 It will create new virtual machine and automatically apply the STaaS ansible playbook. 
 
+## Default login
+
+- Nemea-Dashboard: nemea/nemea
+- Liberouter GUI: admin/admin
