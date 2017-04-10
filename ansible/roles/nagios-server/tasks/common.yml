@@ -30,3 +30,24 @@
   notify:
     - Nagios restart
   when: nagios_conf_dir.stat.exists
+
+- name: Remove Nagios web password protection
+  lineinfile:
+    dest: "{{ config_files.web }}"
+    regexp: "{{ item }}"
+    state: absent
+  with_items:
+    - 'AuthName "Nagios Access"'
+    - 'AuthType Basic'
+    - 'AuthUserFile /etc/nagios/passwd'
+    - 'Require valid-user'
+  when: nagios_server_nopasswd is defined and nagios_server_nopasswd
+  notify: Apache restart
+
+- name: Remove Nagios service authentication
+  lineinfile:
+    dest: "{{ config_files.cgi }}"
+    regexp: "^use_authentication="
+    line: "use_authentication=0"
+  when: nagios_server_nopasswd is defined and nagios_server_nopasswd
+  notify: Nagios reload
