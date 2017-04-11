@@ -42,7 +42,7 @@
     - 'AuthUserFile /etc/nagios/passwd'
     - 'Require valid-user'
   when: nagios_server_nopasswd is defined and nagios_server_nopasswd
-  notify: Apache restart
+  notify: Apache reload
 
 - name: Remove Nagios service authentication
   lineinfile:
@@ -50,4 +50,4 @@
     regexp: "^use_authentication="
     line: "use_authentication=0"
   when: nagios_server_nopasswd is defined and nagios_server_nopasswd
-  notify: Nagios reload
+  notify: Nagios restart
