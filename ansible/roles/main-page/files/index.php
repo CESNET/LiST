@@ -76,7 +76,7 @@ main {
 
     <main>
     <?php if (file_exists("liberouter-gui")) {?>
-        <a href="/liberouter-gui/dist" class="pane"><span>Liberouter GUI</span></a>
+        <a href="/liberouter-gui" class="pane"><span>Liberouter GUI</span></a>
     <?php } ?>
 
     <?php if (file_exists("Nemea-Dashboard")) {?>

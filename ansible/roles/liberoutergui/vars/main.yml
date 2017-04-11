@@ -14,12 +14,12 @@ liberoutergui: {
     dest: "/etc/httpd/conf.modules.d/10-wsgi.conf"
   },
   conf: {
-    src: "{{ liberoutergui_path }}/config-sample.ini",
-    dest: "{{ liberoutergui_path }}/config.ini"
+    src: "{{ liberoutergui_path }}/api/config-sample.ini",
+    dest: "{{ liberoutergui_path }}/api/config.ini"
   },
   git_repo: "https://github.com/CESNET/liberouter-gui.git",
   release: {
-    url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.2-alpha/liberouter-gui-v0.2-alpha.zip",
+    url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.2-beta/liberouter-gui-v0.2-beta.zip",
     zip: "{{ liberoutergui_path }}/liberouter-gui.zip"
   }
 }

@@ -32,8 +32,8 @@
 
 - name: Install python requirements to virtual environment
   pip:
-    requirements: "{{ liberoutergui_path }}/requirements.txt"
-    virtualenv: "{{ liberoutergui_path }}/venv"
+    requirements: "{{ liberoutergui_path }}/api/requirements.txt"
+    virtualenv: "{{ liberoutergui_path }}/api/venv"
     virtualenv_python: python3.4
     virtualenv_site_packages: yes
     state: latest
