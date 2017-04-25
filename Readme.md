@@ -81,7 +81,7 @@ timezone: Europe/Prague
 scgui_history_minutes: 120
 scgui_branch: devel
 sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
-nagios_client_hostgroup: nemea-collectors
+nagios_client_hostgroups: [nemea-collectors, staas]
 nagios_client_exclude_services: [nemea-running-modules, link-traffic]
 nagios_server_nopasswd: false
 
@@ -91,9 +91,9 @@ ansible_become: true
 The sample data URL should point to bzipped2 ipfix file with data 
 stored by ipfix plugin of IPFIXcol collector.
 
-Nagios client hostgroup is a name of hostgroup to which the host
-belongs. If it is not a default (nemea-collectors), the hostgroup must
-be created by adding configuration file for it (see next lines).
+Nagios client hostgroup list is a list of hostgroups to which the host
+belongs. If it is not an existing (nemea-collectors or staas), the hostgroup must
+be created by adding configuration file for it (see next lines). Default is both `nemea-collectors` and `staas` hostgroups.
 
 Nagios client can be excluded from specific services if necessary.
 

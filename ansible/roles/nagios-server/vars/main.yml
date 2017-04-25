@@ -2,7 +2,7 @@ packages: [nagios, nagios-plugins-all, nagios-plugins-nrpe]
 
 config_files: {
   dest: "/etc/nagios/conf.d/",
-  templates: ["hosts.cfg", "nemea-collectors.cfg"],
+  templates: ["hosts.cfg", "nemea-collectors.cfg", "staas.cfg"],
   configs: ["nrpe.cfg"],
   host: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/nagios/server/",
   web: "/etc/httpd/conf.d/nagios.conf",
