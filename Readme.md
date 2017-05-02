@@ -82,6 +82,7 @@ scgui_history_minutes: 120
 scgui_branch: devel
 sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
 nagios_client_hostgroups: [nemea-collectors, staas]
+nagios_client_contacts: []
 nagios_client_exclude_services: [nemea-running-modules, link-traffic]
 nagios_server_nopasswd: false
 
@@ -94,6 +95,8 @@ stored by ipfix plugin of IPFIXcol collector.
 Nagios client hostgroup list is a list of hostgroups to which the host
 belongs. If it is not an existing (nemea-collectors or staas), the hostgroup must
 be created by adding configuration file for it (see next lines). Default is both `nemea-collectors` and `staas` hostgroups.
+
+Each host monitored by nagios can report to specific contacts. If none are specified, notifications are sent to `admins` contact group. The contacts must already exist.
 
 Nagios client can be excluded from specific services if necessary.
 
