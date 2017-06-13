@@ -2,3 +2,5 @@
   yum: "name={{ packages }} state=latest update_cache=yes"
   notify:
     - Mongo restart
+
+- include: common.yml

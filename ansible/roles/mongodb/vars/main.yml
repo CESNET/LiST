@@ -2,7 +2,12 @@ packages: [mongodb-org, python-pymongo]
 
 repo: {
   mongo: {
-    src: "mongodb-org-3.2.repo",
-    dest: "/etc/yum.repos.d/mongodb-org-3.2.repo"
+    src: "mongodb-org-3.4.repo",
+    dest: "/etc/yum.repos.d/mongodb-org-3.4.repo"
   }
+}
+
+mongod_conf: {
+  src: "mongod.conf",
+  dest: "/etc/mongod.conf"
 }

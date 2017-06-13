@@ -81,6 +81,7 @@ timezone: Europe/Prague
 scgui_history_minutes: 120
 scgui_branch: devel
 sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
+mongod_cachesizeGB: 1
 nagios_client_hostgroups: [nemea-collectors, staas]
 nagios_client_contacts: []
 nagios_client_exclude_services: [nemea-running-modules, link-traffic]
@@ -91,6 +92,8 @@ ansible_become: true
 
 The sample data URL should point to bzipped2 ipfix file with data 
 stored by ipfix plugin of IPFIXcol collector.
+
+Size of Mongo database cache in gigabytes. Allows float numbers (e.g.: 0.25)
 
 Nagios client hostgroup list is a list of hostgroups to which the host
 belongs. If it is not an existing (nemea-collectors or staas), the hostgroup must

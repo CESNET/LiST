@@ -1,0 +1,4 @@
+- name: Copy mongod configuration
+  template:
+    src: "{{ mongod_conf.src }}"
+    dest: "{{ mongod_conf.dest }}"

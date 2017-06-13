@@ -6,5 +6,7 @@
 - name: Install Mongo, python, etc
   yum: "name={{ packages }} state=installed"
 
+- include: common.yml
+
 - name: Start & enable Mongo
   service: name=mongod state=started enabled=yes
