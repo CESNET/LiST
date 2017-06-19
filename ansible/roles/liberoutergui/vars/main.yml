@@ -13,6 +13,10 @@ liberoutergui: {
     src: "10-wsgi.conf",
     dest: "/etc/httpd/conf.modules.d/10-wsgi.conf"
   },
+  htaccess: {
+    src: ".htaccess",
+    dest: "{{ liberoutergui_path }}"
+  },
   conf: {
     src: "{{ liberoutergui_path }}/api/config-sample.ini",
     dest: "{{ liberoutergui_path }}/api/config.ini"

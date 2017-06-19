@@ -30,6 +30,11 @@
     remote_src: true
   notify: Apache restart
 
+- name: Replace .htaccess with our version
+  copy:
+    src: "{{ liberoutergui.htaccess.src }}"
+    dest: "{{ liberoutergui.htaccess.dest }}"
+
 - name: Install python requirements to virtual environment
   pip:
     requirements: "{{ liberoutergui_path }}/api/requirements.txt"
