@@ -24,7 +24,7 @@
 
 - name: Create default Liberouter GUI admin/admin user
   shell: |
-    mongo liberouter <<< 'db.users.drop(); db.users.insert({ "_id" : ObjectId("58172c575d47e20e452adcfb"), "first_name" : "Petr", "username" : "admin", "settings" : null, "last_name" : null, "user_id" : null, "email" : null, "password" : BinData(0,"JDJiJDEyJExLd3NkY2R0UUdjdnNzalBMLmxKTC56a2RXQUtYU09aL1Y1R2JlVjk1QzVpWFVsdGdnUFJh"), "role" : 0 })'
+    mongo liberouter <<< 'db.users.drop(); db.users.insert({ "_id" : ObjectId("58172c575d47e20e452adcfb"), "first_name" : "", "username" : "admin", "settings" : null, "last_name" : null, "user_id" : null, "email" : null, "password" : BinData(0,"JDJiJDEyJExLd3NkY2R0UUdjdnNzalBMLmxKTC56a2RXQUtYU09aL1Y1R2JlVjk1QzVpWFVsdGdnUFJh"), "role" : 0 })'
 
 - name: Common tasks
   include: common.yml

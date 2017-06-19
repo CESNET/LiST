@@ -19,7 +19,7 @@ liberoutergui: {
   },
   git_repo: "https://github.com/CESNET/liberouter-gui.git",
   release: {
-    url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.2-beta/liberouter-gui-v0.2-beta.zip",
+    url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.3.1/liberouter-gui-v0.3.1.zip",
     zip: "{{ liberoutergui_path }}/liberouter-gui.zip"
   }
 }
