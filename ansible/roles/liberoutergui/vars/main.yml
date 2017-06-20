@@ -21,6 +21,10 @@ liberoutergui: {
     src: "{{ liberoutergui_path }}/api/config-sample.ini",
     dest: "{{ liberoutergui_path }}/api/config.ini"
   },
+  assetsconf: {
+    src: "{{ liberoutergui_path }}/assets/config-sample.json",
+    dest: "{{ liberoutergui_path }}/assets/config.json"
+  },
   git_repo: "https://github.com/CESNET/liberouter-gui.git",
   release: {
     url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.3.1/liberouter-gui-v0.3.1.zip",

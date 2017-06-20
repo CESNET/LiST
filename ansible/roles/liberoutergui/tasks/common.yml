@@ -30,6 +30,12 @@
     remote_src: true
   notify: Apache restart
 
+- name: Create Liberouter GUI API path config
+  copy:
+    src: "{{ liberoutergui.assetsconf.src }}"
+    dest: "{{ liberoutergui.assetsconf.dest }}"
+    remote_src: true
+
 - name: Replace .htaccess with our version
   copy:
     src: "{{ liberoutergui.htaccess.src }}"
