@@ -4,4 +4,5 @@ dependencies:
   - epel
   - mongodb
   - pip3.4
+  - { role: nemea, tags: nemea }
   - { role: apache, tags: apache }
