@@ -9,6 +9,7 @@
     force: yes
     recursive: yes
     update: yes
+    version: "{{ liberoutergui.git_tag }}"
   notify: Apache restart
 
 - name: Common tasks

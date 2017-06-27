@@ -19,6 +19,7 @@
     dest: "{{ liberoutergui_path }}"
     depth: 1
     force: yes
+    version: "{{ liberoutergui.git_tag }}"
     recursive: yes
   notify: Apache restart
 

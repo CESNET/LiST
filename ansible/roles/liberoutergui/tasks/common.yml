@@ -8,6 +8,7 @@
   get_url:
     url: "{{ liberoutergui.release.url }}"
     dest: "{{ liberoutergui.release.zip }}"
+    force: yes
 
 - name: Unpack Liberouter GUI release
   unarchive:

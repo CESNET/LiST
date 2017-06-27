@@ -26,6 +26,7 @@ liberoutergui: {
     dest: "{{ liberoutergui_path }}/assets/config.json"
   },
   git_repo: "https://github.com/CESNET/liberouter-gui.git",
+  git_tag: "v0.3.1",
   release: {
     url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.3.1/liberouter-gui-v0.3.1.zip",
     zip: "{{ liberoutergui_path }}/liberouter-gui.zip"
