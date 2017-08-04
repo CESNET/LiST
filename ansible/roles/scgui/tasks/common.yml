@@ -24,8 +24,8 @@
                                 <fileFormat>lnfstore</fileFormat>
                                 <profiles>yes</profiles>
                                 <storagePath>/data/flow/</storagePath>
-                                <prefix>nfcapd.</prefix>
-                                <suffixMask>%Y%m%d%H%M</suffixMask>
+                                <prefix>lnf.</prefix>
+                                <suffixMask>%Y%m%d%H%M%S</suffixMask>
                                 <identificatorField>staas</identificatorField>
                                 <compress>yes</compress>
                                 <dumpInterval>
