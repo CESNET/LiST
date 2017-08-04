@@ -1,5 +1,6 @@
 - name: Check for certificates dir
   local_action: stat path={{ apache_configuration.cert_local }}
+  become: false
   register: apache_cert_dir
   ignore_errors: True
 

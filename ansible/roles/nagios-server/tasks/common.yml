@@ -14,6 +14,7 @@
 
 - name: Check host specific Nagios configs
   local_action: stat path={{ config_files.host }}
+  become: false
   register: nagios_conf_dir
   ignore_errors: True
 

@@ -25,6 +25,7 @@
 
 - name: Check for Warden config dir
   local_action: stat path={{ configuration_warden.local }}
+  become: false
   register: warden_conf_dir
   ignore_errors: True
 

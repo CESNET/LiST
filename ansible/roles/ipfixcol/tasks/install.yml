@@ -15,6 +15,7 @@
 
 - name: Check for host specific startup.xml
   local_action: stat path={{ ipfixcol_startup_xml.host }}
+  become: false
   register: host_startup_xml
   ignore_errors: True
 
