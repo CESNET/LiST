@@ -7,7 +7,9 @@
     times: yes
     delete: yes
     rsync_opts:
-      - "--omit-dir-times --exclude supervisor_config_gener.xml --exclude nemea_status.conf"
+      - "--omit-dir-times"
+      - "--exclude=supervisor_config_gener.xml"
+      - "--exclude=nemea_status.conf"
   notify:
     - Restart NEMEA supervisor
   ignore_errors: yes
