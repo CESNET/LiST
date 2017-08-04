@@ -1,0 +1,3 @@
+letsencrypt_cert: {
+    email: "staas@cesnet.cz"
+}

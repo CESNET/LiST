@@ -3,7 +3,7 @@
 
 - name: Generate let's encrypt certificate
   shell: |
-    certbot --non-interactive --agree-tos --email staas@cesnet.cz --apache --domains {{ hostname }} certonly
+    certbot --non-interactive --agree-tos --email {{ letsencrypt_cert.email }} --apache --domains {{ hostname }} certonly
     cp -u /etc/letsencrypt/live/{{ hostname }}/privkey.pem /etc/httpd/certificate/certificate.key
     cp -u /etc/letsencrypt/live/{{ hostname }}/cert.pem /etc/httpd/certificate/certificate.crt
   args:
