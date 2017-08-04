@@ -6,7 +6,7 @@
   hostname: name={{ hostname }}
 
 - name: Set hostname to /etc/hosts
-  lineinfile: dest={{ hosts_file }} regexp='.*{{ hostname }}$' line="{{ ansible_default_ipv4.address }} {{ hostname }}" state=present
+  lineinfile: dest={{ hosts_file }} regexp='\d+\.\d+\.\d+\.d+\s+{{ hostname }}$' line="{{ ansible_default_ipv4.address }} {{ hostname }}" state=present
   when: ansible_default_ipv4.address is defined
 
 - name: Set SELinux policy to permissive
