@@ -3,7 +3,7 @@
 HOSTNAME=`hostname -f`
 mkdir /etc/warden
 for name in hoststats vportscan amplificationdetector ipblacklist bruteforce voipfraud_detection dnstunnel; do
-	secret=`tr -dc '[a-zA-Z0-9]' </dev/urandom | head -c10`
+	secret=`tr -dc '[:alnum:]' </dev/urandom | head -c10`
 	/opt/warden_server_3/warden_server.py register -n cz.cesnet.nemea.$name --valid --write --notest --debug -h $HOSTNAME -r staas@cesnet.cz -s "$secret"
 	cat > /etc/warden/$name.cfg <<CONF
 {
