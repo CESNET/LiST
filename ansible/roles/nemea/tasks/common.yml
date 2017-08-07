@@ -12,6 +12,17 @@
     - Restart NEMEA supervisor
   ignore_errors: yes
 
+- name: Check for reporters configuration
+  stat: path={{ nemea_reporters_config_path }}
+  register: reporters_conf
+  ignore_errors: True
+
+- name: Create default reporters configuration
+  copy:
+    src: "reporters-config.yml"
+    dest: "{{ nemea_reporters_config_path }}"
+  when: not reporters_conf.stat.exists
+
 - name: Check for Warden config dir
   local_action: stat path={{ configuration_warden.local }}
   register: warden_conf_dir
