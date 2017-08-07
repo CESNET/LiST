@@ -37,6 +37,14 @@
     dest: "{{ liberoutergui.assetsconf.dest }}"
     remote_src: true
 
+- name: Set path to reporters configuration file
+  lineinfile:
+    dest: "{{ liberoutergui.nemea.conf_path }}"
+    state: present
+    regexp: 'reporters_config =.*'
+    line: "reporters_config = {{ nemea_reporters_config_path }}"
+  notify: Apache restart
+
 - name: Replace .htaccess with our version
   copy:
     src: "{{ liberoutergui.htaccess.src }}"

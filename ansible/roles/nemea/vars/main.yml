@@ -32,5 +32,8 @@ warden_client_file: {
   mode: "0664"
 }
 
+# path to reporters-config.yml, used by liberouter gui
+nemea_reporters_config_path: "/etc/nemea/reporters-config.yml"
+
 nemea_user: "nemead"
 nemea_group: "nemead"
