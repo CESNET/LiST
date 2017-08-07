@@ -1,6 +1,5 @@
 dependencies:
   - common
-  - settings
   - epel
   - mongodb
   - pip3.4
