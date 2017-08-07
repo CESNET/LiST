@@ -13,8 +13,8 @@ Content
 ------------------------------------------------------------------------------
 A. Introduction
 
-   Warden is a system for efficient sharing information about detected events
-(threats). Warden Server is server-side part of the software, the
+   Warden is a system for efficient sharing of information about detected
+events (threats). Warden Server is server-side part of the software, the
 communication hub, allowing to publish detected events and download yet
 unprocessed ones.
 
@@ -28,7 +28,7 @@ of Warden Server administration.
    Warden Server is Python/WSGI based, written primarily with Apache mod_wsgi
 in mind. Other WSGI servers/frameworks are not yet tested, so your mileage
 may vary. Authentication is X509 certificate (for machine or client
-identification) + shared secret (for client icentification, where
+identification) + shared secret (for client identification, where
 certificate does not suffice).
 
 ------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ B. Dependencies
  1. Platform
 
     Python 2.7+
-	Apache 2.2
+	Apache 2.2/2.4
 	mod_wsgi 3.3+
 
  2. Python modules
@@ -65,11 +65,11 @@ C. Installation
    mysql> CREATE DATABASE warden3;
    mysql> GRANT ALL ON warden3.* TO `warden`@`localhost`;
    mysql> SET PASSWORD FOR 'warden'@'localhost' = PASSWORD('example');
-   mysql> FLUSH PRIVILEDGES;
+   mysql> FLUSH PRIVILEGES;
 
  * Create necessary table structure
 
-   mysql -p -u warden warden3 < warden3.0.sql
+   mysql -p -u warden warden3 < warden_3.0.sql
 
  * Enable mod_wsgi, mod_ssl, include Warden configuration
 
@@ -79,7 +79,9 @@ C. Installation
       Include /opt/warden_server_3.0/apache.conf
 
    or paste the contents into whichever Directory, Location or VirtualHost
-   you dedicate for Warden. You can use apache.conf.dist as an example.
+   you dedicate for Warden.  You can use apache22.conf.dist or
+   apache24.conf.dist (for Apache version 2.2 or 2.4, respectively) as an
+   example.
 
    You may need to change paths to certificate/key/ca material, path to
    warden_server.wsgi and web path alias.
@@ -121,8 +123,9 @@ particular implementation object of the aspect, for example type of logger
 
 		Log: FileLogger, SysLogger
 		DB: MySQL
-		Auth: X509Authenticator, NoAuthenticator
-		Validator: JSONSchemaValidator, "NoValidator
+		Auth: X509Authenticator, X509NameAuthenticator,
+              X509MixMatchAuthenticator,PlainAuthenticator
+		Validator: JSONSchemaValidator, NoValidator
 		Handler: WardenHandler
 
 	"type" keyword is not mandatory, if not specified, first implementation
@@ -140,17 +143,31 @@ object from particular section list is used ("FileLogger" for example).
       facility: syslog facility, defaults to "daemon"
       level: least log level (CRITICAL, ERROR, WARNING, INFO, DEBUG)
 
-   NoAuthenticator: forego authentication, for debug purposes
-
    X509Authenticator: authenticate based on certificate chain validation,
        hostname corresponding with certificate CN or SubjectAltName and
-       optionally shared secret
+       optionally shared secret (note that more clients on one machine
+       will have to have the certificate with the same hostname, clients
+       than can be differentiated by separate secrets).
+       This method is OBSOLETE.
+
+    X509NameAuthenticator: authenticate based on certificate chain validation,
+        certificate CN must correspond with client _name_, NOT hostname.
+
+    X509MixMatchAuthenticator: automatically choose X509Authenticator or
+        X509NameAuthenticator based on existence of 'secret' in query. Allows
+        for seamless transition of clients between two authentication methods.
+
+   PlainAuthenticator: authenticate based on client name or shared secret, usable
+      over plain HTTP connection or HTTPS without client certificate - note that
+      this pretty much spoils security, and is meant only for testing and
+      debugging purposes, NOT for production servers
 
    NoValidator: forego event JSON validation, for debug purposes
 
    JSONSchemaValidator: validate incoming events based on JSON schema file
       filename: path to schema file, defaults to "idea.schema" at
-                installation directory
+                installation directory, for information on obtaining current
+                IDEA schema file, refer to https://idea.cesnet.cz/en/schema
 
    MySQL: database storage backend
       host: database server host, default "localhost"
@@ -208,7 +225,8 @@ warden_server.py register [--help] -n NAME -h HOSTNAME -r REQUESTOR
      -r REQUESTOR, --requestor REQUESTOR
                            requestor email
      -s SECRET, --secret SECRET
-                           authentication token
+                           authentication token (use explicit empty string to
+                           disable)
      --note NOTE           client freetext description
      --valid               valid client (default)
      --novalid

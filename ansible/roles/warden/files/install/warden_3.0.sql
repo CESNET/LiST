@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(11) NOT NULL,
+  `id` int UNSIGNED NOT NULL,
   `category` varchar(64) NOT NULL,
   `subcategory` varchar(64) DEFAULT NULL,
   `cat_subcat` varchar(129) NOT NULL,
@@ -41,19 +41,21 @@ CREATE TABLE IF NOT EXISTS `categories` (
 --
 
 CREATE TABLE IF NOT EXISTS `clients` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `registered` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `requestor` varchar(256) NOT NULL,
   `hostname` varchar(256) NOT NULL,
   `note` text NULL,
-  `valid` tinyint(1) NOT NULL DEFAULT '1',
+  `valid` tinyint UNSIGNED NOT NULL DEFAULT '1',
   `name` varchar(64) NOT NULL,
   `secret` varchar(16) NULL,
-  `read` tinyint(1) NOT NULL DEFAULT '1',
-  `debug` tinyint(1) NOT NULL DEFAULT '0',
-  `write` tinyint(1) NOT NULL DEFAULT '0',
-  `test` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `read` tinyint UNSIGNED NOT NULL DEFAULT '1',
+  `debug` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `write` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `test` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `clients_1` (`valid`, `secret`, `hostname`),
+  KEY `clients_2` (`valid`, `name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -63,14 +65,15 @@ CREATE TABLE IF NOT EXISTS `clients` (
 --
 
 CREATE TABLE IF NOT EXISTS `events` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `received` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `client_id` int(11) NOT NULL,
+  `client_id` int UNSIGNED NOT NULL,
   `data` longtext NOT NULL,
-  `valid` tinyint(1) NOT NULL DEFAULT '1',
+  `valid` tinyint UNSIGNED NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `id` (`id`,`client_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8  DEFAULT COLLATE utf8_unicode_ci AUTO_INCREMENT=1 ;
+  KEY `id` (`id`,`client_id`),
+  KEY `received` (`received`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  DEFAULT COLLATE utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -79,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `events` (
 --
 
 CREATE TABLE IF NOT EXISTS `event_category_mapping` (
-  `event_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `event_id` bigint UNSIGNED NOT NULL,
+  `category_id` int UNSIGNED NOT NULL,
   KEY `event_id_2` (`event_id`,`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
@@ -91,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `event_category_mapping` (
 --
 
 CREATE TABLE IF NOT EXISTS `event_tag_mapping` (
-  `event_id` int(11) NOT NULL,
-  `tag_id` int(11) NOT NULL,
+  `event_id` bigint UNSIGNED NOT NULL,
+  `tag_id` int UNSIGNED NOT NULL,
   KEY `event_id_2` (`event_id`,`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
@@ -103,9 +106,9 @@ CREATE TABLE IF NOT EXISTS `event_tag_mapping` (
 --
 
 CREATE TABLE IF NOT EXISTS `last_events` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `client_id` int(11) NOT NULL,
-  `event_id` int(11) NOT NULL,
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `client_id` int UNSIGNED NOT NULL,
+  `event_id` bigint UNSIGNED NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `client_id` (`client_id`,`event_id`)
@@ -118,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `last_events` (
 --
 
 CREATE TABLE IF NOT EXISTS `tags` (
-  `id` int(11) NOT NULL,
+  `id` int UNSIGNED NOT NULL,
   `tag` varchar(64) NOT NULL,
   KEY `id_tag_name` (`id`,`tag`),
   KEY `tag_name` (`tag`)

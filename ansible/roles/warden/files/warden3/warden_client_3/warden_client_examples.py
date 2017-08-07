@@ -4,16 +4,13 @@
 # Copyright (C) 2011-2015 Cesnet z.s.p.o
 # Use of this source is governed by a 3-clause BSD-style license, see LICENSE file.
 
-from warden_client import Client, Error, read_cfg, format_timestamp
-import json
 import string
-from time import time, gmtime
-from math import trunc
+from time import time
 from uuid import uuid4
 from pprint import pprint
-from os import path
-from random import randint, randrange, choice, random;
-from base64 import b64encode;
+from random import randint, randrange, choice, random
+from base64 import b64encode
+from warden_client import Client, Error, read_cfg, format_timestamp
 
 def gen_min_idea():
 
@@ -56,7 +53,7 @@ def gen_random_idea(client_name="cz.example.warden.test"):
     def randip6():
         return [rand6ip, geniprange(rand6ip), rand6cidr][randint(0, 2)]()
 
-    def randstr(charlist=string.letters, maxlen=32, minlen=1):
+    def randstr(charlist=string.ascii_letters, maxlen=32, minlen=1):
         return ''.join(choice(charlist) for i in range(randint(minlen, maxlen)))
 
     event = {
@@ -106,7 +103,7 @@ def gen_random_idea(client_name="cz.example.warden.test"):
              "Size": 46,
              "Ref": ["cve:CVE-%s-%s" % (randstr(string.digits, 4), randstr())],
              "ContentEncoding": "base64",
-             "Content": b64encode(randstr())
+             "Content": b64encode(randstr().encode('ascii')).decode("ascii")
           }
        ],
        "Node": [
@@ -139,7 +136,7 @@ def main():
     #     idstore="MyClient.id",
     #     name="cz.example.warden.test")
 
-    print "=== Debug ==="
+    print("=== Debug ===")
     info = wclient.getDebug()
     pprint(info)
 
@@ -150,18 +147,18 @@ def main():
     # If you want just to be informed, this is not necessary, just
     # configure logging correctly and check logs.
     if isinstance(info, Error):
-        print info
+        print(info)
 
-    print "=== Server info ==="
+    print("=== Server info ===")
     info = wclient.getInfo()
 
-    print "=== Sending 10 event(s) ==="
+    print("=== Sending 10 event(s) ===")
     start = time()
     ret = wclient.sendEvents([gen_random_idea(client_name=wclient.name) for i in range(10)])
-    print ret
-    print "Time: %f" % (time()-start)
+    print(ret)
+    print("Time: %f" % (time()-start))
 
-    print "=== Getting 10 events ==="
+    print("=== Getting 10 events ===")
     start = time()
 
     # cat = ['Availability', 'Abusive.Spam','Attempt.Login']
@@ -182,10 +179,10 @@ def main():
     nogroup = []
 
     ret = wclient.getEvents(count=10, cat=cat, nocat=nocat, tag=tag, notag=notag, group=group, nogroup=nogroup)
-    print "Time: %f" % (time()-start)
-    print "Got %i events" % len(ret)
+    print("Time: %f" % (time()-start))
+    print("Got %i events" % len(ret))
     for e in ret:
-        print e.get("Category"), e.get("Node")[0].get("Type"), e.get("Node")[0].get("Name")
+        print(e.get("Category"), e.get("Node")[0].get("Type"), e.get("Node")[0].get("Name"))
 
 if __name__ == "__main__":
     main()

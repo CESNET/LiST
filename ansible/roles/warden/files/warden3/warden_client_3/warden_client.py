@@ -13,7 +13,7 @@ from operator import itemgetter
 
 fix_logging_filename = str if version_info<(2, 7) else lambda x: x
 
-if version_info > (3, 0):
+if version_info[0] >= 3:
     import http.client as httplib
     from urllib.parse import urlparse
     from urllib.parse import urlencode

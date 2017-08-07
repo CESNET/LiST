@@ -5,16 +5,24 @@
 # Use of this source is governed by a 3-clause BSD-style license, see LICENSE file.
 
 import hashlib  # Some Python/ssl versions incorrectly initialize hashes, this helps
-import json, httplib, ssl, socket, logging, logging.handlers, time
-from urlparse import urlparse
-from urllib import urlencode
-from sys import stderr, exc_info
+from sys import stderr, exc_info, version_info
+import json, ssl, socket, logging, logging.handlers, time
 from traceback import format_tb
 from os import path
 from operator import itemgetter
-from sys import version_info
 
-fix_logging_filename = str if version_info<(2, 7) else lambda(x): x
+fix_logging_filename = str if version_info<(2, 7) else lambda x: x
+
+if version_info[0] >= 3:
+    import http.client as httplib
+    from urllib.parse import urlparse
+    from urllib.parse import urlencode
+    basestring = str
+else:
+    import httplib
+    from urlparse import urlparse
+    from urllib import urlencode
+
 
 
 VERSION = "3.0-beta2"
@@ -31,6 +39,7 @@ class HTTPSConnection(httplib.HTTPSConnection):
     of SSL/ TLS version and cipher selection.  See:
     http://hg.python.org/cpython/file/c1c45755397b/Lib/httplib.py#l1144
     and `ssl.wrap_socket()`
+    Used only if ssl.SSLContext is not available (Python version < 2.7.9)
     '''
     def __init__(self, host, **kwargs):
         self.ciphers = kwargs.pop('ciphers',None)
@@ -112,6 +121,14 @@ class Error(Exception):
                 kwargs["send_events_limit"] = int(kwargs["send_events_limit"])
             except Exception:
                 del kwargs["send_events_limit"]
+        if "exc" in kwargs:
+            # Traceback objects cause reference loops, so memory may be not
+            # correctly free'd. We only need traceback to log it in str_debug(),
+            # so let's get the string representation now and forget the 
+            # traceback object, thus preventing the loop.
+            exctype, excvalue, tb = kwargs["exc"]
+            tb = format_tb(tb)
+            kwargs["exc"] = exctype, excvalue, tb
         self.errors.append(kwargs)
 
 
@@ -141,6 +158,8 @@ class Error(Exception):
     def next(self):
         """ In list or iterable context we're empty """
         raise StopIteration
+
+    __next__ = next
 
 
     def __bool__(self):
@@ -201,10 +220,10 @@ class Error(Exception):
         out.append(self.str_preamble(e))
         if not "exc" in e or not e["exc"]:
             return ""
-        exc_tb = e["exc"][2]
+        exc_tb = e["exc"][2] # exc_tb is string repr. of traceback object
         if exc_tb:
             out.append("Traceback:\n")
-            out.extend(format_tb(exc_tb))
+            out.extend(exc_tb)
         return "".join(out)
 
 
@@ -252,6 +271,20 @@ class Client(object):
 
         self.ciphers = 'TLS_RSA_WITH_AES_256_CBC_SHA'
         self.sslversion = ssl.PROTOCOL_TLSv1
+
+        # If Python is new enough to have SSLContext, use it for SSL settings,
+        # otherwise our own class derived from httplib.HTTPSConnection is used
+        # later in connect().
+        if hasattr(ssl, 'SSLContext'):
+            self.sslcontext = ssl.SSLContext(self.sslversion)
+            self.sslcontext.load_cert_chain(self.certfile, self.keyfile)
+            if self.cafile:
+                self.sslcontext.load_verify_locations(self.cafile)
+                self.sslcontext.verify_mode = ssl.CERT_REQUIRED
+            else:
+                self.sslcontext.verify_mode = ssl.CERT_NONE
+        else:
+            self.sslcontext = None
 
         self.getInfo()  # Call to align limits with server opinion
 
@@ -343,19 +376,23 @@ class Client(object):
 
         try:
             if self.url.scheme=="https":
-                conn = HTTPSConnection(
-                    self.url.netloc,
-                    strict = False,
-                    key_file = self.keyfile,
-                    cert_file = self.certfile,
-                    timeout = self.timeout,
-                    ciphers = self.ciphers,
-                    ca_certs = self.cafile,
-                    ssl_version = self.sslversion)
+                if self.sslcontext:
+                    conn = httplib.HTTPSConnection(
+                        self.url.netloc,
+                        timeout = self.timeout,
+                        context = self.sslcontext)
+                else:
+                    conn = HTTPSConnection(
+                        self.url.netloc,
+                        key_file = self.keyfile,
+                        cert_file = self.certfile,
+                        timeout = self.timeout,
+                        ciphers = self.ciphers,
+                        ca_certs = self.cafile,
+                        ssl_version = self.sslversion)
             elif self.url.scheme=="http":
                 conn = httplib.HTTPConnection(
                     self.url.netloc,
-                    strict = False,
                     timeout = self.timeout)
             else:
                 return Error(message="Don't know how to connect to \"%s\"" % self.url.scheme,
@@ -381,7 +418,7 @@ class Client(object):
             kwargs["secret"] = self.secret
 
         if kwargs:
-            for k in kwargs.keys():
+            for k in list(kwargs.keys()):
                 if kwargs[k] is None:
                     del kwargs[k]
             argurl = "?" + urlencode(kwargs, doseq=True)
@@ -434,13 +471,13 @@ class Client(object):
 
         if res.status==httplib.OK:
             try:
-                data = json.loads(response_data)
+                data = json.loads(response_data.decode("utf-8"))
             except:
                 data = Error(method=func, message="JSON message parsing failed",
                     exc=exc_info(), response=response_data)
         else:
             try:
-                data = json.loads(response_data)
+                data = json.loads(response_data.decode("utf-8"))
                 data["errors"]   # trigger exception if not dict or no error key
             except:
                 data = Error(method=func, message="Generic server HTTP error",
@@ -532,7 +569,7 @@ class Client(object):
         """ Send out "events" list to server, retrying on server errors.
         """
         ev = events
-        idx_xlat = range(len(ev))
+        idx_xlat = list(range(len(ev)))
         err = Error()
         retry = retry or self.retry
         attempt = retry
@@ -550,7 +587,7 @@ class Client(object):
                 res.errors.sort(key=itemgetter("error"))
                 for e in res.errors:
                     errno = e["error"]
-                    evlist = e.get("events", range(len(ev)))   # none means all
+                    evlist = e.get("events", list(range(len(ev))))   # none means all
                     if errno < 500 or not attempt:
                         # Fatal error or last try, translate indices
                         # to original and prepare for returning to caller
@@ -573,11 +610,11 @@ class Client(object):
             tag=None, notag=None,
             group=None, nogroup=None):
 
-        if not id:
+        if id is None:
             id = self._loadID(idstore)
 
         res = self.sendRequest(
-            "getEvents", id=id, count=count or self.get_events_limit, cat=cat,
+            "getEvents", id=id, count=self.get_events_limit if count is None else count, cat=cat,
             nocat=nocat, tag=tag, notag=notag, group=group, nogroup=nogroup)
 
         if res:
