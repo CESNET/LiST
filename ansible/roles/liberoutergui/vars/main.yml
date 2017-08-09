@@ -29,7 +29,7 @@ liberoutergui: {
     conf_path: "{{ liberoutergui_path }}/api/liberouterapi/modules/nemea/config.ini"
   },
   git_repo: "https://github.com/CESNET/liberouter-gui.git",
-  git_tag: "a53814a7dc398ea7f1fa5af15b16bbef8815fdab",
+  git_tag: "73eea1d18a154805bd97192785203ebdf2b64583",
   release: {
     url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.3.2/liberouter-gui-v0.3.2.zip",
     zip: "{{ liberoutergui_path }}/liberouter-gui.zip"
