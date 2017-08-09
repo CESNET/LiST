@@ -12,7 +12,7 @@ custom_actions:
        path: /dev/stdout
 rules:
 - id: 1
-  condition: Null
+  condition: True
   actions:
   - store_mongo
   - store_warden
