@@ -10,6 +10,11 @@ custom_actions:
   - id: file
     file:
        path: /dev/stdout
+  - id: sendmail
+    email:
+      to: root@localhost
+      subject: "Example report"
+      from: "nemead@localhost"
 rules:
 - id: 1
   condition: True
