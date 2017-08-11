@@ -1,4 +1,4 @@
 # Remove flow data files older than {{ scgui_history_minutes }} minutes
 MAILTO=root
 
-0 * * * *     root find /data/flow/ -type f -name 'nfcapd.*' -mmin +{{ scgui_history_minutes }} -delete
+0 * * * *     root find /data/flow/ -type f -name 'lnf.*' -mmin +{{ scgui_history_minutes }} -delete
