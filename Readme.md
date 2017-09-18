@@ -87,6 +87,10 @@ nagios_client_contacts: []
 nagios_client_exclude_services: [nemea-running-modules, link-traffic]
 nagios_server_nopasswd: false
 
+letsencrypt_cert: {
+    email: "staas@cesnet.cz"
+}
+
 ansible_become: true
 ```
 
@@ -103,7 +107,9 @@ Each host monitored by nagios can report to specific contacts. If none are speci
 
 Nagios client can be excluded from specific services if necessary.
 
-Nagios server can be installed without password (for demo or secure environment)
+Nagios server can be installed without password (for demo or secure environment).
+
+Let's encrypt certificate creation allows to set custom contact mail.
 
 Configuration files are located in `host_files/hostname/`:
 
