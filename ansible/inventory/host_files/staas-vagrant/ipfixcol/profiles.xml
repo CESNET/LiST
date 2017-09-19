@@ -21,7 +21,7 @@
 			<sourceList>
 				<source>*</source>
 			</sourceList>
-			<filter>ipVersion = 6</filter>
+			<filter>ipv6</filter>
 		</channel>
 	</channelList>
 
@@ -41,10 +41,7 @@
 						<source>ipv6</source>
 					</sourceList>
 					<filter>
-						sourceTransportPort == 110 OR
-						destinationTransportPort == 110 OR
-						sourceTransportPort == 995 OR
-						destinationTransportPort == 995
+						port in [110 995 ]
 					</filter>
 				</channel>
 
@@ -55,10 +52,7 @@
 						<source>ipv6</source>
 					</sourceList>
 					<filter>
-						sourceTransportPort == 143 OR
-						destinationTransportPort == 143 OR
-						sourceTransportPort == 993 OR
-						destinationTransportPort == 993
+						port in [143 993]
 					</filter>
 				</channel>
 				
@@ -69,9 +63,9 @@
 						<source>ipv6</source>
 					</sourceList>
 					<filter>
-						sourceTransportPort == 25 OR
-						destinationTransportPort == 25 OR
-						sourceTransportPort == 465 OR
+						sourceTransportPort == 25 or
+						destinationTransportPort == 25 or
+						sourceTransportPort == 465 or
 						destinationTransportPort == 465
 					</filter>
 				</channel>
