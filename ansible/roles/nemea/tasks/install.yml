@@ -4,6 +4,13 @@
     dest: "{{ repo.nemea.dest }}"
     mode: "{{ repo.mode }}"
 
+- name: Add NEMEA-Testing repository
+  get_url:
+    url: "{{ repo.nemea_testing.url }}"
+    dest: "{{ repo.nemea_testing.dest }}"
+    mode: "{{ repo.mode }}"
+  when: nemea_use_testing_repo is defined and nemea_use_testing_repo
+
 - name: Install NEMEA packages
   yum: "name={{ packages }} state=installed"
 

@@ -5,6 +5,10 @@ repo: {
     url: "https://copr.fedorainfracloud.org/coprs/g/CESNET/NEMEA/repo/epel-7/group_CESNET-NEMEA-epel-7.repo",
     dest: "/etc/yum.repos.d/COPR-NEMEA.repo"
   },
+  nemea_testing: {
+    url: "https://copr.fedorainfracloud.org/coprs/g/CESNET/NEMEA-testing/repo/epel-7/group_CESNET-NEMEA-testing-epel-7.repo",
+    dest: "/etc/yum.repos.d/COPR-NEMEA-Testing.repo"
+  },
   mode: 664
 }
 

@@ -86,6 +86,7 @@ nagios_client_hostgroups: [nemea-collectors, staas]
 nagios_client_contacts: []
 nagios_client_exclude_services: [nemea-running-modules, link-traffic]
 nagios_server_nopasswd: false
+nemea_use_testing_repo: false
 
 letsencrypt_cert: {
     email: "staas@cesnet.cz"
@@ -108,6 +109,8 @@ Each host monitored by nagios can report to specific contacts. If none are speci
 Nagios client can be excluded from specific services if necessary.
 
 Nagios server can be installed without password (for demo or secure environment).
+
+Nemea testing repository can be used by setting `nemea_use_testing_repo` to `true`.
 
 Let's encrypt certificate creation allows to set custom contact mail.
 

@@ -10,6 +10,8 @@ nagios_client_contacts: []
 nagios_client_exclude_services: [nemea-running-modules, link-traffic]
 nagios_server_nopasswd: true
 
+nemea_use_testing_repo: false
+
 ansible_host: localhost
 ansible_port: 22222
 ansible_user: vagrant
