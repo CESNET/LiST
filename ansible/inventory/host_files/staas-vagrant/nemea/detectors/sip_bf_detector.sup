@@ -15,9 +15,9 @@
   <params>12009</params>
 </interface>
 <interface>
-  <type>TCP</type>
+  <type>BLACKHOLE</type>
   <direction>OUT</direction>
-  <params>12321</params>
+  <params>timeout=NO_WAIT</params>
 </interface>
 </trapinterfaces>
 </module>

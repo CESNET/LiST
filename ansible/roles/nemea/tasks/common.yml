@@ -10,9 +10,16 @@
       - "--omit-dir-times"
       - "--exclude=supervisor_config_gener.xml"
       - "--exclude=nemea_status.conf"
+  ignore_errors: yes
+
+- name: Set NEMEA permissions
+  file:
+    path: "/etc/nemea/"
+    recurse: yes
+    owner: "{{ nemea_user }}"
+    group: "{{ nemea_group }}"
   notify:
     - Restart NEMEA supervisor
-  ignore_errors: yes
 
 - name: Check for reporters configuration
   stat: path={{ nemea_reporters_config_path }}
@@ -85,3 +92,10 @@
                         </fileWriter>
                 </destination>
   notify: Restart NEMEA supervisor
+
+- name: Linkload monitor
+  copy:
+    dest: "/var/www/cgi-bin/linkloadmonitor"
+    src: "/usr/bin/nemea/link_traff2json.py"
+    mode: 0755
+
