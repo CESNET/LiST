@@ -48,9 +48,24 @@
     delete: yes
     rsync_opts:
       - "--omit-dir-times"
+  when: warden_conf_dir.stat.exists
+
+- name: Set Warden config dir ownership
+  file:
+    path: "/etc/warden/"
+    recurse: yes
+    owner: "{{ nemea_user }}"
+    group: "{{ nemea_group }}"
+  when: warden_conf_dir.stat.exists
+
+- name: Set Warden config dir permissions
+  file:
+    path: "/etc/warden/"
+    recurse: no
+    mode: 0750
+  when: warden_conf_dir.stat.exists
   notify:
     - Restart NEMEA supervisor
-  when: warden_conf_dir.stat.exists
 
 - name: Install warden client
   copy:
