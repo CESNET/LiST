@@ -6,6 +6,8 @@
     certbot --non-interactive --agree-tos --email {{ letsencrypt_cert.email }} --apache --domains {{ hostname }} --must-staple --rsa-key-size 4096 certonly
     cp -u /etc/letsencrypt/live/{{ hostname }}/privkey.pem /etc/httpd/certificate/certificate.key
     cp -u /etc/letsencrypt/live/{{ hostname }}/fullchain.pem /etc/httpd/certificate/certificate.crt
+    openssl ecparam -out /etc/httpd/certificate/ecparam.pem -name secp384r1
+    cat /etc/httpd/certificate/ecparam.pem >> /etc/httpd/certificate/certificate.crt
   args:
     creates: "/etc/letsencrypt/live/"
   notify:
