@@ -1,12 +1,15 @@
 packages: [httpd, mod_ssl]
 
-ssl_conf: "/etc/httpd/conf.d/ssl.conf"
-
 apache_configuration: {
   dest: "/etc/httpd/",
   cert_file: "/etc/httpd/certificate/certificate.crt",
   key_file: "/etc/httpd/certificate/certificate.key",
   cert_local: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/certificate"
+}
+
+apache_ssl_conf: {
+  src: "ssl.conf",
+  dest: "/etc/httpd/conf.d/ssl.conf"
 }
 
 apache_redirect_conf: {

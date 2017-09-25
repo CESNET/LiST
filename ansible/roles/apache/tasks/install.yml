@@ -9,18 +9,10 @@
 
 - include: common.yml
 
-- name: Set path to SSL certificate
-  replace:
-    dest: "{{ ssl_conf }}"
-    regexp: 'SSLCertificateFile /etc/.*'
-    replace: 'SSLCertificateFile {{ apache_configuration.cert_file }}'
-  notify: Apache restart
-
-- name: Set path to SSL certificate key
-  replace:
-    dest: "{{ ssl_conf }}"
-    regexp: 'SSLCertificateKeyFile /etc/.*'
-    replace: 'SSLCertificateKeyFile {{ apache_configuration.key_file }}'
+- name: Configure Apache SSL
+  template:
+    src: "{{ apache_ssl_conf.src }}"
+    dest: "{{ apache_ssl_conf.dest }}"
   notify: Apache restart
 
 - name: Start & enable Apache
