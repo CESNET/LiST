@@ -1,5 +1,5 @@
 packages: [mariadb-server, mariadb-devel, mod_ssl, mod_wsgi, swig, openssl-devel, gcc, python-pip, python-devel]
-pip_packages: ["ZEO", zope.security==4.1.0, mysqldbda, mysql, M2Crypto, jsonschema]
+pip_packages: ["ZEO==4.1.0", zope.security==4.1.0, mysqldbda, mysql, M2Crypto, jsonschema]
 
 warden_install_dir: {
   src: "install/",
