@@ -19,7 +19,7 @@ sample_data: {
 configuration: {
   src: "/usr/share/nemea-supervisor/*",
   dest: "/etc/nemea/",
-  creates: "/etc/nemea/config_example.xml",
+  creates: "{{ nemea_reporters_config_path }}",
   local: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/nemea/"
 }
 
