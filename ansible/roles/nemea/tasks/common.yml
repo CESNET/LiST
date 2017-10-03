@@ -113,4 +113,5 @@
     dest: "/var/www/cgi-bin/linkloadmonitor"
     src: "/usr/bin/nemea/link_traff2json.py"
     mode: 0755
+    remote_src: yes
 
