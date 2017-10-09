@@ -13,19 +13,14 @@
     dest: "{{ liberoutergui.httpdwsgi.dest }}"
   notify: Apache restart
 
-- name: Clone Liberouter GUI git
-  git:
-    repo: "{{ liberoutergui.git_repo }}"
-    dest: "{{ liberoutergui_path }}"
-    depth: 1
-    force: yes
-    version: "{{ liberoutergui.git_tag }}"
-    recursive: yes
-  notify: Apache restart
+- name: Create liberouter-gui directory
+  file: 
+    path: "{{ liberoutergui_path }}"
+    state: directory
 
 - name: Create default Liberouter GUI admin/admin user
   shell: |
-    mongo liberouter <<< 'db.users.drop(); db.users.insert({ "_id" : ObjectId("58172c575d47e20e452adcfb"), "first_name" : "", "username" : "admin", "settings" : null, "last_name" : null, "user_id" : null, "email" : null, "password" : BinData(0,"JDJiJDEyJExLd3NkY2R0UUdjdnNzalBMLmxKTC56a2RXQUtYU09aL1Y1R2JlVjk1QzVpWFVsdGdnUFJh"), "role" : 0 })'
+    mongo liberouter <<< 'db.users.drop(); db.users.insert({ "_id" : ObjectId("58172c575d47e20e452adcfb"), "first_name" : "", "username" : "admin", "settings" : null, "last_name" : null, "user_id" : null, "email" : null, "password" : BinData(0,"JDJiJDEyJExLd3NkY2R0UUdjdnNzalBMLmxKTC56a2RXQUtYU09aL1Y1R2JlVjk1QzVpWFVsdGdnUFJh"), "role" : 0, "provider": "db"})'
 
 - name: Common tasks
   include: common.yml

@@ -17,11 +17,10 @@
     copy: no
 
 - name: Set path in index.html
-  lineinfile:
+  replace:
     dest: "{{ liberoutergui_path }}/index.html"
-    state: present
-    regexp: '<base href=".*>'
-    line: '  <base href="/liberouter-gui/">'
+    regexp: '<base href="[^"]*">'
+    replace: '<base href="/liberouter-gui/">'
   notify: Apache restart
 
 - name: Create Liberouter GUI config
@@ -52,8 +51,8 @@
 
 - name: Install python requirements to virtual environment
   pip:
-    requirements: "{{ liberoutergui_path }}/api/requirements.txt"
-    virtualenv: "{{ liberoutergui_path }}/api/venv"
+    requirements: "{{ liberoutergui_path }}/backend/requirements.txt"
+    virtualenv: "{{ liberoutergui_path }}/backend/venv"
     virtualenv_python: python3.4
     virtualenv_site_packages: yes
     state: latest

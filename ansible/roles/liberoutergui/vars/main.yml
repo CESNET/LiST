@@ -18,20 +18,18 @@ liberoutergui: {
     dest: "{{ liberoutergui_path }}"
   },
   conf: {
-    src: "{{ liberoutergui_path }}/api/config-sample.ini",
-    dest: "{{ liberoutergui_path }}/api/config.ini"
+    src: "{{ liberoutergui_path }}/backend/config-sample.ini",
+    dest: "{{ liberoutergui_path }}/backend/config.ini"
   },
   assetsconf: {
     src: "{{ liberoutergui_path }}/assets/config-sample.json",
     dest: "{{ liberoutergui_path }}/assets/config.json"
   },
   nemea: {
-    conf_path: "{{ liberoutergui_path }}/api/liberouterapi/modules/nemea/config.ini"
+    conf_path: "{{ liberoutergui_path }}/backend/liberouterapi/modules/Nemea-Dashboard/config.ini"
   },
-  git_repo: "https://github.com/CESNET/liberouter-gui.git",
-  git_tag: "e1f22ade3135c797c428f133a9d95e37baeade31",
   release: {
-    url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.3.2/liberouter-gui-v0.3.2.zip",
+    url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.4.0/liberouter-gui-v0.4.0.zip",
     zip: "{{ liberoutergui_path }}/liberouter-gui.zip"
   }
 }
