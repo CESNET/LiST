@@ -1,9 +1,3 @@
-warden_filer: {
-  src: "warden_filer.py",
-  dest: "/usr/local/bin/warden_filer.py",
-  mode: "0755"
-}
-
 warden_filer_service: {
   src: "warden_filer_receiver",
   dest: "/etc/init.d/warden_filer_receiver",

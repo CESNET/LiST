@@ -1,4 +1,4 @@
 dependencies:
   - common
   - { role: warden-client, tags: warden-client }
-  - { role: ipfixcol, tags: ipfixcol }
+  - { role: warden-server, tags: warden-server }

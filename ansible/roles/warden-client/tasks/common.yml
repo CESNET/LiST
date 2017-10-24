@@ -1,0 +1,14 @@
+- name: Install warden client
+  copy:
+    src: "{{ warden_client_file.src }}"
+    dest: "{{ warden_client_file.dest }}"
+    group: "{{ warden_client_file.group }}"
+    owner: "{{ warden_client_file.owner }}"
+    mode: "{{ warden_client_file.mode }}"
+
+- name: Copy Warden filer python file
+  copy:
+    src: "{{ warden_filer.src }}"
+    dest: "{{ warden_filer.dest }}"
+    mode: "{{ warden_filer.mode }}"
+

@@ -1,11 +1,3 @@
-- name: Copy Warden filer python file
-  copy:
-    src: "{{ warden_filer.src }}"
-    dest: "{{ warden_filer.dest }}"
-    mode: "{{ warden_filer.mode }}"
-  notify:
-    - Restart Warden filer
-
 - name: Copy Warden filer service file
   copy:
     src: "{{ warden_filer_service.src }}"

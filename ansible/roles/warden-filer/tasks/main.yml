@@ -1,0 +1,7 @@
+- name: Warden Filer install
+  include: install.yml
+  tags: install
+
+- name: Warden Filer update
+  include: update.yml
+  tags: update

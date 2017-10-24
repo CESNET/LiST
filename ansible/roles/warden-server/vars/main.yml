@@ -45,7 +45,7 @@ warden_register: {
   creates: "/etc/warden/dnstunnel.cfg"
 }
 
-warden_files: {
+warden_server_files: {
   src: "warden3/",
   dest: "/opt"
 }

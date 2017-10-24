@@ -10,3 +10,4 @@
     - { role: ipfixcol, tags: ipfixcol }
     - { role: nemea-status, tags: nemea-status }
     - { role: main-page, tags: main-page }
+    - { role: warden-client, tags: warden-client }

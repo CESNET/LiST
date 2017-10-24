@@ -1,7 +1,7 @@
 - name: Warden install
-  include: install.yml
+  include: common.yml
   tags: install
 
 - name: Warden update
-  include: update.yml
+  include: common.yml
   tags: update

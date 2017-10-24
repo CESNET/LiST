@@ -67,14 +67,6 @@
   notify:
     - Restart NEMEA supervisor
 
-- name: Install warden client
-  copy:
-    src: "{{ warden_client_file.src }}"
-    dest: "{{ warden_client_file.dest }}"
-    group: "{{ warden_client_file.group }}"
-    owner: "{{ warden_client_file.owner }}"
-    mode: "{{ warden_client_file.mode }}"
-
 - name: Add configuration to startup.xml
   blockinfile:
     dest: "{{ ipfixcol_startup_xml.dest }}"

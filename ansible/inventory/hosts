@@ -1,7 +1,7 @@
 [staas]
 staas-vagrant
 
-[warden]
+[warden-server]
 staas-vagrant
 
 [letsencrypt]

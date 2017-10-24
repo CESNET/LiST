@@ -1,4 +1,0 @@
-dependencies:
-  - common
-  - apache
-  - { role: warden, tags: warden }

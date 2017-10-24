@@ -59,10 +59,10 @@
     dest: "{{ httpd_warden.service.dest }}"
   notify: Apache-warden restart
 
-- name: Copy Warden server and client
+- name: Copy Warden server
   synchronize:
-    src: "{{ warden_files.src }}"
-    dest: "{{ warden_files.dest }}"
+    src: "{{ warden_server_files.src }}"
+    dest: "{{ warden_server_files.dest }}"
     archive: no
     recursive: yes
     times: yes

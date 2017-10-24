@@ -28,14 +28,6 @@ configuration_warden: {
   local: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/warden"
 }
 
-warden_client_file: {
-  src: "warden_client.py",
-  dest: "/usr/lib/python2.7/site-packages/warden_client.py",
-  owner: "root",
-  group: "root",
-  mode: "0664"
-}
-
 # path to reporters-config.yml, used by liberouter gui
 nemea_reporters_config_path: "/etc/nemea/reporters-config.yml"
 
