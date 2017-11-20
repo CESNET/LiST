@@ -16,5 +16,15 @@
 - name: Set SELinux policy to permissive
   selinux: policy=targeted state=permissive
 
+- name: Set large system receive buffers using sysctl
+  copy:
+    src: "20-staas.conf"
+    dest: "/etc/sysctl.d/20-staas.conf"
+  register: sysctl_conf
+
+- name: Activate large system receive buffers
+  command: sysctl --system
+  when: sysctl_conf.changed
+
 - name: Common tasks
   include: common.yml
