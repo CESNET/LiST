@@ -1,7 +1,7 @@
 hostname: staas-vagrant
 timezone: Europe/Prague
 scgui_history_minutes: 120
-scgui_branch: no_sidebar
+scgui_branch: master
 sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
 mongod_cachesizeGB: 0.25
 

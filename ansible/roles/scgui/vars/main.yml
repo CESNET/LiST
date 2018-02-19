@@ -41,6 +41,12 @@ tmp_dir: {
   group: "{{ apache_group }}"
 }
 
+scgui_filters: {
+  dest: "/data/filters.txt",
+  owner: "{{ apache_user }}",
+  group: "{{ apache_group }}"
+}
+
 scgui_cron: {
   src: "scgui_cleanup",
   dest: "/etc/cron.d/scgui_cleanup"

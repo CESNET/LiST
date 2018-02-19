@@ -27,6 +27,14 @@
     owner: "{{ tmp_dir.owner }}"
     group: "{{ tmp_dir.group }}"
 
+- name: Create filters.txt file
+  copy:
+    content: ""
+    dest: "{{ scgui_filters.dest }}"
+    force: no
+    owner: "{{ scgui_filters.owner }}"
+    group: "{{ scgui_filters.group }}"
+
 # Needed for the GUI to send signal to IPFIXcol to reload profiles.xml
 - name: Add apache user to nemead group
   user:

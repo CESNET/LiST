@@ -32,6 +32,10 @@
                                         <timeWindow>300</timeWindow>
                                         <align>yes</align>
                                 </dumpInterval>
+                                <index>
+                                    <enable>yes</enable>
+                                    <autosize>yes</autosize>
+                                </index>
                         </fileWriter>
                 </destination>
   notify: Restart NEMEA supervisor
