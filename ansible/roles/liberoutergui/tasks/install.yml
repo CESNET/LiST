@@ -14,13 +14,17 @@
   notify: Apache restart
 
 - name: Create liberouter-gui directory
-  file: 
+  file:
     path: "{{ liberoutergui_path }}"
     state: directory
 
 - name: Create default Liberouter GUI admin/admin user
   shell: |
     mongo liberouter <<< 'db.users.drop(); db.users.insert({ "_id" : ObjectId("58172c575d47e20e452adcfb"), "first_name" : "", "username" : "admin", "settings" : null, "last_name" : null, "user_id" : null, "email" : null, "password" : BinData(0,"JDJiJDEyJExLd3NkY2R0UUdjdnNzalBMLmxKTC56a2RXQUtYU09aL1Y1R2JlVjk1QzVpWFVsdGdnUFJh"), "role" : 0, "provider": "db"})'
+
+- name: Setup database for alerts
+  shell: |
+    mongo {{ liberoutergui.mongodb.db }} <<< 'db.createCollection("{{ liberoutergui.mongodb.collection }}"); db.alerts_new.createIndex({ DetectTime: 1})'
 
 - name: Common tasks
   include: common.yml

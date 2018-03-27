@@ -28,6 +28,10 @@ liberoutergui: {
   nemea: {
     conf_path: "{{ liberoutergui_path }}/backend/liberouterapi/modules/Nemea-Dashboard/config.ini"
   },
+  mongodb: {
+    db: "nemeadb",
+    collection: "alerts_new"
+  },
   release: {
     url: "https://github.com/CESNET/liberouter-gui/releases/download/v0.4.0/liberouter-gui-v0.4.0.zip",
     zip: "{{ liberoutergui_path }}/liberouter-gui.zip"
