@@ -14,10 +14,5 @@
   <direction>OUT</direction>
   <params>12009</params>
 </interface>
-<interface>
-  <type>BLACKHOLE</type>
-  <direction>OUT</direction>
-  <params>timeout=NO_WAIT</params>
-</interface>
 </trapinterfaces>
 </module>
