@@ -22,7 +22,9 @@
         /* =========== */
         // use absolute paths or command names (relative to the PATH env. var.)
         $FDISTDUMP_CMD          = '/usr/lib64/mpich/bin/fdistdump_mpich';
+        $FDISTDUMP_ARGS         = '--output-rich-header';
         $FDISTDUMP_HA_CMD       = 'fdistdump-ha';
+        $FDISTDUMP_HA_ARGS      = '';
         $MPIEXEC_CMD            = '/usr/lib64/mpich/bin/mpiexec';
         $MPIEXEC_ARGS           = '-n 2'; // -env OMP_NUM_THREADS 4
         $RRDTOOL_CMD            = '/opt/rrdtool-1.6.0/bin/rrdtool';
