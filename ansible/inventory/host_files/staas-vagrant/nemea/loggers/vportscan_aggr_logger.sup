@@ -1,8 +1,8 @@
 <module>
 <name>vportscan_agg_logger</name>
 <enabled>true</enabled>
-<path>/usr/bin/nemea/logger</path>
-<params>-t -T -a /data/vportscan/alerts.log</params>
+<path>/usr/bin/nemea/json_dump.py</path>
+<params>-a /data/vportscan/alerts.log</params>
 <trapinterfaces>
 <interface>
   <type>TCP</type>
