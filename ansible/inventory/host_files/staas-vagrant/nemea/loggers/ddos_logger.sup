@@ -1,0 +1,13 @@
+<module>
+<name>ddos_logger</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/logger</path>
+<params>-t -a /data/ddos_detector/alerts.log</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>ddos_detector_alert</params>
+</interface>
+</trapinterfaces>
+</module>
