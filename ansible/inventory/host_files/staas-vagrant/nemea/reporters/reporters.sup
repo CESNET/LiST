@@ -113,6 +113,20 @@
 </module>
 
 <module>
+  <name>ddos_detector2idea</name>
+  <enabled>true</enabled>
+  <path>/usr/bin/nemea/ddos_detector2idea.py</path>
+  <params>-n cz.cesnet.nemea.ddos_detector -c /etc/nemea/reporters-config.yml</params>
+  <trapinterfaces>
+    <interface>
+      <type>UNIXSOCKET</type>
+      <direction>IN</direction>
+      <params>ddos_detector_alert</params>
+    </interface>
+  </trapinterfaces>
+</module>
+
+<module>
 <name>minerdetector2idea</name>
 <enabled>false</enabled>
 <path>/usr/bin/nemea/minerdetector2idea.py</path>

@@ -1,0 +1,18 @@
+<module>
+<name>ddos_detector</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/ddos_detector</path>
+<params>-p 100 -t 1000 -c 10 -m 100000 -b 100</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>flow_data_source</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>ddos_detector_alert</params>
+</interface>
+</trapinterfaces>
+</module>
