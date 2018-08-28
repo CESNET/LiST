@@ -1,0 +1,18 @@
+/var/log/nemea-supervisor/modules_events /var/log/nemea-supervisor/modules_statistics /var/log/nemea-supervisor/supervisor_log_module_event /var/log/nemea-supervisor/supervisor_log_statistics /var/log/nemea-supervisor/supervisor_log {
+	missingok
+	sharedscripts
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}
+
+/var/log/nemea-supervisor/modules_logs/*_stderr /var/log/nemea-supervisor/modules_logs/*_stdout {
+	missingok
+	sharedscripts
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}
+
