@@ -23,6 +23,11 @@ configuration: {
   local: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/nemea/"
 }
 
+nemea_logrotate: {
+  src: "nemea-supervisor",
+  dest: "/etc/logrotate.d/nemea-supervisor"
+}
+
 configuration_warden: {
   dest: "/etc/",
   local: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/warden"

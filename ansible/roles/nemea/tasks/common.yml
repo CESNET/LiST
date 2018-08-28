@@ -32,6 +32,11 @@
     dest: "{{ nemea_reporters_config_path }}"
   when: not reporters_conf.stat.exists
 
+- name: Copy logrotate configuration configuration
+  copy:
+    src: "{{ nemea_logrotate.src }}"
+    dest: "{{ nemea_logrotate.dest }}"
+
 - name: Check for Warden config dir
   local_action: stat path={{ configuration_warden.local }}
   become: false
