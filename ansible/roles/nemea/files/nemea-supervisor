@@ -4,6 +4,7 @@
 	notifempty
 	compress
 	delaycompress
+	su nemead nemead
 	copytruncate
 }
 
@@ -11,6 +12,8 @@
 	missingok
 	sharedscripts
 	notifempty
+	size 50M
+	su nemead nemead
 	compress
 	delaycompress
 	copytruncate
