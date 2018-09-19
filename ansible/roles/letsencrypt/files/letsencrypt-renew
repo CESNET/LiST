@@ -7,7 +7,7 @@ cp -u /etc/letsencrypt/live/$HOSTNAME/privkey.pem /etc/httpd/certificate/certifi
 cp -u /etc/letsencrypt/live/$HOSTNAME/fullchain.pem /etc/httpd/certificate/certificate.crt
 
 ISNEW=`find /etc/letsencrypt/live/$HOSTNAME/privkey.pem -mmin +60`
-if [ -z "$ISNEW" ]: then
+if [ -z "$ISNEW" ]; then
 	cat /etc/httpd/certificate/ecparam.pem >> /etc/httpd/certificate/certificate.crt
 	apachectl graceful
 fi
