@@ -2,7 +2,7 @@
 
 HOSTNAME=`hostname -f`
 secret=`tr -dc '[a-zA-Z0-9]' </dev/urandom | head -c10`
-/opt/warden_server_3/warden_server.py register -n cz.cesnet.staas.warden_filer --valid --write --notest --debug -h $HOSTNAME -r staas@cesnet.cz -s "$secret"
+/opt/warden_server_3/warden_server.py register -n cz.cesnet.list.warden_filer --valid --write --notest --debug -h $HOSTNAME -r list@cesnet.cz -s "$secret"
 cat > /etc/warden/warden_filer.cfg <<CONF
 {
     "warden": {
@@ -14,7 +14,7 @@ cat > /etc/warden/warden_filer.cfg <<CONF
         "errlog": {"level": "debug"},
         "filelog": {"level": "debug"},
         "syslog": {"level": "debug"},
-        "name": "cz.cesnet.staas.warden_filer",
+        "name": "cz.cesnet.list.warden_filer",
         "secret": "$secret"
     },
     "receiver": {

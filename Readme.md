@@ -1,13 +1,13 @@
-# What is Security Tools as a Service
+# About Liberouter Security Tools
 
-Security Tools as a Service (STaaS) is an initiative to provide an easy way to setup and operate network monitoring and analysis toolset provided by CESNET. It takes flow records in form of NetFlow or IPFIX messages and provided tools for reception, processing, storing, analysing and displaying the data and processed results. For complete list of features read ahead to section StaaS components
+Liberouter Security Tools (LiST) is an initiative to provide an easy way to setup and operate network monitoring and analysis toolset provided by CESNET. It takes flow records in form of NetFlow or IPFIX messages and provided tools for reception, processing, storing, analysing and displaying the data and processed results. For complete list of features read ahead to section LiST components
 
-# STaaS installation
+# LiST installation
 
-STaaS uses [ansible](https://www.ansible.com/) to automate installation and manage running instances.
-The STaaS playbook requires at least version 2.1.0 and is targeted at CentOS 7 and Scientific Linux 7 systems.
+LiST uses [ansible](https://www.ansible.com/) to automate installation and manage running instances.
+The LiST playbook requires at least version 2.1.0 and is targeted at CentOS 7 and Scientific Linux 7 systems.
 
-## STaaS components
+## LiST components
 
 Following Components can be installed using ansible:
 
@@ -26,9 +26,9 @@ Optional:
 - Local Warden client that writes to files
 - [Let's Encrypt](https://letsencrypt.org/) certificate
 
-## STaaS server initial configuration
+## LiST server initial configuration
 
-To install STaaS on a new server, the ansible has to have access to a root or a user with sudo.
+To install LiST on a new server, the ansible has to have access to a root or a user with sudo.
 Following configuration is also expected:
 
 `/etc/sysconfig/iptables`
@@ -55,17 +55,17 @@ Defaults   !requiretty
 SELINUX=permissive
 ```
 
-## STaaS inventory file
+## LiST inventory file
 
 Each hosts file can specify following host groups:
 
-- `[staas]` - Basic STaaS provisioning
+- `[list]` - Basic LiST provisioning
 - `[warden]` - Local Warden server installation for testing
 - `[letsencrypt]` - Create Let's encrypt certificate for the hosts, needs public IP
 - `[nagios-clients]` - Clients to be monitored by Nagios server
 - `[nagios-servers]` - Nagios server to monitor the clients
 
-## STaaS per host configuration
+## LiST per host configuration
 
 It is possible to specify per host variables and configuration file to 
 differentiate between managed hosts. This configuration can be found 
@@ -76,20 +76,20 @@ separate inventory, for example to track changes in hosts configuration
 Several variables can be set in the `host_vars/hostname` file:
 
 ```
-hostname: staas-demo.liberouter.org
+hostname: list-demo.liberouter.org
 timezone: Europe/Prague
 scgui_history_minutes: 120
 scgui_branch: devel
 sample_data_src: "http://www.liberouter.org/~thorgrin/data.ipfix.bz2"
 mongod_cachesizeGB: 1
-nagios_client_hostgroups: [nemea-collectors, staas]
+nagios_client_hostgroups: [nemea-collectors, list]
 nagios_client_contacts: []
 nagios_client_exclude_services: [nemea-running-modules, link-traffic]
 nagios_server_nopasswd: false
 nemea_use_testing_repo: false
 
 letsencrypt_cert: {
-    email: "staas@cesnet.cz"
+    email: "list@cesnet.cz"
 }
 
 ansible_become: true
@@ -101,8 +101,8 @@ stored by ipfix plugin of IPFIXcol collector.
 Size of Mongo database cache in gigabytes. Allows float numbers (e.g.: 0.25)
 
 Nagios client hostgroup list is a list of hostgroups to which the host
-belongs. If it is not an existing (nemea-collectors or staas), the hostgroup must
-be created by adding configuration file for it (see next lines). Default is both `nemea-collectors` and `staas` hostgroups.
+belongs. If it is not an existing (nemea-collectors or list), the hostgroup must
+be created by adding configuration file for it (see next lines). Default is both `nemea-collectors` and `list` hostgroups.
 
 Each host monitored by nagios can report to specific contacts. If none are specified, notifications are sent to `admins` contact group. The contacts must already exist.
 
@@ -137,17 +137,17 @@ A basic ansible playbook command (call from the `ansible` directory):
 ansible-playbook -i inventory/hosts site.yml --tags install
 ```
 
-The `site.yml` playbook includes all parts of the STaaS. You can use only selected playbooks, e.g. `nagios.yml` to setup nagios. In that case, everything except Nagios roles and hostgroups are ignored.
+The `site.yml` playbook includes all parts of the LiST. You can use only selected playbooks, e.g. `nagios.yml` to setup nagios. In that case, everything except Nagios roles and hostgroups are ignored.
 
-## STaaS Vagrant box
+## LiST Vagrant box
 
-Local development and testing of STaaS can be easily done using Vagrant box. Just go to vagrant directory and call
+Local development and testing of LiST can be easily done using Vagrant box. Just go to vagrant directory and call
 
 ```
 vagrant up
 ```
 
-It will create new virtual machine and automatically apply the STaaS ansible playbook. 
+It will create new virtual machine and automatically apply the LiST ansible playbook. 
 
 ## Default login
 

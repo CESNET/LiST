@@ -4,7 +4,7 @@ mkdir -p /opt/warden_server_3/{keys,ca}
 cd /opt/warden_server_3/ca
 # generate CA
 openssl genrsa -out rootCA.key 2048
-echo -e "CZ\nCzech Republic\nPrague\nCESNET - STaaS\n\n`hostname -f`\n\nstaas@cesnet.cz\n" | openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
+echo -e "CZ\nCzech Republic\nPrague\nCESNET - LiST\n\n`hostname -f`\n\nlist@cesnet.cz\n" | openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
 
 cd /opt/warden_server_3/keys
 for i in server client; do

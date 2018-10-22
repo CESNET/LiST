@@ -1,27 +1,27 @@
 Vagrant.configure(2) do |config|
 
-  config.vm.define "staas-vagrant" do |staas|
-    staas.vm.box = "centos/7"
+  config.vm.define "list-vagrant" do |list|
+    list.vm.box = "centos/7"
 
-    staas.vm.provider :virtualbox do |v|
+    list.vm.provider :virtualbox do |v|
         v.customize ["modifyvm", :id, "--memory", 1024]
         v.customize ["modifyvm", :id, "--cpus", 1]
-        v.customize ["modifyvm", :id, "--name", "staas-vagrant"]
+        v.customize ["modifyvm", :id, "--name", "list-vagrant"]
     end
 
     # webserver https
-    staas.vm.network "forwarded_port", guest: 443, host: 8443
+    list.vm.network "forwarded_port", guest: 443, host: 8443
 
     # ssh
-    staas.vm.network "forwarded_port", guest: 22, host: 22222
+    list.vm.network "forwarded_port", guest: 22, host: 22222
 
     # dashboard backend
-    staas.vm.network "forwarded_port", guest: 5555, host: 5555
+    list.vm.network "forwarded_port", guest: 5555, host: 5555
 
     # ipfixcol
-    staas.vm.network "forwarded_port", guest: 4739, host: 4739, protocol: "udp"
+    list.vm.network "forwarded_port", guest: 4739, host: 4739, protocol: "udp"
 
-    staas.vm.provision :ansible do |ansible|
+    list.vm.provision :ansible do |ansible|
       ansible.playbook = "../ansible/site.yml"
       ansible.inventory_path = "../ansible/inventory/hosts"
       ansible.tags = "install"

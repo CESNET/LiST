@@ -1,4 +1,4 @@
-- include: staas.yml
+- include: list.yml
 - include: nagios.yml
 - include: letsencrypt.yml
 - include: warden-server.yml

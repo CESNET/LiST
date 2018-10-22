@@ -1,4 +1,4 @@
-- hosts: staas
+- hosts: list
   force_handlers: true
   roles:
     - { role: settings, tags: settings }

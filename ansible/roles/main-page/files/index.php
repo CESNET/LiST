@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>STaaS</title>
-    <meta name="description" content="STaaS main site with links to the services">
+    <title>LiST</title>
+    <meta name="description" content="LiST main site with links to the services">
     <style>
 html {
   height: 100%;
@@ -71,7 +71,7 @@ main {
 <body>
 
     <header>
-        <h1>Security Tools as a Service</h1>
+        <h1>Liberouter Security Tools</h1>
     </header>
 
     <main>
@@ -105,7 +105,7 @@ main {
     </main>
 
     <footer>
-        <a href="https://github.com/CESNET/STaaS">STaaS</a> | Copyright: <a href="https://www.ces.net">CESNET z. s. p. o.</a>, <a href="https://www.liberouter.org">Liberouter team</a>, 2017
+        <a href="https://github.com/CESNET/LiST">LiST</a> | Copyright: <a href="https://www.ces.net">CESNET z. s. p. o.</a>, <a href="https://www.liberouter.org">Liberouter team</a>, 2017
     </footer>
 
 </body>

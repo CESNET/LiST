@@ -18,8 +18,8 @@
 
 - name: Set large system receive buffers using sysctl
   copy:
-    src: "20-staas.conf"
-    dest: "/etc/sysctl.d/20-staas.conf"
+    src: "20-list.conf"
+    dest: "/etc/sysctl.d/20-list.conf"
   register: sysctl_conf
 
 - name: Activate large system receive buffers

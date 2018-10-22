@@ -26,7 +26,7 @@
                                 <storagePath>/data/flow/</storagePath>
                                 <prefix>lnf.</prefix>
                                 <suffixMask>%Y%m%d%H%M%S</suffixMask>
-                                <identificatorField>staas</identificatorField>
+                                <identificatorField>list</identificatorField>
                                 <compress>yes</compress>
                                 <dumpInterval>
                                         <timeWindow>300</timeWindow>
