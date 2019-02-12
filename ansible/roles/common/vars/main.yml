@@ -1,2 +1,2 @@
 supported_distributions: "CentOS/7;Scientific/7"
-packages: [rsync, git]
+packages: [rsync, git, python-setuptools]
