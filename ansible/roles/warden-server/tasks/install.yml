@@ -1,6 +1,13 @@
 - name: Install Warden rpm dependencies
   yum: "name={{ packages }} state=installed"
 
+- name: Update pip2
+  pip:
+    name: "{{ item }}"
+    executable: pip2
+    state: latest
+  with_items: "{{ pip_update }}"
+
 - name: Install Warden pip dependencies
   pip:
     name: "{{ item }}"
