@@ -1,75 +1,132 @@
 <?xml version="1.0"?>
 <!-- Live profile (default - always must exists) -->
 <profile name="live">
-	<!--## Type of a profile -->
-	<type>normal</type>
-	<!--## Directory for data store of valuable data and statistics -->
-	<directory>/data/flow/live/</directory>
+  <!--## Type of a profile -->
+  <type>normal</type>
+  <!--## Directory for data store of valuable data and statistics -->
+  <directory>/data/flow/live/</directory>
+  <!-- List of channels that belong to the profile -->
+  <channelList>
+    <channel name="ipv4">
+      <!--## List of sources from which channel will receive data -->
+      <sourceList>
+        <!--## Live profile always use "*" -->
+        <source>*</source>
+      </sourceList>
+      <!--## Filter applied on records, specifying whether it belongs to the profile -->
+      <filter>ipVersion = 4</filter>
+    </channel>
+    <channel name="ipv6">
+      <sourceList>
+        <source>*</source>
+      </sourceList>
+      <filter>ipv6</filter>
+    </channel>
 
-	<!-- List of channels that belong to the profile -->
-	<channelList>
-		<channel name="ipv4">
-			<!--## List of sources from which channel will receive data -->
-			<sourceList>
-				<!--## Live profile always use "*" -->
-				<source>*</source>
-			</sourceList>
-			<!--## Filter applied on records, specifying whether it belongs to the profile -->
-			<filter>ipVersion = 4</filter>
-		</channel>
-		<channel name="ipv6">
-			<sourceList>
-				<source>*</source>
-			</sourceList>
-			<filter>ipv6</filter>
-		</channel>
-	</channelList>
+    <!-- Channels by Observation Domain ID -->
+    <!--
+    <channel name="mynet1">
+      <sourceList>
+        <source>*</source>
+      </sourceList>
+      <filter>odid = 1</filter>
+    </channel>
+    <channel name="mynet2">
+      <sourceList>
+        <source>*</source>
+      </sourceList>
+      <filter>odid = 2</filter>
+    </channel>
+    -->
 
-	<!--## List of subprofiles that belong to the live profile -->
-	<subprofileList>
-		<!--## Example subprofile for -->
-		<profile name="emails">
-			<type>normal</type>
-			<directory>/data/flow/live/emails/</directory>
+  </channelList>
+  <!--## List of subprofiles that belong to the live profile -->
+  <subprofileList>
+    <!--## Example subprofile for -->
+    <profile name="emails">
+      <type>normal</type>
+      <directory>/data/flow/live/emails/</directory>
+      <channelList>
+        <!-- POP3 flows -->
+        <channel name="pop3">
+          <sourceList>
+            <!--## Sources are channels only from the parent profile -->
+            <source>ipv4</source>
+            <source>ipv6</source>
+          </sourceList>
+          <filter>port in [110 995]</filter>
+        </channel>
+        <!-- IMAP flows -->
+        <channel name="imap">
+          <sourceList>
+            <source>ipv4</source>
+            <source>ipv6</source>
+          </sourceList>
+          <filter>port in [143 993]</filter>
+        </channel>
+        <!-- SMTP flows -->
+        <channel name="smtp">
+          <sourceList>
+            <source>ipv4</source>
+            <source>ipv6</source>
+          </sourceList>
+          <filter>port in [25 465]</filter>
+        </channel>
+      </channelList>
+    </profile>
 
-			<channelList>
-				<!-- POP3 flows -->
-				<channel name="pop3">
-					<sourceList>
-						<!--## Sources are channels only from the parent profile -->
-						<source>ipv4</source>
-						<source>ipv6</source>
-					</sourceList>
-					<filter>
-						port in [110 995 ]
-					</filter>
-				</channel>
+    <!-- Subprofiles by Interface per each Observation Domain ID -->
+    <!--
+    <profile name="mynet1">
+      <type>normal</type>
+      <directory>/data/flow/live/mynet1/</directory>
+      <channelList>
+        <channel name="wan">
+          <sourceList>
+            <source>mynet1</source>
+          </sourceList>
+          <filter>ingressInterface = 0</filter>
+        </channel>
+        <channel name="lan">
+          <sourceList>
+            <source>mynet1</source>
+          </sourceList>
+          <filter>ingressInterface = 1</filter>
+        </channel>
+        <channel name="guest">
+          <sourceList>
+            <source>mynet1</source>
+          </sourceList>
+          <filter>ingressInterface = 2</filter>
+        </channel>
+      </channelList>
+    </profile>
+    <profile name="mynet2">
+      <type>normal</type>
+      <directory>/data/flow/live/mynet2/</directory>
+      <channelList>
+        <channel name="wan">
+          <sourceList>
+            <source>mynet2</source>
+          </sourceList>
+          <filter>ingressInterface = 0</filter>
+        </channel>
+        <channel name="lan">
+          <sourceList>
+            <source>mynet2</source>
+          </sourceList>
+          <filter>ingressInterface = 1</filter>
+        </channel>
+        <channel name="guest">
+          <sourceList>
+            <source>mynet2</source>
+          </sourceList>
+          <filter>ingressInterface = 2</filter>
+        </channel>
+      </channelList>
+    </profile>
+    -->
 
-				<!-- IMAP flows -->
-				<channel name="imap">
-					<sourceList>
-						<source>ipv4</source>
-						<source>ipv6</source>
-					</sourceList>
-					<filter>
-						port in [143 993]
-					</filter>
-				</channel>
-				
-				<!-- SMTP flows -->
-				<channel name="smtp">
-					<sourceList>
-						<source>ipv4</source>
-						<source>ipv6</source>
-					</sourceList>
-					<filter>
-						sourceTransportPort == 25 or
-						destinationTransportPort == 25 or
-						sourceTransportPort == 465 or
-						destinationTransportPort == 465
-					</filter>
-				</channel>
-			</channelList>
-		</profile>
-	</subprofileList>
+  </subprofileList>
 </profile>
+
