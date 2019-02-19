@@ -1,0 +1,2 @@
+tlsendpoint_service: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/socat/tls-endpoint.service"
+

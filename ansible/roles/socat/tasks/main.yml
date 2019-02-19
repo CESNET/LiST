@@ -1,0 +1,4 @@
+- name: Socat install
+  include: install.yml
+  tags: install
+

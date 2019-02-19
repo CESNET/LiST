@@ -13,3 +13,4 @@
     - { role: warden-client, tags: warden-client }
     - { role: easyrsa, tags: easyrsa }
     - { role: fail2ban, tags: fail2ban }
+    - { role: socat, tags: socat }
