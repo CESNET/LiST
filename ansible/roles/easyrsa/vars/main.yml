@@ -1,0 +1,8 @@
+easyrsa_tmp: "/tmp"
+
+easyrsa_src: {
+  url: "https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.6/EasyRSA-unix-v3.0.6.tgz",
+  dest: "{{ easyrsa_tmp }}/EasyRSA-unix-v3.0.6.tgz",
+  creates: "/opt/easyrsa"
+}
+
