@@ -22,9 +22,16 @@ Vagrant.configure(2) do |config|
     list.vm.network "forwarded_port", guest: 4739, host: 4739, protocol: "udp"
 
     list.vm.provision :ansible do |ansible|
-      ansible.playbook = "../ansible/site.yml"
+      ansible.playbook = "../ansible/list.yml"
       ansible.inventory_path = "../ansible/inventory/hosts"
       ansible.tags = "install"
+      ansible.raw_arguments = [
+        "--skip-tags=ipfixcol",
+                     # --skip-tags=liberoutergui,main-page,nemea-dashboard,nemea-status,munin,ipfixcol,scgui,nagios,
+                     # nagios-client,warden-client",
+        "-vvv",
+      ]
+
     end
 
   end

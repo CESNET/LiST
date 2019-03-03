@@ -1,0 +1,158 @@
+<module>
+<name>blacklist_downloader</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/bl_downloader.py</path>
+<params>--repo-path /data/blacklistfilter/blacklist_repo</params>
+<trapinterfaces/>
+</module>
+
+<module>
+<name>ipblacklistfilter</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/ipblacklistfilter</path>
+<params/>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>flow_data_source</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>ipblacklist_aggregator_ur_sock</params>
+</interface>
+</trapinterfaces>
+</module>
+
+<module>
+<name>ipblacklist_aggregator_ur</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/agg</path>
+<params>-k SRC_IP -k DST_IP -k PROTOCOL -k DST_PORT -s BYTES -s PACKETS -o SRC_BLACKLIST -o DST_BLACKLIST -t g:60</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>ipblacklist_aggregator_ur_sock</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>blacklist_aggregator_ip:timeout=1000</params>
+</interface>
+</trapinterfaces>
+</module>
+
+<module>
+<name>blacklist_aggregator_json</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/blacklist_aggregator.py</path>
+<params>-t 5</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>blacklist_aggregator_ip</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>blacklist_aggregator_url</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>adaptive_ip_url2:timeout=NO_WAIT</params>
+</interface>
+</trapinterfaces>
+</module>
+
+<module>
+<name>urlblacklistfilter</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/urlblacklistfilter</path>
+<params/>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>http_data_source</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>blacklist_aggregator_url</params>
+</interface>
+</trapinterfaces>
+</module>
+
+<module>
+<name>dnsblacklistfilter</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/dnsblacklistfilter</path>
+<params/>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>dns_data_source</params>
+</interface>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>adaptive_dns</params>
+</interface>
+</trapinterfaces>
+</module>
+
+<module>
+<name>adaptive_ipblacklistfilter</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/ipblacklistfilter</path>
+<params>-4 /tmp/blacklistfilter/adaptive.blist</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>flow_data_source</params>
+</interface>
+<interface>
+  <type>FILE</type>
+  <direction>OUT</direction>
+  <params>/data/blacklistfilter/evidence_adaptive</params>
+</interface>
+</trapinterfaces>
+</module>
+
+<module>
+<name>adaptive_filter</name>
+<enabled>true</enabled>
+<path>/usr/bin/nemea/adaptive_filter</path>
+<params>-p 30 -l 20 -e 300</params>
+<trapinterfaces>
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>adaptive_ip_url2</params>
+</interface>
+
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>IN</direction>
+  <params>adaptive_dns</params>
+</interface>
+
+<interface>
+  <type>UNIXSOCKET</type>
+  <direction>OUT</direction>
+  <params>blacklist2idea_sock:timeout=NO_WAIT</params>
+</interface>
+
+<interface>
+  <type>FILE</type>
+  <direction>OUT</direction>
+  <params>/data/blacklistfilter/evidence_detection</params>
+</interface>
+</trapinterfaces>
+</module>
