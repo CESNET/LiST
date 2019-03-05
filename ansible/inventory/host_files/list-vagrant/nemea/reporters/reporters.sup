@@ -27,10 +27,10 @@
 </module>
 
 <module>
-  <name>ipblacklist2idea</name>
+  <name>blacklist2idea</name>
   <enabled>true</enabled>
-  <path>/usr/bin/nemea/ipblacklist2idea.py</path>
-  <params>-n cz.cesnet.nemea.ipblacklist --warden=/etc/warden/ipblacklist.cfg -c /etc/nemea/reporters-config.yml</params>
+  <path>/usr/bin/nemea/blacklist2idea.py</path>
+  <params>--name=cz.cesnet.nemea.blacklist --warden=/etc/warden/blacklist.cfg -c /etc/nemea/reporters-config.yml</params>
   <trapinterfaces>
     <interface>
       <type>TCP</type>

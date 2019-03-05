@@ -1,8 +1,8 @@
 <module>
-<name>ipblacklistfilter_logger</name>
+<name>blacklistfilter_aggr_logger</name>
 <enabled>true</enabled>
-<path>/usr/bin/nemea/logger</path>
-<params>-t -T -a /data/ipblacklistfilter/detected.log</params>
+<path>/usr/bin/nemea/json_dump.py</path>
+<params>-a /data/blacklistfilter/detected.log</params>
 <trapinterfaces>
 <interface>
   <type>TCP</type>
