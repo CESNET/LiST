@@ -1,13 +1,13 @@
 - hosts: list
   force_handlers: true
   roles:
-    # - { role: settings, tags: settings }
-    # - { role: nemea-dashboard, tags: nemea-dashboard }
-    # - { role: liberoutergui, tags: liberoutergui }
-    # - { role: scgui, tags: scgui }
+    - { role: settings, tags: settings }
+    - { role: nemea-dashboard, tags: nemea-dashboard }
+    - { role: liberoutergui, tags: liberoutergui }
+    - { role: scgui, tags: scgui }
     - { role: nemea, tags: nemea }
-    # - { role: munin, tags: munin }
-    # - { role: ipfixcol, tags: ipfixcol }
-    # - { role: nemea-status, tags: nemea-status }
-    # - { role: main-page, tags: main-page }
-    # - { role: warden-client, tags: warden-client }
+    - { role: munin, tags: munin }
+    - { role: ipfixcol, tags: ipfixcol }
+    - { role: nemea-status, tags: nemea-status }
+    - { role: main-page, tags: main-page }
+    - { role: warden-client, tags: warden-client }
