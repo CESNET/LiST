@@ -80,7 +80,7 @@ hostname: list-demo.liberouter.org
 timezone: Europe/Prague
 scgui_history_minutes: 120
 scgui_branch: devel
-sample_data_src: "https://dior.ics.muni.cz/~velan/dowload/data.ipfix.bz2"
+sample_data_src: "https://github.com/CESNET/LiST/releases/download/v0.1-beta/data.ipfix.bz2"
 mongod_cachesizeGB: 1
 nagios_client_hostgroups: [nemea-collectors, list]
 nagios_client_contacts: []
