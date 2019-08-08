@@ -27,6 +27,20 @@
 </module>
 
 <module>
+  <name>blacklist2idea</name>
+  <enabled>true</enabled>
+  <path>/usr/bin/nemea/blacklist2idea.py</path>
+  <params>--name=cz.cesnet.nemea.blacklist --warden=/etc/warden/blacklist.cfg -c /etc/nemea/reporters-config.yml</params>
+  <trapinterfaces>
+    <interface>
+      <type>TCP</type>
+      <direction>IN</direction>
+      <params>12006</params>
+    </interface>
+  </trapinterfaces>
+</module>
+
+<module>
   <name>vportscan2idea</name>
   <enabled>true</enabled>
   <path>/usr/bin/nemea/vportscan2idea.py</path>
@@ -140,16 +154,3 @@
 </trapinterfaces>
 </module>
 
-<module>
-<name>blacklist2idea</name>
-<enabled>true</enabled>
-<path>/usr/bin/nemea/blacklist2idea.py</path>
-<params>--blacklist-config /etc/nemea/blacklistfilter/bl_downloader_config.xml -c /etc/nemea/reporters-config.yml</params>
-<trapinterfaces>
-<interface>
-  <type>UNIXSOCKET</type>
-  <direction>IN</direction>
-  <params>blacklist2idea_sock</params>
-</interface>
-</trapinterfaces>
-</module>
