@@ -74,6 +74,11 @@
     - Restart NEMEA supervisor
 
 # Hotfix for adaptive blacklistfilter
+- name: Init adaptive blacklist dir
+  file:
+      path: "/tmp/blacklistfilter/"
+      state: directory
+      mode: 0777
 - name: Init adaptive blacklist
   file:
       path: "/tmp/blacklistfilter/adaptive.blist"
