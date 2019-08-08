@@ -25,12 +25,10 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "../ansible/list.yml"
       ansible.inventory_path = "../ansible/inventory/hosts"
       ansible.tags = "install"
-      ansible.raw_arguments = [
-        "--skip-tags=ipfixcol",
-                     # --skip-tags=liberoutergui,main-page,nemea-dashboard,nemea-status,munin,ipfixcol,scgui,nagios,
-                     # nagios-client,warden-client",
-        "-vvv",
-      ]
+      #ansible.raw_arguments = [
+      #  "--skip-tags=nagios,warden-client",
+      #  -vvv",
+      #]
 
     end
 
