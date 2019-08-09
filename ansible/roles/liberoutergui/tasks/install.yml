@@ -7,7 +7,7 @@
     executable: pip3
   with_items:  "{{ pip_packages }}"
 
-- name: Load python3.4 wsgi module in Apache
+- name: Load python3.6 wsgi module in Apache
   copy:
     src: "{{ liberoutergui.httpdwsgi.src }}"
     dest: "{{ liberoutergui.httpdwsgi.dest }}"

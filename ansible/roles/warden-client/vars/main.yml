@@ -1,12 +1,13 @@
 warden_filer: {
   src: "warden_filer.py",
+  configsrc: "warden_client.cfg",
   dest: "/usr/local/bin/warden_filer.py",
   mode: "0755"
 }
 
 warden_client_file: {
   src: "warden_client.py",
-  dest: "/usr/lib/python2.7/site-packages/warden_client.py",
+  dest: "/usr/lib/python3.6/site-packages/warden_client.py",
   owner: "root",
   group: "root",
   mode: "0664"

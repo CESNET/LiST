@@ -1,5 +1,7 @@
 - hosts: list
   force_handlers: true
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
   roles:
     - { role: settings, tags: settings }
     - { role: nemea-dashboard, tags: nemea-dashboard }

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2011-2015 Cesnet z.s.p.o
@@ -428,7 +428,7 @@ def get_configs():
 
     # Allow inline or external Warden config
     wconfig = config.get("warden", "warden_client.cfg")
-    if isinstance(wconfig, basestring):
+    if isinstance(wconfig, str):
         wconfig = read_cfg(wconfig)
 
     fconfig = config.get(args.func, {})

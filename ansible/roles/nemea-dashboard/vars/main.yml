@@ -1,4 +1,4 @@
-packages: [python34]
+packages: [python36]
 
 pip: {
   requirements: "/var/www/html/Nemea-Dashboard/requirements.txt"

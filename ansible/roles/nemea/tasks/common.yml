@@ -73,6 +73,12 @@
   notify:
     - Restart NEMEA supervisor
 
+- name: Link warden_filer.py to NEMEA
+  file:
+    path: /usr/bin/nemea/warden_filer.py
+    src: /usr/local/bin/warden_filer.py
+    state: link
+
 # Hotfix for adaptive blacklistfilter
 - name: Init adaptive blacklist dir
   file:

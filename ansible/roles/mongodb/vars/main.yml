@@ -1,4 +1,5 @@
-packages: [mongodb-org, python-pymongo]
+packages: [mongodb-org,]
+pip3packages: [pymongo,]
 
 repo: {
   mongo: {

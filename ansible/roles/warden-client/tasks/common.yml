@@ -12,3 +12,88 @@
     dest: "{{ warden_filer.dest }}"
     mode: "{{ warden_filer.mode }}"
 
+- name: Create config dir for warden_filer sender
+  file:
+    path: "/etc/warden/filer"
+    state: directory
+    mode: '0750'
+    owner: nemead
+    group: nemead
+
+- name: Copy config for warden_filer sender
+  copy:
+    src: "{{ warden_filer.configsrc }}"
+    dest: "/etc/warden/filer/warden_client.cfg"
+    owner: nemead
+    group: nemead
+    mode: "0640"
+
+- name: Check for generated key and cert
+  stat: path=/opt/warden_server_3/keys/client.key
+  register: warden_filer_key
+  ignore_errors: True
+
+- name: Copy warden_filer key
+  copy:
+    remote_src: True
+    src: "/opt/warden_server_3/keys/client.key"
+    dest: "/etc/warden/filer/key.pem"
+    mode: "0640"
+    owner: nemead
+    group: nemead
+  when: warden_filer_key.stat.exists
+
+- name: Copy warden_filer ca cert
+  copy:
+    remote_src: True
+    src: "/opt/warden_server_3/ca/rootCA.pem"
+    dest: "/etc/warden/filer/rootCA.pem"
+    mode: "0640"
+    owner: nemead
+    group: nemead
+  when: warden_filer_key.stat.exists
+  register: warden_ca_cert
+  ignore_errors: True
+
+- name: Copy warden_filer cert
+  copy:
+    remote_src: True
+    src: "/opt/warden_server_3/keys/client.crt"
+    dest: "/etc/warden/filer/cert.pem"
+    mode: "0640"
+    owner: nemead
+    group: nemead
+  when: warden_filer_key.stat.exists
+
+- name: Insert path to CA cert into config
+  blockinfile:
+    dest: "/etc/warden/filer/warden_client.cfg"
+    insertbefore: '"keyfile": "/etc/warden/filer/key.pem",'
+    marker: '"ansiblecafile{mark}": "1",'
+    backup: yes
+    block: '"cafile": "/etc/warden/filer/rootCA.pem",'
+  when: warden_ca_cert is succeeded
+
+- name: Replace Warden server with localhost in config
+  replace:
+    path: "/etc/warden/filer/warden_client.cfg"
+    regexp: "warden-hub.cesnet.cz"
+    replace: 'localhost:8443'
+  when: warden_ca_cert is succeeded
+
+- name: Clean markers
+  replace:
+    path: "/etc/warden/filer/warden_client.cfg"
+    regexp: '.*ansiblecafile.*'
+    replace: ''
+  when: warden_ca_cert is succeeded
+
+
+- name: Create warden dir for NEMEA
+  file:
+    path: /data/warden/
+    state: directory
+    owner: nemead
+    group: nemead
+
+                

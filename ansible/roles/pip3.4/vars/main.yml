@@ -1,7 +1,0 @@
-packages: [python34, python34-devel, "@Development tools"]
-
-pip: {
-  url: "https://bootstrap.pypa.io/get-pip.py",
-  tmp: "/tmp/get-pip.py",
-  creates: "/bin/pip",
-}

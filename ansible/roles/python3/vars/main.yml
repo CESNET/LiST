@@ -1,0 +1,2 @@
+packages: [python36, python36-devel, python36-pip, python36-virtualenv, "@Development tools"]
+

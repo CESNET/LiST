@@ -1,3 +1,5 @@
+---
+namespace: com.example.list_vagrant.nemea
 smtp_connections:
   - id: mylocalserver
 custom_actions:
@@ -6,9 +8,13 @@ custom_actions:
        host: localhost
        db: nemeadb
        collection: alerts_new
-  - id: store_warden
+  - id: warden
     warden:
       url: https://localhost/warden/
+  - id: store_warden
+    file:
+      path: /data/warden/incoming/
+      temp_path: /data/warden/temp/
   - id: file
     file:
        path: /dev/stdout

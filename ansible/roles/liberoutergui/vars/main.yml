@@ -1,4 +1,4 @@
-packages: [unzip, httpd-devel]
+packages: [unzip, httpd-devel, libffi-devel]
 
 pip_packages: [virtualenv, mod_wsgi]
 

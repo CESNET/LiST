@@ -53,7 +53,9 @@
   pip:
     requirements: "{{ liberoutergui_path }}/backend/requirements.txt"
     virtualenv: "{{ liberoutergui_path }}/backend/venv"
-    virtualenv_python: python3.4
+    virtualenv_python: python3.6
     virtualenv_site_packages: yes
+    virtualenv_command: virtualenv-3
     state: latest
   notify: Apache restart
+

@@ -3,8 +3,14 @@
     src: "{{ repo.mongo.src }}"
     dest: "{{ repo.mongo.dest }}"
 
-- name: Install Mongo, python, etc
+- name: Install Mongo
   yum: "name={{ packages }} state=installed"
+
+- name: Install pymongo
+  pip:
+    name: "{{ pip3packages }}"
+    executable: pip3
+    state: latest
 
 - include: common.yml
 

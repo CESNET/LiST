@@ -1,7 +1,7 @@
 dependencies:
   - common
   - epel
+  - python3
   - mongodb
-  - pip3.4
   - { role: nemea, tags: nemea }
   - { role: apache, tags: apache }

@@ -1,0 +1,10 @@
+- name: Install dependencies
+  yum: "name={{ packages }} state=installed"
+
+- name: Update pip3
+  pip:
+    name:
+      - setuptools
+    executable: pip3
+    state: latest
+
