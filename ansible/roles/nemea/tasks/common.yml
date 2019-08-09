@@ -112,7 +112,25 @@
                                         <bufferSwitch>1</bufferSwitch>
                                         <format>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,PACKETS,?DST_PORT,?SRC_PORT,DIR_BIT_FIELD,PROTOCOL,?TCP_FLAGS,?TOS,?TTL</format>
                                 </interface>
-                               <!-- VOIP interface -->
+                                <!-- HTTP interface -->
+                                <interface>
+                                        <type>u</type>
+                                        <params>http_data_source</params>
+                                        <ifcTimeout>1000</ifcTimeout>
+                                        <flushTimeout>1000000</flushTimeout>
+                                        <bufferSwitch>1</bufferSwitch>
+                                        <format>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,?HTTP_REQUEST_AGENT_ID,?HTTP_REQUEST_METHOD_ID,?HTTP_RESPONSE_STATUS_CODE,PACKETS,DST_PORT,SRC_PORT,DIR_BIT_FIELD,PROTOCOL,TCP_FLAGS,?TOS,?TTL,?HTTP_REQUEST_AGENT,?HTTP_REQUEST_HOST,?HTTP_REQUEST_REFERER,?HTTP_REQUEST_URL,?HTTP_RESPONSE_CONTENT_TYPE</format>
+                                </interface>
+                                <!-- DNS interface -->
+                                <interface>
+                                        <type>u</type>
+                                        <params>dns_data_source</params>
+                                        <ifcTimeout>1000</ifcTimeout>
+                                        <flushTimeout>1000000</flushTimeout>
+                                        <bufferSwitch>1</bufferSwitch>
+                                        <format>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,DNS_RR_TTL,PACKETS,DNS_ANSWERS,DNS_CLASS,DNS_ID,?DNS_PSIZE,DNS_QTYPE,DNS_RLENGTH,?DST_PORT,?SRC_PORT,DIR_BIT_FIELD,?DNS_DO,DNS_RCODE,PROTOCOL,?TCP_FLAGS,?TOS,?TTL,?DNS_NAME,?DNS_RDATA</format>
+                                </interface>
+                                <!-- VOIP interface -->
                                 <interface>
                                         <type>u</type>
                                         <params>voip_data_source</params>

@@ -1,0 +1,40 @@
+- name: Check for TLS endpoint configuration (tls-endpoint.service)
+  local_action: stat path={{ tlsendpoint_service }}
+  become: false
+  register: tlsendpoint_service_file
+  ignore_errors: True
+
+- name: Install socat
+  yum: "name=socat state=installed"
+  when: tlsendpoint_service_file.stat.exists
+
+- name: Copy tls-endpoint.service configuration
+  copy:
+    src: "{{ tlsendpoint_service }}"
+    dest: /etc/systemd/system/tls-endpoint.service
+  when: tlsendpoint_service_file.stat.exists
+
+- name: Create a system user tlsendpoint
+  user:
+    name: tlsendpoint
+    system: yes
+    state: present
+    create_home: no
+  when: tlsendpoint_service_file.stat.exists
+
+- name: Create directory for TLS certificates
+  file:
+    path: /etc/tls-endpoint/
+    state: directory
+    owner: tlsendpoint
+  when: tlsendpoint_service_file.stat.exists
+
+- name: Create README for tlsendpoint
+  copy:
+    content: >
+      Put server.key, server.crt, ca.crt into this directory and execute
+      systemctl enable tlsendpoint
+      service tlsendpoint start
+    dest: /etc/tls-endpoint/README
+  when: tlsendpoint_service_file.stat.exists
+

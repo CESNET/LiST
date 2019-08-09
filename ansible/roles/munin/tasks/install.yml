@@ -37,5 +37,15 @@
     replace: '[{{ hostname }}]'
   when: hostname is defined
 
+- name: Check if munin-server_confd.local_dir
+  local_action: stat path="{{ munin_server_confd.local_dir }}"
+  register: result
+
+- name: Copy list of munin monitored machines
+  copy:
+    src: "{{ munin_server_confd.local_dir }}"
+    dest: "{{ munin_server_confd.target_dir }}"
+  when: result.stat.exists == True
+
 - name: Start & enable Munin-node
   service: name=munin-node state=started enabled=yes

@@ -1,0 +1,16 @@
+- name: Update Fail2ban
+  yum: "name=fail2ban state=latest update_cache=yes"
+
+- name: Check for jail.local configuration
+  local_action: stat path="{{ jaillocal_file }}"
+  become: false
+  register: jail_local_conf
+  ignore_errors: True
+
+- name: Copy jail.local configuration
+  copy:
+    src: "{{ jaillocal_file }}"
+    dest: /etc/fail2ban/jail.local
+    force: yes
+    when: jail_local_conf.stat.exists
+

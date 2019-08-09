@@ -1,0 +1,13 @@
+- name: Download EasyRSA archive
+  get_url:
+    url: "{{ easyrsa_src.url }}"
+    dest: "{{ easyrsa_src.dest }}"
+
+- name: Extract EasyRSA
+  shell: |
+    mkdir -p "{{ easyrsa_src.creates }}"
+    tar -C "{{ easyrsa_src.creates }}" --strip-components=1 -xzf "{{ easyrsa_src.dest }}"
+    rm "{{ easyrsa_src.dest }}"
+  args:
+    creates: "{{ easyrsa_src.creates }}"
+

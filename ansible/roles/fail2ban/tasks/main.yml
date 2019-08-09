@@ -1,0 +1,8 @@
+- name: Fail2ban install
+  include: install.yml
+  tags: install
+
+- name: Fail2ban update
+  include: update.yml
+  tags: update
+

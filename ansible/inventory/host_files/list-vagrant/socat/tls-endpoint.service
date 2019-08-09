@@ -1,0 +1,21 @@
+[Unit]
+Description=Create a simple TLS endpoint using socat and keys&certs in /etc/tls-enspoint/ (server.key,server.crt,sa.crt)
+After=network-online.target
+Before=multi-user.target
+DefaultDependencies=no
+
+[Service]
+User=tlsendpoint
+
+ExecStart=/bin/socat openssl-listen:4740,method=TLS1.2,key=/etc/tls-endpoint/server.key,cert=/etc/tls-endpoint/server.crt,cafile=/etc/tls-endpoint/ca.crt,reuseaddr,fork udp-sendto:localhost:4739
+
+# wait 60 seconds before trying to restart the connection
+# if it disconnects
+RestartSec=60
+
+# keep retrying no matter what
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

@@ -18,3 +18,9 @@ plugin: {
   src: "/usr/share/munin/plugins/nemea_supervisor",
   dest: "/etc/munin/plugins/nemea_supervisor"
 }
+
+munin_server_confd: {
+  local_dir: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/munin-server/",
+  target_dir: /etc/munin/conf.d/
+}
+

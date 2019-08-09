@@ -1,6 +1,22 @@
 - name: Install Apache
   yum: "name={{ packages }} state=installed"
 
+- name: Create /etc/systemd/system/httpd.service.d
+  file:
+    path: /etc/systemd/system/httpd.service.d
+    state: directory
+
+- name: Install systemd privatetmp override
+  copy:
+    content: <
+        [Service]
+        PrivateTmp=False
+    dest: /etc/systemd/system/httpd.service.d/noprivtemp.conf
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
 - name: Redirect HTTP to HTTPs
   copy:
     src: "{{ apache_redirect_conf.src }}"

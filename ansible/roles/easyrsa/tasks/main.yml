@@ -1,0 +1,4 @@
+- name: EasyRSA install
+  include: install.yml
+  tags: install
+

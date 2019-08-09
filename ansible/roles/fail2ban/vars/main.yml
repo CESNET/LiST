@@ -1,0 +1,1 @@
+jaillocal_file: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/fail2ban/jail.local"

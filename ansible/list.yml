@@ -13,3 +13,6 @@
     - { role: nemea-status, tags: nemea-status }
     - { role: main-page, tags: main-page }
     - { role: warden-client, tags: warden-client }
+    - { role: easyrsa, tags: easyrsa }
+    - { role: fail2ban, tags: fail2ban }
+    - { role: socat, tags: socat }
