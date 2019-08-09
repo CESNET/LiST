@@ -21,8 +21,9 @@
   </modules>
 
   <modules>
-    <name>Loggers</name>
+    <name>Munin</name>
     <enabled>true</enabled>
-    <!-- include /etc/nemea/loggers -->
+    <!-- include /etc/nemea/munin -->
   </modules>
+
 </nemea-supervisor>

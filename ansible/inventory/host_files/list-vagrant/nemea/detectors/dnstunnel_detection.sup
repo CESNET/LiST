@@ -6,7 +6,7 @@
 <interface>
   <type>UNIXSOCKET</type>
   <direction>IN</direction>
-  <params>flow_data_source</params>
+  <params>dns_data_source</params>
 </interface>
 <interface>
   <type>TCP</type>

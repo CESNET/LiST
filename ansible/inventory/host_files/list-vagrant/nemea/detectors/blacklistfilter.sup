@@ -10,7 +10,7 @@
 <name>ipblacklistfilter</name>
 <enabled>true</enabled>
 <path>/usr/bin/nemea/ipblacklistfilter</path>
-<params> </params>
+<params/>
 <trapinterfaces>
 <interface>
   <type>UNIXSOCKET</type>
