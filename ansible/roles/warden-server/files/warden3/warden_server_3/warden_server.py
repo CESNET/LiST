@@ -8,12 +8,12 @@ from __future__ import print_function
 
 import sys
 import os
+import io
 from os import path
 import logging
 import logging.handlers
 import json
 import re
-import email.utils
 from traceback import format_tb
 from collections import namedtuple
 from time import sleep
@@ -25,9 +25,18 @@ import MySQLdb.cursors as mycursors
 if sys.version_info[0] >= 3:
     import configparser as ConfigParser
     from urllib.parse import parse_qs
+    unicode = str
+
+    def get_method_params(method):
+        return method.__code__.co_varnames[:method.__code__.co_argcount]
+
 else:
     import ConfigParser
     from urlparse import parse_qs
+
+    def get_method_params(method):
+        return method.func_code.co_varnames[:method.func_code.co_argcount]
+
 
 # for local version of up to date jsonschema
 sys.path.append(path.join(path.dirname(__file__), "..", "lib"))
@@ -139,6 +148,7 @@ def get_clean_root_logger(level=logging.INFO):
     logger = logging.getLogger(__name__)
     logger.setLevel(level)
     while logger.handlers:
+        logger.handlers[0].close()
         logger.removeHandler(logger.handlers[0])
     while logger.filters:
         logger.removeFilter(logger.filters[0])
@@ -212,7 +222,7 @@ Client = namedtuple("Client", [
 class Object(object):
 
     def __str__(self):
-        attrs = self.__init__.func_code.co_varnames[1:self.__init__.func_code.co_argcount]
+        attrs = get_method_params(self.__init__)[1:]
         eq_str = ["%s=%r" % (attr, getattr(self, attr, None)) for attr in attrs]
         return "%s(%s)" % (type(self).__name__, ", ".join(eq_str))
 
@@ -435,7 +445,7 @@ class JSONSchemaValidator(NoValidator):
     def __init__(self, req, log, filename=None):
         NoValidator.__init__(self, req, log)
         self.path = filename or path.join(path.dirname(__file__), "idea.schema")
-        with open(self.path) as f:
+        with io.open(self.path, "r", encoding="utf-8") as f:
             self.schema = json.load(f)
         self.validator = Draft4Validator(self.schema)
 
@@ -477,11 +487,11 @@ class MySQL(ObjectBase):
         self.catmap_filename = catmap_filename
         self.tagmap_filename = tagmap_filename
 
-        with open(catmap_filename, "r") as catmap_fd:
+        with io.open(catmap_filename, "r", encoding="utf-8") as catmap_fd:
             self.catmap = json.load(catmap_fd)
             self.catmap_other = self.catmap["Other"]    # Catch error soon, avoid lookup later
 
-        with open(tagmap_filename, "r") as tagmap_fd:
+        with io.open(tagmap_filename, "r", encoding="utf-8") as tagmap_fd:
             self.tagmap = json.load(tagmap_fd)
             self.tagmap_other = self.catmap["Other"]    # Catch error soon, avoid lookup later
 
@@ -595,7 +605,7 @@ class MySQL(ObjectBase):
             with attempt as db:
                 rows = db.query("".join(query), params).fetchall()
                 if len(rows) > 1:
-                    self.log.warn(
+                    self.log.warning(
                         "get_client_by_name: query returned more than one result (cert_names = %s, name = %s, secret = %s): %s" % (
                             cert_names, name, secret, ", ".join([str(Client(**row)) for row in rows])))
                     return None
@@ -806,10 +816,10 @@ class MySQL(ObjectBase):
     def load_maps(self):
         with self as db:
             db.query("DELETE FROM tags")
-            for tag, num in self.tagmap.iteritems():
+            for tag, num in self.tagmap.items():
                 db.query("INSERT INTO tags(id, tag) VALUES (%s, %s)", (num, tag))
             db.query("DELETE FROM categories")
-            for cat_subcat, num in self.catmap.iteritems():
+            for cat_subcat, num in self.catmap.items():
                 catsplit = cat_subcat.split(".", 1)
                 category = catsplit[0]
                 subcategory = catsplit[1] if len(catsplit) > 1 else None
@@ -912,8 +922,20 @@ class Server(ObjectBase):
 
             args = self.sanitize_args(path, method, args)
 
+            # Based on RFC2616, section 4.4 we SHOULD respond with 400 (bad request) or 411
+            # (length required) if content length was not specified. We choose not to, to
+            # preserve compatibility with clients deployed in the wild, which use POST for
+            # all requests (even those without payload, with no specified content length).
+            # According to PEP3333, section "Input and Error Streams", the application SHOULD
+            # NOT attempt to read more data than specified by CONTENT_LENGTH. As stated in
+            # section "environ Variables", CONTENT_LENGTH may be empty (string) or absent.
             try:
-                post_data = environ['wsgi.input'].read()
+                content_length = int(environ.get('CONTENT_LENGTH', 0))
+            except ValueError:
+                content_length = 0
+
+            try:
+                post_data = environ['wsgi.input'].read(content_length)
             except:
                 raise self.req.error(message="Data read error.", error=408, exc=sys.exc_info())
 
@@ -931,10 +953,15 @@ class Server(ObjectBase):
 
         # Make sure everything is properly encoded - JSON and various function
         # may spit out unicode instead of str and it gets propagated up (str
-        # + unicode = unicode). However, the right thing would be to be unicode
-        # correct among whole source and always decode on input (json module
-        # does that for us) and on output here.
-        if isinstance(status, unicode):
+        # + unicode = unicode).
+        # For Python2 the right thing would be to be unicode correct among whole
+        # source and always decode on input (json module does that for us) and
+        # on output here.
+        # For Python3 strings are internally unicode so no decoding on input is
+        # necessary. For output, "status" must be unicode string, "output" must
+        # be encoded bytes array, what is done here. Important: for Python 3 we
+        # define: unicode = str
+        if isinstance(status, unicode) and sys.version_info[0] < 3:
             status = status.encode("utf-8")
         if isinstance(output, unicode):
             output = output.encode("utf-8")
@@ -947,11 +974,10 @@ class Server(ObjectBase):
 
 
 def json_wrapper(method):
-
     def meth_deco(self, post, **args):
-        if "events" in method.func_code.co_varnames[0:method.func_code.co_argcount]:
+        if "events" in get_method_params(method):
             try:
-                events = json.loads(post) if post else None
+                events = json.loads(post.decode('utf-8')) if post else None
             except Exception as e:
                 raise self.req.error(
                     message="Deserialization error.", error=400,
@@ -973,7 +999,7 @@ def json_wrapper(method):
     try:
         meth_deco.arguments = method.arguments
     except AttributeError:
-        meth_deco.arguments = method.func_code.co_varnames[:method.func_code.co_argcount]
+        meth_deco.arguments = get_method_params(method)
     return meth_deco
 
 
@@ -997,13 +1023,14 @@ class WardenHandler(ObjectBase):
     def getDebug(self):
         return {
             "environment": self.req.env,
-            "client": self.req.client.__dict__,
+            "client": self.req.client._asdict(),
             "database": self.db.get_debug(),
             "system": {
+                "python": sys.version,
                 "uname": os.uname()
             },
             "process": {
-                "cwd": os.getcwdu(),
+                "cwd": unicode(os.getcwd()),
                 "pid": os.getpid(),
                 "ppid": os.getppid(),
                 "pgrp": os.getpgrp(),
@@ -1177,15 +1204,15 @@ def read_ini(path):
 
 
 def read_cfg(path):
-    with open(path, "r") as f:
+    with io.open(path, "r", encoding="utf-8") as f:
         stripcomments = "\n".join((l for l in f if not l.lstrip().startswith(("#", "//"))))
         conf = json.loads(stripcomments)
 
     # Lowercase keys
     conf = dict((
         sect.lower(), dict(
-            (subkey.lower(), val) for subkey, val in subsect.iteritems())
-    ) for sect, subsect in conf.iteritems())
+            (subkey.lower(), val) for subkey, val in subsect.items())
+    ) for sect, subsect in conf.items())
 
     return conf
 
@@ -1333,7 +1360,7 @@ def build_server(conf, section_order=section_order, section_def=section_def, par
     }
 
     def init_obj(sect_name):
-        config = conf.get(sect_name, {})
+        config = dict(conf.get(sect_name, {}))
         sect_name = sect_name.lower()
         sect_def = section_def[sect_name]
 
@@ -1360,7 +1387,7 @@ def build_server(conf, section_order=section_order, section_def=section_def, par
 
         # Process parameters
         kwargs = {}
-        for name, definition in params.iteritems():
+        for name, definition in params.items():
             raw_val = config.get(name, definition["default"])
             try:
                 type_callable = conv_dict[definition["type"]]
@@ -1451,9 +1478,8 @@ def modify_client(**kwargs):
         return allowed.match(nsid)
 
     def isValidEmail(mail):
-        mails = (email.utils.parseaddr(m) for m in mail.split(","))
-        allowed = re.compile(r"^[a-zA-Z0-9_.%!+-]+@[a-zA-Z0-9-.]+$")  # just basic check
-        valid = (allowed.match(ms[1]) for ms in mails)
+        allowed = re.compile(r"(^[a-zA-Z0-9_ .%!+-]*(?=<.*>))?(^|(<(?=.*(>))))[a-zA-Z0-9_.%!+-]+@[a-zA-Z0-9-.]+\4?$")   # just basic check
+        valid = (allowed.match(ms.strip())for ms in mail.split(','))
         return all(valid)
 
     def isValidID(id):
@@ -1573,7 +1599,8 @@ def get_args():
     argp.add_argument(
         "-c", "--config",
         help="path to configuration file")
-    subargp = argp.add_subparsers(title="commands")
+    subargp = argp.add_subparsers(title="commands", dest="command")
+    subargp.required = True
 
     subargp_check = subargp.add_parser(
         "check", add_help=False,
