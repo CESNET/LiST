@@ -1,164 +1,161 @@
 <module>
-  <name>hoststats2idea</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/hoststats2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>TCP</type>
-      <direction>IN</direction>
-      <params>12002</params>
-    </interface>
-  </trapinterfaces>
+ <name>hoststats2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/hoststats2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12002</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>amplification2idea</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/amplification2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>TCP</type>
-      <direction>IN</direction>
-      <params>12001</params>
-    </interface>
-  </trapinterfaces>
+ <name>amplification2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/amplification2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12001</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>blacklist2idea</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/blacklist2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>TCP</type>
-      <direction>IN</direction>
-      <params>12006</params>
-    </interface>
-  </trapinterfaces>
+ <name>blacklist2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/blacklist2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12006</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>vportscan2idea</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/vportscan2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>TCP</type>
-      <direction>IN</direction>
-      <params>12005</params>
-    </interface>
-  </trapinterfaces>
+ <name>vportscan2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/vportscan2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12005</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>bruteforce2idea</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/bruteforce2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>UNIXSOCKET</type>
-      <direction>IN</direction>
-      <params>bfd_data_out</params>
-    </interface>
-  </trapinterfaces>
+ <name>bruteforce2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/bruteforce2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>UNIXSOCKET</type>
+     <direction>IN</direction>
+     <params>bfd_data_out</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>voipfraud2idea</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/voipfraud2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>TCP</type>
-      <direction>IN</direction>
-      <params>12003</params>
-    </interface>
-  </trapinterfaces>
+ <name>voipfraud2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/voipfraud2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12003</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>dnstunnel2idea</name>
-  <enabled>false</enabled>
-  <path>/usr/bin/nemea/dnstunnel2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>TCP</type>
-      <direction>IN</direction>
-      <params>12004</params>
-    </interface>
-  </trapinterfaces>
+ <name>dnstunnel2idea</name>
+ <enabled>false</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/dnstunnel2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12004</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <!-- TODO add warden config -->
-
 <module>
-<name>haddrscan2idea</name>
-<enabled>true</enabled>
-<path>/usr/bin/nemea/haddrscan2idea.py</path>
-<params>-c /etc/nemea/reporters-config.yml</params>
-<trapinterfaces>
-<interface>
-  <type>TCP</type>
-  <direction>IN</direction>
-  <params>12008</params>
-</interface>
-</trapinterfaces>
+ <name>haddrscan2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/haddrscan2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12008</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>ddos_detector2idea</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/ddos_detector2idea.py</path>
-  <params>-c /etc/nemea/reporters-config.yml</params>
-  <trapinterfaces>
-    <interface>
-      <type>UNIXSOCKET</type>
-      <direction>IN</direction>
-      <params>ddos_detector_alert</params>
-    </interface>
-  </trapinterfaces>
+ <name>ddos_detector2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/ddos_detector2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>UNIXSOCKET</type>
+     <direction>IN</direction>
+     <params>ddos_detector_alert</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-<name>minerdetector2idea</name>
-<enabled>false</enabled>
-<path>/usr/bin/nemea/minerdetector2idea.py</path>
-<params>-c /etc/nemea/reporters-config.yml</params>
-<trapinterfaces>
-<interface>
-  <type>UNIXSOCKET</type>
-  <direction>IN</direction>
-  <params>miner_detector_data_out</params>
-</interface>
-</trapinterfaces>
+ <name>minerdetector2idea</name>
+ <enabled>false</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/minerdetector2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>UNIXSOCKET</type>
+     <direction>IN</direction>
+     <params>miner_detector_data_out</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-<name>sipbf2idea</name>
-<enabled>true</enabled>
-<path>/usr/bin/nemea/sipbf2idea.py</path>
-<params>-c /etc/nemea/reporters-config.yml</params>
-<trapinterfaces>
-<interface>
-  <type>TCP</type>
-  <direction>IN</direction>
-  <params>12009</params>
-</interface>
-</trapinterfaces>
+ <name>sipbf2idea</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/python3</path>
+ <params>/usr/bin/nemea/sipbf2idea.py -c /etc/nemea/reporters-config.yml</params>
+ <trapinterfaces>
+   <interface>
+     <type>TCP</type>
+     <direction>IN</direction>
+     <params>12009</params>
+   </interface>
+ </trapinterfaces>
 </module>
 
 <module>
-  <name>warden_filer</name>
-  <enabled>true</enabled>
-  <path>/usr/bin/nemea/nemea_warden_filer</path>
-  <params>-c /etc/nemea/reporters-config.yml -w /etc/warden/filer/warden_client.cfg</params>
+ <name>warden_filer</name>
+ <enabled>true</enabled>
+ <path>/usr/bin/nemea/nemea_warden_filer</path>
+ <params>-c /etc/nemea/reporters-config.yml -w /etc/warden/filer/warden_client.cfg</params>
 </module>
-
-

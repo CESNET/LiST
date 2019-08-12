@@ -1,4 +1,4 @@
-packages: [nemea, nemea-modules]
+packages: [nemea, python36-nemea-pycommon, python36-nemea-pytrap]
 
 repo: {
   nemea: {
