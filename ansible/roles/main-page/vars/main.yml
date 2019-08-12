@@ -1,5 +1,3 @@
-packages: [php]
-
 index: {
   src: "index.php",
   dest: "/var/www/html/index.php"

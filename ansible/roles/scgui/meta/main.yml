@@ -1,5 +1,6 @@
 dependencies:
   - role: common
   - role: apache
+  - role: php7
   - { role: ipfixcol, tags: ipfixcol }
   - { role: nemea, tags: nemea }

@@ -1,3 +1,4 @@
 dependencies:
   - role: common
   - role: apache
+  - role: php7

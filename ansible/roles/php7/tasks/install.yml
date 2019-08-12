@@ -1,0 +1,20 @@
+- name: Install remirepo with PHP packages
+  yum:
+    name: "{{ repourl }}"
+    state: present
+
+- name: Install yum-utils
+  yum:
+    name: "{{ phprepoconfiger }}"
+    state: installed
+
+- name: Select php73
+  shell: yum-config-manager --enable remi-php73
+
+- name: Install PHP packages
+  yum:
+    name: "{{ phppackages }}"
+    state: installed
+  notify:
+    - Apache restart
+
