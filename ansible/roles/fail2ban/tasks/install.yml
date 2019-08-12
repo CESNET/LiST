@@ -1,8 +1,22 @@
 - name: Install fail2ban
   yum: "name=fail2ban state=installed"
 
+- name: Install f2b-warden action config
+  copy:
+    src: f2b-warden.conf
+    dest: /etc/fail2ban/action.d/f2b-warden.conf
+    mode: 0644
+
+- name: Install Warden connector script
+  copy:
+    src: f2ban_ssh.sh
+    dest: /usr/bin/nemea/f2ban_ssh.sh
+    mode: 0755
+    owner: nemead
+    group: nemead
+
 - name: Check for jail.local configuration
-  local_action: stat path="{{ jaillocal_file }}"
+  local_action: "stat path={{ jaillocal_file }}"
   become: false
   register: jail_local_conf
   ignore_errors: True

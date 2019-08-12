@@ -3,4 +3,6 @@ bantime = 3600
 
 [sshd]
 enabled = true
+action  = iptables[name=SSH, port=ssh, protocol=tcp]
+          f2b-warden[name=SSH, port=ssh, protocol=tcp, wardenpath=/data/warden/]
 
