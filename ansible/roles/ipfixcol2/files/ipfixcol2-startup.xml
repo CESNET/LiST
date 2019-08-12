@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<ipfixcol2>
+  <!-- Input plugins -->
+  <inputPlugins>
+    <input>
+      <name>UDP collector</name>
+      <plugin>udp</plugin>
+      <params>
+        <localPort>4741</localPort>
+        <!-- Bind to all local adresses -->
+        <localIPAddress/>
+      </params>
+    </input>
+  </inputPlugins>
+  <!-- Output plugins -->
+  <outputPlugins>
+    <output>
+      <name>UniRec basic</name>
+      <plugin>unirec</plugin>
+      <params>
+        <uniRecFormat>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,PACKETS,?DST_PORT,?SRC_PORT,DIR_BIT_FIELD,PROTOCOL,?TCP_FLAGS,?TOS,?TTL</uniRecFormat>
+        <trapIfcCommon>
+          <timeout>10000</timeout>
+          <buffer>true</buffer>
+          <autoflush>1000000</autoflush>
+        </trapIfcCommon>
+        <trapIfcSpec>
+          <unix>
+            <name>basic_flowdata</name>
+            <maxClients>64</maxClients>
+          </unix>
+        </trapIfcSpec>
+      </params>
+    </output>
+    <!--
+<output>
+    <name>UniRec SIP</name>
+    <plugin>unirec</plugin>
+    <params>
+        <uniRecFormat>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,PACKETS,?DST_PORT,SIP_MSG_TYPE,?SIP_STATUS_CODE,?SRC_PORT,DIR_BIT_FIELD,PROTOCOL,?TCP_FLAGS,?TOS,?TTL,SIP_CALLED_PARTY,SIP_CALLING_PARTY,?SIP_CALL_ID,?SIP_CSEQ,?SIP_REQUEST_URI,?SIP_USER_AGENT,?SIP_VIA</uniRecFormat>
+        <trapIfcCommon>
+            <timeout>10000</timeout>
+            <buffer>true</buffer>
+            <autoflush>1000000</autoflush>
+        </trapIfcCommon>
+
+        <trapIfcSpec>
+            <unix>
+                <name>sip_flowdata</name>
+                <maxClients>64</maxClients>
+            </unix>
+        </trapIfcSpec>
+    </params>
+</output>
+<output>
+    <name>UniRec HTTP</name>
+    <plugin>unirec</plugin>
+    <params>
+        <uniRecFormat>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,?HTTP_REQUEST_AGENT_ID,?HTTP_REQUEST_METHOD_ID,?HTTP_RESPONSE_STATUS_CODE,PACKETS,DST_PORT,SRC_PORT,DIR_BIT_FIELD,PROTOCOL,TCP_FLAGS,?TOS,?TTL,?HTTP_REQUEST_AGENT,?HTTP_REQUEST_HOST,?HTTP_REQUEST_REFERER,?HTTP_REQUEST_URL,?HTTP_RESPONSE_CONTENT_TYPE</uniRecFormat>
+        <trapIfcCommon>
+            <timeout>1000</timeout>
+            <buffer>true</buffer>
+            <autoflush>1000000</autoflush>
+        </trapIfcCommon>
+
+        <trapIfcSpec>
+            <unix>
+                <name>http_flowdata</name>
+                <maxClients>64</maxClients>
+            </unix>
+        </trapIfcSpec>
+    </params>
+</output>
+<output>
+    <name>UniRec IP6tunnel</name>
+    <plugin>unirec</plugin>
+    <params>
+        <uniRecFormat>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,PACKETS,?DST_PORT,?SRC_PORT,DIR_BIT_FIELD,?IPV6_TUN_TYPE,PROTOCOL,?TCP_FLAGS,?TOS,?TTL</uniRecFormat>
+        <trapIfcCommon>
+            <timeout>1000</timeout>
+            <buffer>true</buffer>
+            <autoflush>1000000</autoflush>
+        </trapIfcCommon>
+
+        <trapIfcSpec>
+            <unix>
+                <name>ipv6tunnel_flowdata</name>
+                <maxClients>64</maxClients>
+            </unix>
+        </trapIfcSpec>
+    </params>
+</output>
+<output>
+    <name>UniRec DNS</name>
+    <plugin>unirec</plugin>
+    <params>
+        <uniRecFormat>DST_IP,SRC_IP,BYTES,LINK_BIT_FIELD,TIME_FIRST,TIME_LAST,DNS_RR_TTL,PACKETS,DNS_ANSWERS,DNS_CLASS,DNS_ID,?DNS_PSIZE,DNS_QTYPE,DNS_RLENGTH,?DST_PORT,?SRC_PORT,DIR_BIT_FIELD,?DNS_DO,DNS_RCODE,PROTOCOL,?TCP_FLAGS,?TOS,?TTL,?DNS_NAME,?DNS_RDATA</uniRecFormat>
+        <trapIfcCommon>
+            <timeout>1000</timeout>
+            <buffer>true</buffer>
+            <autoflush>1000000</autoflush>
+        </trapIfcCommon>
+
+        <trapIfcSpec>
+            <unix>
+                <name>dns_flowdata</name>
+                <maxClients>64</maxClients>
+            </unix>
+        </trapIfcSpec>
+    </params>
+</output>
+<output>
+    <name>UniRec TLS</name>
+    <plugin>unirec</plugin>
+    <params>
+        <uniRecFormat>TIME_FIRST,TIME_LAST,SRC_IP,DST_IP,PROTOCOL,SRC_PORT,DST_PORT,TLS_CONTENT_TYPE,TLS_HANDSHAKE_TYPE,?TLS_SETUP_TIME,TLS_SERVER_VERSION,TLS_SERVER_RANDOM,TLS_SERVER_SESSIONID,TLS_CIPHER_SUITE,TLS_ALPN,TLS_SNI,TLS_SNI_LENGTH,TLS_CLIENT_VERSION,TLS_CIPHER_SUITES,TLS_CLIENT_RANDOM,TLS_CLIENT_SESSIONID,TLS_EXTENSION_TYPES,TLS_EXTENSION_LENGTHS,TLS_ELLIPTIC_CURVES,TLS_EC_POINTFORMATS,TLS_CLIENT_KEYLENGTH,TLS_ISSUER_CN,TLS_SUBJECT_CN,TLS_SUBJECT_ON,TLS_VALIDITY_NOTBEFORE,TLS_VALIDITY_NOTAFTER,TLS_SIGNATURE_ALG,TLS_PUBLIC_KEYALG,TLS_PUBLIC_KEYLENGTH,TLS_JA_3FINGERPRINT,?TCP_FLAGS,PACKETS,BYTES</uniRecFormat>
+        <trapIfcCommon>
+            <timeout>1000</timeout>
+            <buffer>true</buffer>
+            <autoflush>1000000</autoflush>
+        </trapIfcCommon>
+
+        <trapIfcSpec>
+            <unix>
+                <name>tls_flowdata</name>
+                <maxClients>64</maxClients>
+            </unix>
+        </trapIfcSpec>
+    </params>
+<verbosity>debug</verbosity>
+</output>
+-->
+    <!--
+    <output>
+      <name>JSON output</name>
+      <plugin>json</plugin>
+      <params>
+        <tcpFlags>formatted</tcpFlags>
+        <timestamp>formatted</timestamp>
+        <protocol>formatted</protocol>
+        <ignoreUnknown>false</ignoreUnknown>
+        <ignoreOptions>true</ignoreOptions>
+        <nonPrintableChar>true</nonPrintableChar>
+        <outputs>
+          <file>
+              <name>Store to files</name>
+              <path>/data/ipfixcol2/flow/%Y/%m/%d/</path>
+              <prefix>json.</prefix>
+              <timeWindow>300</timeWindow>
+              <timeAlignment>yes</timeAlignment>
+          </file>
+        </outputs>
+      </params>
+    </output>
+-->
+  </outputPlugins>
+</ipfixcol2>
+

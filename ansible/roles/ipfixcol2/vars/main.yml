@@ -1,0 +1,18 @@
+packages: [ipfixcol2, ipfixcol2-unirec-output]
+
+repo: {
+  ipfixcol: {
+    url: "https://copr.fedorainfracloud.org/coprs/g/CESNET/IPFIXcol/repo/epel-7/group_CESNET-IPFIXcol-epel-7.repo",
+    dest: "/etc/yum.repos.d/COPR-IPFIXcol.repo"
+  },
+  mode: 664
+}
+
+ipfixcol2_startup_xml: {
+  src: "ipfixcol2-startup.xml",
+  dest: "/etc/ipfixcol2/ipfixcol2-startup.xml",
+  host: "{{ inventory_dir }}/host_files/{{ inventory_hostname }}/ipfixcol2/ipfixcol-startup.xml"
+}
+
+# This is just a copy that can be set in the set_fact task
+ipfixcol2_startup_xml_src: "{{ ipfixcol2_startup_xml.src }}"

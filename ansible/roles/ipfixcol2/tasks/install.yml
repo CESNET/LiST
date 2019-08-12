@@ -1,0 +1,25 @@
+- name: Add IPFIXcol2 repo
+  get_url:
+    url: "{{ repo.ipfixcol.url }}"
+    dest: "{{ repo.ipfixcol.dest }}"
+    mode: "{{ repo.mode }}"
+
+- name: Install IPFIXcol2
+  yum: "name={{ packages }} state=installed"
+
+- name: Check for host specific startup.xml
+  local_action: stat path={{ ipfixcol2_startup_xml.host }}
+  become: false
+  register: host_startup_xml
+  ignore_errors: True
+
+- name: Select host specific ipfixcol2-startup.xml
+  set_fact:
+    ipfixcol2_startup_xml_src: "{{ ipfixcol2_startup_xml.host }}"
+  when: host_startup_xml.stat.exists
+
+- name: Copy startup.xml configuration template
+  copy:
+    src: "{{ ipfixcol2_startup_xml_src }}"
+    dest: "{{ ipfixcol2_startup_xml.dest }}"
+    force: no
