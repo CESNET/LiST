@@ -16,7 +16,7 @@
     "port": 5555,
     "host": "0.0.0.0"
   },
-  "ssl": true,
+  "ssl": false,
   "ssl_key": "{{ apache_configuration.key_file }}",
   "ssl_crt": "{{ apache_configuration.cert_file }}",
   "debug": false

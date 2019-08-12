@@ -18,3 +18,10 @@
   with_items:
     - "{{ apache_configuration.cert_file }}"
     - "{{ apache_configuration.key_file }}"
+
+- name: Configure proxy HTTP for dashboard backend
+  copy:
+    src: nemea-dashboard.conf
+    dest: /etc/httpd/conf.d/nemea-dashboard.conf
+    mode: 0644
+
