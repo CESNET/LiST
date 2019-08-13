@@ -1,0 +1,3 @@
+MAILTO=root
+
+0 0 * * *     root mongo nemeadb /usr/bin/nemea/mongo-cleanup.js 2>/dev/null >/dev/null

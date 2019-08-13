@@ -23,5 +23,7 @@ nemea_dashboard_conf: {
   template_file: "config.json",
   local_file_js: "config.js",
   conf_file: "/var/www/html/Nemea-Dashboard/api/config.json",
-  conf_file_js: "/var/www/html/Nemea-Dashboard/public/config.js"
+  conf_file_js: "/var/www/html/Nemea-Dashboard/public/config.js",
+  cleanup_js: "/usr/bin/nemea/mongo-cleanup.js"
 }
+

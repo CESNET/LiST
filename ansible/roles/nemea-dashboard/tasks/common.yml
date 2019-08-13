@@ -25,3 +25,13 @@
     dest: /etc/httpd/conf.d/nemea-dashboard.conf
     mode: 0644
 
+- name: Install MongoDB cleanup script
+  copy:
+    src: mongo-cleanup.js
+    dest: "{{ nemea_dashboard_conf.cleanup_js }}"
+
+- name: Setup MongoDB cleanup cron
+  copy:
+    src: "mongo_cleanup.cron"
+    dest: "/etc/cron.d/mongo_cleanup"
+
