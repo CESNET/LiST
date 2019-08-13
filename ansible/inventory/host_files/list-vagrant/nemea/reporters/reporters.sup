@@ -96,7 +96,6 @@
  </trapinterfaces>
 </module>
 
-<!-- TODO add warden config -->
 <module>
  <name>haddrscan2idea</name>
  <enabled>true</enabled>
