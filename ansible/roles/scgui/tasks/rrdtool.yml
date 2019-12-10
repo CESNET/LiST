@@ -19,3 +19,4 @@
   args:
     chdir: "{{ rrdtool_tmp }}"
     creates: "{{ rrdtool_src.creates }}"
+    warn: no

@@ -20,6 +20,8 @@
 
 - name: Get allowed_hosts from nrpe.cfg
   shell: sed -rn 's/^allowed_hosts=(.+)/\1/p' {{ config_nrpe.main }}
+  args:
+    warn: no
   register: allowed_hosts
   changed_when: false
 
