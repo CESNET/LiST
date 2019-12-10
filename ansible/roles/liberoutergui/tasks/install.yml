@@ -4,7 +4,7 @@
 - name: Install pip3 dependencies
   pip:
     name: "{{ item }}"
-    executable: pip3
+    executable: pip3.4
   with_items:  "{{ pip_packages }}"
 
 - name: Load python3.4 wsgi module in Apache
