@@ -1,4 +1,4 @@
-- hosts: warden-server
+- hosts: warden_server
   force_handlers: true
   roles:
     - { role: warden-server, tags: warden-server }

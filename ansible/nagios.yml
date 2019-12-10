@@ -1,4 +1,4 @@
-- hosts: nagios-clients
+- hosts: nagios_clients
 
   # Gather facts about nagios servers, we need IP addresses
   pre_tasks:
@@ -12,7 +12,7 @@
   roles:
     - { role: nagios-client, tags: nagios-client }
 
-- hosts: nagios-servers
+- hosts: nagios_servers
 
   # Gather facts about nagios clients, we need IP addresses
   pre_tasks:
