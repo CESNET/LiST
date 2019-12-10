@@ -3,16 +3,14 @@
 
 - name: Update pip2
   pip:
-    name: "{{ item }}"
+    name: "{{ pip_update }}"
     executable: pip2
     state: latest
-  with_items: "{{ pip_update }}"
 
 - name: Install Warden pip dependencies
   pip:
-    name: "{{ item }}"
+    name: "{{ pip_packages }}"
     executable: pip2
-  with_items: "{{ pip_packages }}"
 
 - name: Start & enable MariaDB
   service: name=mariadb state=started enabled=yes
