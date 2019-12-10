@@ -4,7 +4,7 @@
   pre_tasks:
   - setup:
     delegate_to: "{{ item }}"
-    with_items: "{{ groups['nagios-servers'] }}"
+    with_items: "{{ groups['nagios_servers'] }}"
     delegate_facts: true
     tags: always
 
@@ -18,7 +18,7 @@
   pre_tasks:
   - setup:
     delegate_to: "{{ item }}"
-    with_items: "{{ groups['nagios-clients'] }}"
+    with_items: "{{ groups['nagios_clients'] }}"
     delegate_facts: true
     tags: always
 
