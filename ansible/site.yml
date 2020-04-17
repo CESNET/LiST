@@ -1,4 +1,4 @@
-- include: nagios.yml
-- include: letsencrypt.yml
-- include: warden-server.yml
-- include: list.yml
+- import_playbook: list.yml
+- import_playbook: nagios.yml
+- import_playbook: letsencrypt.yml
+- import_playbook: warden-server.yml

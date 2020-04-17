@@ -1,10 +1,10 @@
-- hosts: nagios-clients
+- hosts: nagios_clients
 
   # Gather facts about nagios servers, we need IP addresses
   pre_tasks:
   - setup:
     delegate_to: "{{ item }}"
-    with_items: "{{ groups['nagios-servers'] }}"
+    with_items: "{{ groups['nagios_servers'] }}"
     delegate_facts: true
     tags: always
 
@@ -12,13 +12,13 @@
   roles:
     - { role: nagios-client, tags: nagios-client }
 
-- hosts: nagios-servers
+- hosts: nagios_servers
 
   # Gather facts about nagios clients, we need IP addresses
   pre_tasks:
   - setup:
     delegate_to: "{{ item }}"
-    with_items: "{{ groups['nagios-clients'] }}"
+    with_items: "{{ groups['nagios_clients'] }}"
     delegate_facts: true
     tags: always
 
